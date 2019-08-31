@@ -1,0 +1,22 @@
+.rowColumn
+{
+    height:100%;
+}
+
+.canvas
+{
+	height:100%;
+}
+
+.appCanvas
+{
+	display:hidden;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 100%;
+  width: 30%;
+}
