@@ -22,7 +22,7 @@ game.map = {};
 /// constants
 
 var debug = true;
-var debugLevel = 3;
+var debugLevel = 4;
 var adjustment = 1/32;
 
 /// end constants
@@ -101,7 +101,6 @@ function clearCanvas(){
 }
 
 function draw(){
-	
 	copyMap();
 	drawPlayer();
 	counter();
@@ -109,23 +108,37 @@ function draw(){
 }
 
 function drawPlayer(){
-	context.drawImage(game.player.sprite.getImg(), game.width/2, game.height/2, 48, 48);
+	addSprite(game.player.entity.sprite);
 }
 
 function copyMap(){
-	context.drawImage(mapCanvas, game.player.positionX, game.player.positionY);
+	addToContext(mapCanvas, 0, 0);
 }
 
 function resize(){
 	canvas.width = game.width = convasDiv.offsetWidth;
-	canvas.height = game.height =convasDiv.offsetHeight;
+	canvas.height = game.height = convasDiv.offsetHeight;
 	
 	drawMap();
 	
 	//blueprint.draw();
 	addDebugText();
 }
-			
+	
+
+function addSprite(sprite){
+	addToContext(sprite.getImg(), sprite.x, sprite.y, sprite.width, sprite.height);
+}
+
+function addToContext(img, x, y, width = null, height = null){
+	var adjX = x + game.cameraX;
+	var adjY = y + game.cameraY;
+	if(width && height){
+		context.drawImage(img, adjX, adjY, width, height)
+	} else {
+		context.drawImage(img, adjX, adjY);
+	}
+}
 
 /*
 
@@ -148,6 +161,7 @@ function loadSprite(url) {
 }
 */
 
+/*
 function rotateAndPaintImage(img, angleInDeg , positionX, positionY, sizeX, sizeY ) {
 	var angleInRad = angleInDeg*Math.PI/180
 	
@@ -160,6 +174,8 @@ function rotateAndPaintImage(img, angleInDeg , positionX, positionY, sizeX, size
 	context.rotate(-angleInRad);
 	context.translate(-positionX, -positionY);
 }
+
+*/
 
 function drawMap(){
 	
@@ -203,7 +219,7 @@ function counter(){
 		context.font = "60px Verdana,sans-serif";
 		context.fillText(seconds, 300, 50);
 }
-///temp
+///end temp
 
 class DebugInfo {
 	constructor(level = 0){
@@ -236,6 +252,9 @@ function addDebugText(){
 	debugInfo.add("Frame Time " + frameTime, 4);
 	debugInfo.add("adjust " + adjust, 4);
 	debugInfo.add("Keys Pressed " + getKeys(), 3);
+	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 4);
+	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
+	debugInfo.add("Player Angle " + game.player.entity.angle, 4);
 }
 
 function getKeys(){
@@ -256,4 +275,3 @@ onkeydown = onkeyup = function(e){
 	}
 	// console.log(game.map)
 }
-
