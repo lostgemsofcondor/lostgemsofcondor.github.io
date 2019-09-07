@@ -22,6 +22,7 @@ game.map = {};
 /// constants
 
 var debug = true;
+var debugDrawing = true;
 var debugLevel = 4;
 var adjustment = 1/32;
 
@@ -104,6 +105,7 @@ function draw(){
 	copyMap();
 	drawPlayer();
 	counter();
+	drawDebugThings();
 	addDebugText();
 }
 
@@ -112,7 +114,18 @@ function drawPlayer(){
 }
 
 function copyMap(){
+	var adjXPlayer = adjustXCord(game.player.positionX);
+	var adjYPlayer = adjustYCord(game.player.positionY);
+	var adjXZero = adjustXCord(0);
+	var adjYZero = adjustYCord(0);
+	//context.save();
+	//context.rotate(game.angle);
+	//context.translate(adjXZero-game.player.positionX, adjYZero-game.player.positionY);
 	addToContext(mapCanvas, 0, 0);
+	//context.translate(adjXPlayer, adjYPlayer);
+	//context.drawImage(mapCanvas, 0, 0);
+	//context.translate(-positionX, -positionY);
+	context.restore();
 }
 
 function resize(){
@@ -122,7 +135,7 @@ function resize(){
 	drawMap();
 	
 	//blueprint.draw();
-	addDebugText();
+	draw();
 }
 	
 
@@ -131,13 +144,21 @@ function addSprite(sprite){
 }
 
 function addToContext(img, x, y, width = null, height = null){
-	var adjX = x + game.cameraX;
-	var adjY = y + game.cameraY;
+	var adjX = adjustXCord(x);
+	var adjY = adjustYCord(y);
 	if(width && height){
 		context.drawImage(img, adjX, adjY, width, height)
 	} else {
 		context.drawImage(img, adjX, adjY);
 	}
+}
+
+function adjustXCord(x){
+	return x + game.cameraX;
+}
+
+function adjustYCord(y){
+	return y + game.cameraY;
 }
 
 /*
@@ -174,7 +195,6 @@ function rotateAndPaintImage(img, angleInDeg , positionX, positionY, sizeX, size
 	context.rotate(-angleInRad);
 	context.translate(-positionX, -positionY);
 }
-
 */
 
 function drawMap(){
@@ -220,51 +240,6 @@ function counter(){
 		context.fillText(seconds, 300, 50);
 }
 ///end temp
-
-class DebugInfo {
-	constructor(level = 0){
-		this.font = "14px Verdana,sans-serif";
-		this.leftMargin = 10;
-		this.topMargin = 200;
-		this.gap = 15;
-		this.lines = 0;
-		this.level = level;
-		context.font = this.font;
-	}
-	
-	add(str, level=0){
-		if(level <= this.level){
-			context.fillText(str, this.leftMargin, this.topMargin + this.gap * this.lines);
-			this.lines++;
-		}
-	}
-}
-
-function addDebugText(){
-	if(!debug) return;
-	var debugInfo = new DebugInfo(debugLevel);
-	debugInfo.add("fps: " + fps.toFixed(0), 1);
-	debugInfo.add("Width: " + canvas.width, 4);
-	debugInfo.add("Height: " + canvas.height, 4);
-	debugInfo.add("Draw Time " + drawTime, 3);
-	debugInfo.add("Draw Time Max " + drawTimeMax, 2);
-	debugInfo.add("performance.now() " + performance.now(), 4);
-	debugInfo.add("Frame Time " + frameTime, 4);
-	debugInfo.add("adjust " + adjust, 4);
-	debugInfo.add("Keys Pressed " + getKeys(), 3);
-	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 4);
-	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
-	debugInfo.add("Player Angle " + game.player.entity.angle, 4);
-}
-
-function getKeys(){
-	keys = ""
-	Object.keys(game.map).forEach(function(key){
-		// keys += String.fromCharCode(key) + " ";
-		keys += key + " ";
-	});
-	return keys;
-}
 
 onkeydown = onkeyup = function(e){
     e = e || event; // to deal with IE

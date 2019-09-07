@@ -6,6 +6,8 @@ class Game {
 		this.height;
 		this.cameraX = 0;
 		this.cameraY = 0;
+		this.angle = 0;
+		this.rotateSpeed = 1/180 * Math.PI;
 		
 	}
 }
@@ -40,16 +42,18 @@ class Player {
 
 class Entity {
 	set positionX(x) {
-		this.sprite.x = x;
+		this.x = x;
+		this.sprite.x = x - this.sprite.width / 2;
 	}
 	set positionY(y) {
-		this.sprite.y = y;
+		this.y = y;
+		this.sprite.y = y - this.sprite.height / 2;
 	}
 	get positionX(){
-		return this.sprite.x;
+		return this.x;
 	}
 	get positionY(){
-		return this.sprite.y;
+		return this.y;
 	}
 
 	constructor(path, speed, x, y, width, height){
