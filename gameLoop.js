@@ -8,6 +8,7 @@ var keyLeft = "65";
 var keyRight = "68";
 var keyRotateClockwise = "81";
 var keyRotateCounterClockwise = "69";
+var keyResetRotation = "82";
 
 /// end constants
 
@@ -16,7 +17,7 @@ function mainGameLoop(){
 	handleRotate();
 	handleMove();
 
-	adjustCamera();
+	game.adjustCameraToPlayer();
 }
 
 /*
@@ -24,13 +25,24 @@ function mapActions(){
 
 }
 */
+function XNOR(a, b){
+	return (a && !b) || (!a && b);
+}
 
 function handleRotate(){
-	if(key.rotateClockwise) {
-		game.angle += game.rotateSpeed;
+	if(key.resetRotation){
+		game.angle = 0;
+		return;
 	}
-	if(key.rotateCounterClockwise) {
-		game.angle -= game.rotateSpeed;
+	if(XNOR(key.rotateClockwise, key.rotateCounterClockwise)){
+		if(key.rotateClockwise) {
+			game.angle += game.rotateSpeed;
+			game.adjustAllSpriteDirections();
+		}
+		if(key.rotateCounterClockwise) {
+			game.angle -= game.rotateSpeed;
+			game.adjustAllSpriteDirections();
+		}
 	}
 }
 
@@ -41,8 +53,11 @@ function handleMove(){
 	if(angle != null){
 		var angleInRad = angle*Math.PI/180;
 		game.player.entity.angle = angleInRad;
-		game.player.positionY += Math.sin(game.player.entity.angle)*game.player.entity.speed;
-		game.player.positionX += Math.cos(game.player.entity.angle)*game.player.entity.speed;
+		//game.player.entity.angle = angleInRad - game.angle;
+		// game.player.positionY += Math.sin(game.player.entity.angle)*game.player.entity.speed;
+		// game.player.positionX += Math.cos(game.player.entity.angle)*game.player.entity.speed;
+		game.player.entity.moving = true;
+		game.player.entity.move();
 	}
 
 	game.player.entity.adjustSpriteDirection();	
@@ -56,10 +71,5 @@ function readKeys(){
 	key.right = keys.includes(keyRight);
 	key.rotateClockwise = keys.includes(keyRotateClockwise);
 	key.rotateCounterClockwise = keys.includes(keyRotateCounterClockwise);
+	key.resetRotation = keys.includes(keyResetRotation);
 }
-
-function adjustCamera(){
-	game.cameraX = game.width / 2 - game.player.positionX;
-	game.cameraY = game.height / 2 - game.player.positionY;
-}
-

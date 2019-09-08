@@ -1,4 +1,4 @@
-var game = new Game();
+
 
 var canvas = document.getElementById("mainCanvas");
 var convasDiv = document.getElementById("mainCanvasDiv")
@@ -17,7 +17,6 @@ var fpsMax = 60;
 var fps = 0;
 var adjust = 0;
 
-game.map = {};
 
 /// constants
 
@@ -26,8 +25,13 @@ var debugDrawing = true;
 var debugLevel = 4;
 var adjustment = 1/32;
 
+var rotateSpeed = 2;
+var playerSpeed = 15;
+
 /// end constants
 
+var game = new Game();
+game.map = {};
 window.onload = startUp;
 
 function startUp(){
@@ -103,10 +107,15 @@ function clearCanvas(){
 
 function draw(){
 	copyMap();
+	drawObjects();
 	drawPlayer();
 	counter();
 	drawDebugThings();
 	addDebugText();
+}
+
+function drawObjects(){
+	addSprite(game.temp.sprite);
 }
 
 function drawPlayer(){
@@ -114,15 +123,20 @@ function drawPlayer(){
 }
 
 function copyMap(){
-	var adjXPlayer = adjustXCord(game.player.positionX);
-	var adjYPlayer = adjustYCord(game.player.positionY);
-	var adjXZero = adjustXCord(0);
-	var adjYZero = adjustYCord(0);
-	//context.save();
-	//context.rotate(game.angle);
-	//context.translate(adjXZero-game.player.positionX, adjYZero-game.player.positionY);
-	addToContext(mapCanvas, 0, 0);
-	//context.translate(adjXPlayer, adjYPlayer);
+	var p = new Point(0, 0);
+	var adjXPlayer = adjustXCord(game.player);
+	var adjYPlayer = adjustYCord(game.player);
+	var adjXZero = adjustXCord(p);
+	var adjYZero = adjustYCord(p);
+	// var adjXPlayer = adjustXCord(game.player);
+	// var adjYPlayer = adjustYCord(game.player);
+	// var adjXZero = adjustXCord(p);
+	// var adjYZero = adjustYCord(p);
+	context.save();
+	context.translate(adjXPlayer , adjYPlayer);
+	context.rotate(game.angle);
+	context.translate(-adjXPlayer, -adjYPlayer);
+	addToContext(mapCanvas, adjXZero, adjYZero);
 	//context.drawImage(mapCanvas, 0, 0);
 	//context.translate(-positionX, -positionY);
 	context.restore();
@@ -140,25 +154,33 @@ function resize(){
 	
 
 function addSprite(sprite){
-	addToContext(sprite.getImg(), sprite.x, sprite.y, sprite.width, sprite.height);
+	addToContext(sprite.getImg(), adjustXCord(sprite), adjustYCord(sprite), sprite.width, sprite.height);
 }
 
 function addToContext(img, x, y, width = null, height = null){
-	var adjX = adjustXCord(x);
-	var adjY = adjustYCord(y);
+	//var adjX = adjustXCord(x);
+	//var adjY = adjustYCord(y);
 	if(width && height){
-		context.drawImage(img, adjX, adjY, width, height)
+		context.drawImage(img, x, y, width, height)
 	} else {
-		context.drawImage(img, adjX, adjY);
+		context.drawImage(img, x, y);
 	}
 }
 
-function adjustXCord(x){
-	return x + game.cameraX;
+function adjustXCord(o){ //from Object or Entity or point
+	//cos(theta) * (px-ox) - sin(theta) * (py-oy) + ox
+	var cos = Math.cos(game.angle);
+	var sin = Math.sin(game.angle);
+	return cos*(o.positionX - game.cameraCenterX) - sin*(o.positionY - game.cameraCenterY) + game.cameraCenterX + game.cameraX;
+	// return o.positionX + game.cameraX;
 }
 
-function adjustYCord(y){
-	return y + game.cameraY;
+function adjustYCord(o){ //from Object or Entity or point
+	//sin(theta) * (px-ox) + cos(theta) * (py-oy) + oy
+	var cos = Math.cos(game.angle);
+	var sin = Math.sin(game.angle);
+	return sin*(o.positionX - game.cameraCenterX) + cos*(o.positionY - game.cameraCenterY) + game.cameraCenterY + game.cameraY;
+	//return o.positionY + game.cameraY;
 }
 
 /*

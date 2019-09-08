@@ -5,18 +5,48 @@ class DrawDebugThings {
     }
 
     drawPixel(x, y){
-        var adjX = adjustXCord(x);
-        var adjY = adjustYCord(y);
+		var p = new Point(x, y);
+        var adjX = adjustXCord(p);
+        var adjY = adjustYCord(p);
         context.fillRect(adjX, adjY, 1, 1);        
     }
 
     drawCircle(x, y, r){
-        var adjX = adjustXCord(x);
-        var adjY = adjustYCord(y);
+		var p = new Point(x, y);
+        var adjX = adjustXCord(p);
+        var adjY = adjustYCord(p);
         context.beginPath();
         context.arc(adjX, adjY, r, 0, 2 * Math.PI);
         context.stroke();  
-    }
+	}
+	
+    drawLine(x, y, angle, len){
+		var p = new Point(x, y);
+        var adjX = adjustXCord(p);
+		var adjY = adjustYCord(p);
+		
+		var adjXEnd = adjX + Math.cos(angle)*len;
+		var adjYEnd = adjY + Math.sin(angle)*len;
+
+		context.beginPath();
+		context.moveTo(adjX, adjY);
+		context.lineTo(adjXEnd, adjYEnd);
+		context.stroke();
+	}
+
+	mark(entity){
+		this.drawPixel(entity.positionX, entity.positionY);
+		this.drawCircle(entity.positionX, entity.positionY, entity.sprite.width/2);
+	}
+
+	markSprite(sprite){
+		this.drawPixel(sprite.positionX, sprite.positionY);
+		this.drawCircle(sprite.positionX, sprite.positionY, 10);
+	}
+
+	direction(entity){
+		this.drawLine(entity.positionX, entity.positionY, entity.angle, 40);
+	}
 }
 
 function drawDebugThings(){
@@ -24,8 +54,16 @@ function drawDebugThings(){
 	var drawDebugThings = new DrawDebugThings(debugLevel);
     drawDebugThings.drawPixel(0, 0);
     drawDebugThings.drawCircle(0, 0, 30);
-    drawDebugThings.drawPixel(game.player.positionX, game.player.positionY);
-    drawDebugThings.drawCircle(game.player.positionX, game.player.positionY, 30);
+    //drawDebugThings.drawPixel(game.player.positionX, game.player.positionY);
+    //drawDebugThings.drawCircle(game.player.positionX, game.player.positionY, 30);
+    //drawDebugThings.drawPixel(200, 200);
+	//drawDebugThings.drawCircle(200, 200, 30);
+	drawDebugThings.mark(game.player.entity);
+	drawDebugThings.markSprite(game.player.entity.sprite);
+	drawDebugThings.mark(game.temp);
+	drawDebugThings.markSprite(game.temp.sprite);
+	drawDebugThings.direction(game.player.entity);
+
 }
 
 class DebugInfo {
@@ -63,6 +101,8 @@ function addDebugText(){
 	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
 	debugInfo.add("Player Angle " + game.player.entity.angle, 4);
 	debugInfo.add("Game Angle " + game.angle, 4);
+	debugInfo.add("Game cameraX " + game.cameraX, 4);
+	debugInfo.add("Game cameraY " + game.cameraY, 4);
 }
 
 function getKeys(){

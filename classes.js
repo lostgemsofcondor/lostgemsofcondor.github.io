@@ -1,15 +1,37 @@
 class Game {
 	constructor(){
 		this.map = {};
-		this.player = new Player(15);
+		this.player = new Player(playerSpeed);
 		this.width;
 		this.height;
 		this.cameraX = 0;
 		this.cameraY = 0;
+		this.cameraCenterX = 0;
+		this.cameraCenterY = 0;
 		this.angle = 0;
-		this.rotateSpeed = 1/180 * Math.PI;
+		this.rotateSpeed = rotateSpeed/180 * Math.PI;
+
+		this.temp = new Entity("player", 0, 200, 200, 48, 48);
+	}
+
+	adjustAllSpriteDirections(){
+		this.player.entity.adjustSpriteDirection();
+		this.temp.adjustSpriteDirection();
+	}
+
+	
+	adjustCameraToPlayer(){
+		this.cameraCenterX = this.player.positionX;
+		this.cameraCenterY = this.player.positionY;
+		this.adjustCamera();
+	}
+	
+	adjustCamera(){
+		this.cameraX = this.width / 2 - this.cameraCenterX;
+		this.cameraY = this.height / 2 - this.cameraCenterY;
 		
 	}
+
 }
 
 class Player {
@@ -55,6 +77,13 @@ class Entity {
 	get positionY(){
 		return this.y;
 	}
+	get angle(){
+		//return this.angleAbsolute;
+		return this.angleAbsolute - game.angle;
+	}
+	set angle(theta){
+		this.angleAbsolute = theta;
+	}
 
 	constructor(path, speed, x, y, width, height){
 		this.sprite = new Sprite(path, x, y, width, height);
@@ -70,7 +99,7 @@ class Entity {
 	}
 
 	adjustSpriteDirection(){
-		var angle = this.correctMod(this.angle/Math.PI*180, 360);
+		var angle = this.correctMod(this.angleAbsolute/Math.PI*180, 360);
 		if(angle >= 315 || angle <= 45){
 			this.sprite.turn("right");
 		} else if(angle > 45 && angle < 135){
@@ -81,6 +110,14 @@ class Entity {
 			this.sprite.turn("up");
 		}
 	}
+
+	move(){
+		if(!this.moving){
+			return
+		}
+		this.positionX += Math.cos(this.angle)*this.speed;
+		this.positionY += Math.sin(this.angle)*this.speed;
+	}
 }
 
 class Map {
@@ -89,10 +126,30 @@ class Map {
 	}
 }
 
-class Sprite {
-	constructor(path, x, y, width, height){
+class Point {
+	set positionX(x) {
+		this.x = x;
+	}
+	set positionY(y) {
+		this.y = y;
+	}
+	get positionX(){
+		return this.x;
+	}
+	get positionY(){
+		return this.y;
+	}
+	constructor(x, y){
 		this.x = x;
 		this.y = y;
+	}
+}
+
+class Sprite extends Point {
+	constructor(path, x, y, width, height){
+		super(x, y);
+		//this.x = x;
+		//this.y = y;
 		this.width = width;
 		this.height = height;
 
