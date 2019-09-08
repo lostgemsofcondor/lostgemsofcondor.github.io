@@ -32,6 +32,8 @@ function XNOR(a, b){
 function handleRotate(){
 	if(key.resetRotation){
 		game.angle = 0;
+		drawTimeMax = 0; //for debug
+		game.adjustAllSpriteDirections();
 		return;
 	}
 	if(XNOR(key.rotateClockwise, key.rotateCounterClockwise)){
@@ -52,7 +54,7 @@ function handleMove(){
 	var angle = angles[key.right + key.left*2 + key.down*4 + key.up*8];
 	if(angle != null){
 		var angleInRad = angle*Math.PI/180;
-		game.player.entity.angle = angleInRad;
+		game.player.entity.angleAbsolute = angleInRad - game.angle;
 		//game.player.entity.angle = angleInRad - game.angle;
 		// game.player.positionY += Math.sin(game.player.entity.angle)*game.player.entity.speed;
 		// game.player.positionX += Math.cos(game.player.entity.angle)*game.player.entity.speed;

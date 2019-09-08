@@ -11,12 +11,15 @@ class Game {
 		this.angle = 0;
 		this.rotateSpeed = rotateSpeed/180 * Math.PI;
 
-		this.temp = new Entity("player", 0, 200, 200, 48, 48);
+		this.objects = [];
+
+		this.objects.push(new Entity("player", 0, 200, 200, 48, 48));
+		this.objects.push(new Entity("player", 0, 2000, 2000, 48, 48));
 	}
 
 	adjustAllSpriteDirections(){
 		this.player.entity.adjustSpriteDirection();
-		this.temp.adjustSpriteDirection();
+		this.objects.forEach(e => e.adjustSpriteDirection());
 	}
 
 	
@@ -79,7 +82,7 @@ class Entity {
 	}
 	get angle(){
 		//return this.angleAbsolute;
-		return this.angleAbsolute - game.angle;
+		return this.angleAbsolute;
 	}
 	set angle(theta){
 		this.angleAbsolute = theta;
@@ -99,7 +102,7 @@ class Entity {
 	}
 
 	adjustSpriteDirection(){
-		var angle = this.correctMod(this.angleAbsolute/Math.PI*180, 360);
+		var angle = this.correctMod((this.angleAbsolute + game.angle)/Math.PI*180, 360) ;
 		if(angle >= 315 || angle <= 45){
 			this.sprite.turn("right");
 		} else if(angle > 45 && angle < 135){

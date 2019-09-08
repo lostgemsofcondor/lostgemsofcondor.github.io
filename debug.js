@@ -45,7 +45,7 @@ class DrawDebugThings {
 	}
 
 	direction(entity){
-		this.drawLine(entity.positionX, entity.positionY, entity.angle, 40);
+		this.drawLine(entity.positionX, entity.positionY, entity.angle + game.angle, 40);
 	}
 }
 
@@ -60,10 +60,12 @@ function drawDebugThings(){
 	//drawDebugThings.drawCircle(200, 200, 30);
 	drawDebugThings.mark(game.player.entity);
 	drawDebugThings.markSprite(game.player.entity.sprite);
-	drawDebugThings.mark(game.temp);
-	drawDebugThings.markSprite(game.temp.sprite);
 	drawDebugThings.direction(game.player.entity);
-
+	try {
+		drawDebugThings.markSprite(game.objects[0].sprite);
+		drawDebugThings.direction(game.objects[0]);
+		drawDebugThings.mark(game.objects[0]);
+	} catch {}
 }
 
 class DebugInfo {
@@ -100,6 +102,7 @@ function addDebugText(){
 	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 4);
 	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
 	debugInfo.add("Player Angle " + game.player.entity.angle, 4);
+	debugInfo.add("Player Angle Absolute " + game.player.entity.angleAbsolute, 4);
 	debugInfo.add("Game Angle " + game.angle, 4);
 	debugInfo.add("Game cameraX " + game.cameraX, 4);
 	debugInfo.add("Game cameraY " + game.cameraY, 4);

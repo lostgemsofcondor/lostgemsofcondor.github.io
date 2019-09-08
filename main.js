@@ -115,7 +115,7 @@ function draw(){
 }
 
 function drawObjects(){
-	addSprite(game.temp.sprite);
+	game.objects.forEach(e => addSprite(e.sprite));
 }
 
 function drawPlayer(){
