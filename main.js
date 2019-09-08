@@ -124,14 +124,10 @@ function drawPlayer(){
 
 function copyMap(){
 	var p = new Point(0, 0);
-	var adjXPlayer = adjustXCord(game.player);
-	var adjYPlayer = adjustYCord(game.player);
-	var adjXZero = adjustXCord(p);
-	var adjYZero = adjustYCord(p);
-	// var adjXPlayer = adjustXCord(game.player);
-	// var adjYPlayer = adjustYCord(game.player);
-	// var adjXZero = adjustXCord(p);
-	// var adjYZero = adjustYCord(p);
+	var adjXPlayer = game.player.positionX + game.cameraX;
+	var adjYPlayer = game.player.positionY + game.cameraY;
+	var adjXZero = p.positionX + game.cameraX;
+	var adjYZero = p.positionY + game.cameraY;
 	context.save();
 	context.translate(adjXPlayer , adjYPlayer);
 	context.rotate(game.angle);
