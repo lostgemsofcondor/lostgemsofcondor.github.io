@@ -6,15 +6,15 @@ class DrawDebugThings {
 
     drawPixel(x, y){
 		var p = new Point(x, y);
-        var adjX = adjustXCord(p);
-        var adjY = adjustYCord(p);
+        var adjX = p.adjustXCord();
+        var adjY = p.adjustYCord();
         context.fillRect(adjX, adjY, 1, 1);        
     }
 
     drawCircle(x, y, r){
 		var p = new Point(x, y);
-        var adjX = adjustXCord(p);
-        var adjY = adjustYCord(p);
+        var adjX = p.adjustXCord();
+        var adjY = p.adjustYCord();
         context.beginPath();
         context.arc(adjX, adjY, r, 0, 2 * Math.PI);
         context.stroke();  
@@ -22,8 +22,8 @@ class DrawDebugThings {
 	
     drawLine(x, y, angle, len){
 		var p = new Point(x, y);
-        var adjX = adjustXCord(p);
-		var adjY = adjustYCord(p);
+        var adjX = p.adjustXCord();
+		var adjY = p.adjustYCord();
 		
 		var adjXEnd = adjX + Math.cos(angle)*len;
 		var adjYEnd = adjY + Math.sin(angle)*len;

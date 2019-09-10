@@ -68,11 +68,11 @@ class Player {
 class Entity {
 	set positionX(x) {
 		this.x = x;
-		this.sprite.x = x - this.sprite.width / 2;
+		this.sprite.x = x;
 	}
 	set positionY(y) {
 		this.y = y;
-		this.sprite.y = y - this.sprite.height / 2;
+		this.sprite.y = y;
 	}
 	get positionX(){
 		return this.x;
@@ -116,7 +116,7 @@ class Entity {
 
 	move(){
 		if(!this.moving){
-			return
+			return;
 		}
 		this.positionX += Math.cos(this.angle)*this.speed;
 		this.positionY += Math.sin(this.angle)*this.speed;
@@ -142,9 +142,22 @@ class Point {
 	get positionY(){
 		return this.y;
 	}
+
 	constructor(x, y){
 		this.x = x;
 		this.y = y;
+	}
+
+	adjustXCord(){
+		var cos = Math.cos(game.angle);
+		var sin = Math.sin(game.angle);
+		return cos*(this.positionX - game.cameraCenterX) - sin*(this.positionY - game.cameraCenterY) + game.cameraCenterX + game.cameraX;
+	}
+
+	adjustYCord(){
+		var cos = Math.cos(game.angle);
+		var sin = Math.sin(game.angle);
+		return sin*(this.positionX - game.cameraCenterX) + cos*(this.positionY - game.cameraCenterY) + game.cameraCenterY + game.cameraY;
 	}
 }
 
@@ -174,5 +187,13 @@ class Sprite extends Point {
 	
 	turn(direction){
 		this.direction = direction;
+	}
+
+	adjustXCordSprite(){
+		return this.adjustXCord() - this.width / 2;
+	}
+
+	adjustYCordSprite(){
+		return this.adjustYCord() - this.height / 2;
 	}
 }

@@ -150,33 +150,15 @@ function resize(){
 	
 
 function addSprite(sprite){
-	addToContext(sprite.getImg(), adjustXCord(sprite), adjustYCord(sprite), sprite.width, sprite.height);
+	addToContext(sprite.getImg(), sprite.adjustXCordSprite(), sprite.adjustYCordSprite(), sprite.width, sprite.height);
 }
 
 function addToContext(img, x, y, width = null, height = null){
-	//var adjX = adjustXCord(x);
-	//var adjY = adjustYCord(y);
 	if(width && height){
 		context.drawImage(img, x, y, width, height)
 	} else {
 		context.drawImage(img, x, y);
 	}
-}
-
-function adjustXCord(o){ //from Object or Entity or point
-	//cos(theta) * (px-ox) - sin(theta) * (py-oy) + ox
-	var cos = Math.cos(game.angle);
-	var sin = Math.sin(game.angle);
-	return cos*(o.positionX - game.cameraCenterX) - sin*(o.positionY - game.cameraCenterY) + game.cameraCenterX + game.cameraX;
-	// return o.positionX + game.cameraX;
-}
-
-function adjustYCord(o){ //from Object or Entity or point
-	//sin(theta) * (px-ox) + cos(theta) * (py-oy) + oy
-	var cos = Math.cos(game.angle);
-	var sin = Math.sin(game.angle);
-	return sin*(o.positionX - game.cameraCenterX) + cos*(o.positionY - game.cameraCenterY) + game.cameraCenterY + game.cameraY;
-	//return o.positionY + game.cameraY;
 }
 
 /*
@@ -197,21 +179,6 @@ function loadSprite(url) {
 		resourceCache[url] = false;
 		img.src = url;
 	}
-}
-*/
-
-/*
-function rotateAndPaintImage(img, angleInDeg , positionX, positionY, sizeX, sizeY ) {
-	var angleInRad = angleInDeg*Math.PI/180
-	
-	positionX += sizeX/2;
-	positionY += sizeY/2;
-	
-	context.translate(positionX, positionY);
-	context.rotate(angleInRad);
-	context.drawImage(img, -sizeX/2, -sizeY/2, sizeX, sizeY);
-	context.rotate(-angleInRad);
-	context.translate(-positionX, -positionY);
 }
 */
 
