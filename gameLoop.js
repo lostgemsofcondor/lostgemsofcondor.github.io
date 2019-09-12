@@ -16,6 +16,7 @@ function mainGameLoop(){
 	readKeys();
 	handleRotate();
 	handleMove();
+	game.moveAllObjects();
 
 	game.adjustCameraToPlayer();
 }
