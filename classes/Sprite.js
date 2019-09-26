@@ -31,6 +31,6 @@ class Sprite extends Point {
 	}
 
 	adjustYCordSprite(){
-		return this.adjustYCord() - this.height / 2;
+		return this.adjustYCord() - this.height;
 	}
 }

@@ -26,8 +26,9 @@ class Entity {
 		this.positionX = x;
 		this.positionY = y;
 		this.speed = speed;
-		this.angle = 0;
+		this.angle = Math.random() * Math.PI*2;
 		this.moving = moving;
+		this.adjustSpriteDirection();
 	}
 
 	correctMod(a, b){
@@ -51,7 +52,13 @@ class Entity {
 		if(!this.moving){
 			return;
 		}
-		this.positionX += Math.cos(this.angle)*this.speed;
-		this.positionY += Math.sin(this.angle)*this.speed;
+		var newX = this.positionX + Math.cos(this.angle)*this.speed;
+		var newY = this.positionY + Math.sin(this.angle)*this.speed;
+		if(game.map.noCollsion(newX, newY)){
+			this.positionX = newX
+			this.positionY = newY
+		} else {
+			console.log("collision");
+		}
 	}
 }

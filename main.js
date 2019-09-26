@@ -31,7 +31,7 @@ var playerSpeed = 15;
 /// end constants
 
 var game = new Game();
-game.map = {};
+//game.keyMap = {};
 window.onload = startUp;
 
 function startUp(){
@@ -49,17 +49,20 @@ async function main(){
 	var frameTimes = [];
 	var count = 0;
 	while(true){
+		var fast = false;
 		var start = performance.now();
 		gameLoop();
+		await sleep(0)
 		drawTime = performance.now() - start;
 		if(drawTime < 1/(fpsMax) * 1000){
 			await sleep((1/(fpsMax) * 1000) - drawTime + adjust);
+			fast = true;
 		} else {
-			await sleep(0)
+			// await sleep(0)
 		}
 		frameTime = performance.now() - start;
-		if(drawTime > drawTimeMax){
-			drawTimeMax = drawTime
+		if(frameTime > drawTimeMax){
+			drawTimeMax = frameTime;
 		}
 		frameTimes.push(frameTime);
 		count++;
@@ -70,13 +73,13 @@ async function main(){
 		if(count % 60 == 0){
 			count = 0;
 			
-			if(fps - 1 > fpsMax){
+			if(fps - 1 > fpsMax && fast){
 				adjust += adjustment;
 				if(fps - .4 > fpsMax){
 					adjust += adjustment;
 				}
 			}
-			if(fps + .5 < fpsMax){
+			if(fps + .5 < fpsMax && fast){
 				adjust -= adjustment;
 				if(fps + .2 < fpsMax){
 					adjust -= adjustment;
@@ -108,14 +111,18 @@ function clearCanvas(){
 function draw(){
 	copyMap();
 	drawObjects();
-	drawPlayer();
+	//drawPlayer();
 	counter();
 	drawDebugThings();
 	addDebugText();
 }
 
 function drawObjects(){
-	game.objects.forEach(e => addSprite(e.sprite));
+	game.entityList.sort();
+	game.entityList.list.forEach(o => {
+		addSprite(game.get(o.key).sprite);
+	});
+	//game.objects.forEach(e => addSprite(e.sprite));
 }
 
 function drawPlayer(){
@@ -186,12 +193,15 @@ function drawMap(){
 	
 	mapCanvas.width = 3000;
 	mapCanvas.height = 3000;
-	drawGrass();
+	game.map.currentMap();
+	//drawGrass();
 }
 
 ///temp
 var img = new Image();
-img.src = "./sprites/background/pixil-frame-0.png";
+img.src = "./sprites/background/grassBasicDebug.png";
+var water = new Image();
+water.src = "./sprites/background/waterBasic.png";
 function drawGrass(){
 	var x = 0;
 	var y = 0;
@@ -203,12 +213,17 @@ function drawGrass(){
 		sum2++;
 		for(var j = y; j <= y + height*30; j += height/2){
 			// rotateAndPaintImage(img, 10, i, j, width, height);
-			mapContext.drawImage(img, i, j, width, height);
+			if((i >= 96*4 && i <= 96*6 && j >= 96*3 && j <= 96*5) || (j >= 96*12 && j <= 96*14)){
+				mapContext.drawImage(water, i, j, width, height);
+
+			} else {
+
+				mapContext.drawImage(img, i, j, width, height);
+			}
 			sum++;
 			
 		}
 	}
-	console.log(sum, sum2)
 }
 
 
@@ -229,9 +244,39 @@ function counter(){
 onkeydown = onkeyup = function(e){
     e = e || event; // to deal with IE
 	if(e.type == 'keydown'){
-		game.map[e.keyCode] = true;
+		game.keyMap[e.keyCode] = true;
 	} else {
-		delete game.map[e.keyCode];
+		delete game.keyMap[e.keyCode];
 	}
 	// console.log(game.map)
 }
+
+
+/*
+var num = 0;
+class t {
+	constructor(){
+		this.x = Math.random();
+	}
+
+	get i(){
+		var x = [];
+		for(var i = 0; i < 100; i++){
+			x.push(Math.random());
+		}
+		x.sort();
+		num++;
+		return this.x;
+	}
+}
+
+function test(){
+	var x = [];
+	for(var i = 0; i < 100; i++){
+		x.push(new t());
+	}
+	x.sort((a,b) => (a.i - b.i));
+	console.log(num);
+}
+
+*/

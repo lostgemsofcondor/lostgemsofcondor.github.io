@@ -13,6 +13,7 @@ var keyResetRotation = "82";
 /// end constants
 
 function mainGameLoop(){
+	game.gameTick++;
 	readKeys();
 	handleRotate();
 	handleMove();
@@ -67,7 +68,7 @@ function handleMove(){
 }
 
 function readKeys(){
-	var keys = Object.keys(game.map);
+	var keys = Object.keys(game.keyMap);
 	key.up = keys.includes(keyUp);
 	key.down = keys.includes(keyDown);
 	key.left = keys.includes(keyLeft);

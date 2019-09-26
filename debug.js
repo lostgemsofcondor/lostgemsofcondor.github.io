@@ -93,8 +93,9 @@ function addDebugText(){
 	debugInfo.add("fps: " + fps.toFixed(0), 1);
 	debugInfo.add("Width: " + canvas.width, 4);
 	debugInfo.add("Height: " + canvas.height, 4);
-	debugInfo.add("Draw Time " + drawTime, 3);
-	debugInfo.add("Draw Time Max " + drawTimeMax, 2);
+	debugInfo.add("Draw Time " + drawTime, 4);
+	debugInfo.add("Frame Time " + frameTime, 3);
+	debugInfo.add("Frame Time Max " + drawTimeMax, 2);
 	debugInfo.add("performance.now() " + performance.now(), 4);
 	debugInfo.add("Frame Time " + frameTime, 4);
 	debugInfo.add("adjust " + adjust, 4);
@@ -110,7 +111,7 @@ function addDebugText(){
 
 function getKeys(){
 	keys = ""
-	Object.keys(game.map).forEach(function(key){
+	Object.keys(game.keyMap).forEach(function(key){
 		// keys += String.fromCharCode(key) + " ";
 		keys += key + " ";
 	});
