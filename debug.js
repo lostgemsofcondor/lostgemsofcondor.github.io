@@ -107,6 +107,7 @@ function addDebugText(){
 	debugInfo.add("Game Angle " + game.angle, 4);
 	debugInfo.add("Game cameraX " + game.cameraX, 4);
 	debugInfo.add("Game cameraY " + game.cameraY, 4);
+	debugInfo.add("Game tick " + game.gameTick, 4);
 }
 
 function getKeys(){

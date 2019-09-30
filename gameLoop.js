@@ -17,6 +17,7 @@ function mainGameLoop(){
 	readKeys();
 	handleRotate();
 	handleMove();
+	game.updateAI();
 	game.moveAllObjects();
 
 	game.adjustCameraToPlayer();
@@ -56,15 +57,17 @@ function handleMove(){
 	var angle = angles[key.right + key.left*2 + key.down*4 + key.up*8];
 	if(angle != null){
 		var angleInRad = angle*Math.PI/180;
-		game.player.entity.angleAbsolute = angleInRad - game.angle;
+		game.player.entity.angle = angleInRad - game.angle;
 		//game.player.entity.angle = angleInRad - game.angle;
 		// game.player.positionY += Math.sin(game.player.entity.angle)*game.player.entity.speed;
 		// game.player.positionX += Math.cos(game.player.entity.angle)*game.player.entity.speed;
 		game.player.entity.moving = true;
 		game.player.entity.move();
+	} else {
+		game.player.entity.moving = false;
 	}
 
-	game.player.entity.adjustSpriteDirection();	
+	//game.player.entity.adjustSpriteDirection();	
 }
 
 function readKeys(){

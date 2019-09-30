@@ -4,14 +4,17 @@ class Map {
 		this.collisionMap = [];
 		this.currentMapFunction = this.testMap;
 
-		this.grass = new Tile("./sprites/background/grassBasicDebug.png", 96, 96);
+		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96);
 		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96);
 	}
 
 	noCollsion(x, y){
-		var line = this.collisionMap[Math.floor(x / this.tileSize)];
+		var mapX = Math.floor(x / this.tileSize);
+		
+		var line = this.collisionMap[mapX];
 		if(line){
-			return line[Math.floor(y / this.tileSize)];
+			var mapY = Math.floor(y / this.tileSize);
+			return line[mapY] == null ? true : line[mapY];
 		}
 		return true;
 	}
@@ -35,7 +38,7 @@ class Map {
 			var line = [];
 			for(var j = y; j <= y + height*100; j += height){
 				// rotateAndPaintImage(img, 10, i, j, width, height);
-				if((i >= this.tileSize*4 && i <= this.tileSize*8 && j >= this.tileSize*3 && j <= this.tileSize*7) || (j >= this.tileSize*15 && j <= this.tileSize*19)){
+				if((i >= this.tileSize*4 && i <= this.tileSize*8 && j >= this.tileSize*3 && j <= this.tileSize*30) || (i >= this.tileSize*2 && j >= this.tileSize*15 && j <= this.tileSize*19)){
 					line.push(false);
 					this.water.draw(i, j);
 					// mapContext.drawImage(water, i, j, width, height);

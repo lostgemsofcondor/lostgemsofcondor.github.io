@@ -21,19 +21,23 @@ class Game {
 		//this.objects.push(new Entity("player", 0, 200, 200, 48, 48));
 		//this.objects.push(new Entity("player", 0, 2000, 2000, 48, 48));
 		var m = 35;
-		for(var i = 0; i < 10*m; i += m){
-			for(var j = 0; j < 50*m; j += m){
+		for(var i = 0; i < 5*m; i += m){
+			for(var j = 0; j < 5*m; j += m){
 				this.add(new Entity("player", 1, i, j, 48, 48, true));
 			}
 		}
+		
+		var copier = new Entity("player", 1, 350, -35, 48, 48, true);
+		copier.AI = new CopyAI(0, true);
+		this.add(copier);
 
 	}
 
 	add(object){
-		var key = this.objects.length + 1; // Player reserves the 0th space
+		object.key = this.objects.length + 1; // Player reserves the 0th space
 		this.objects.push(object);
 
-		this.entityList.add(key);
+		this.entityList.add(object.key);
 	}
 
 	delete(object){ //todo
@@ -70,4 +74,11 @@ class Game {
 		game.objects.forEach(e => e.move());
 	}
 
+	updateAI(){
+		game.objects.forEach(e => {
+			if(e.AI){
+				e.AI.calculate(e);
+			}
+		});
+	}
 }

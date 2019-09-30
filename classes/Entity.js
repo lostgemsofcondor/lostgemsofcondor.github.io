@@ -18,7 +18,8 @@ class Entity {
 		return this.angleAbsolute;
 	}
 	set angle(theta){
-		this.angleAbsolute = theta;
+		this.angleAbsolute = theta
+		this.adjustSpriteDirection();
 	}
 
 	constructor(path, speed, x, y, width, height, moving = false){
@@ -28,7 +29,8 @@ class Entity {
 		this.speed = speed;
 		this.angle = Math.random() * Math.PI*2;
 		this.moving = moving;
-		this.adjustSpriteDirection();
+		//this.adjustSpriteDirection();
+		this.AI = new AI(this);
 	}
 
 	correctMod(a, b){
@@ -55,9 +57,44 @@ class Entity {
 		var newX = this.positionX + Math.cos(this.angle)*this.speed;
 		var newY = this.positionY + Math.sin(this.angle)*this.speed;
 		if(game.map.noCollsion(newX, newY)){
-			this.positionX = newX
-			this.positionY = newY
+			this.positionX = newX;
+			this.positionY = newY;
+			//this.positionX = newX;
+			//this.positionY = newY;
 		} else {
+			if(this.speed == playerSpeed){
+				console.log("for debug");
+			}
+			var newMapX = Math.floor(newX / game.map.tileSize);
+			var newMapY = Math.floor(newY / game.map.tileSize);
+			var mapX = Math.floor(this.positionX / game.map.tileSize);
+			var mapY = Math.floor(this.positionY / game.map.tileSize);
+			if(mapX != newMapX && mapY != newMapY){
+				if(game.map.collisionMap[newMapX][mapY]){
+					newMapX = mapX;
+				} else if(game.map.collisionMap[mapX][newMapY]){
+					newMapY = mapY;
+				}
+			} 
+			if(mapX != newMapX){
+				if(newMapX > mapX){
+					newX = newMapX * game.map.tileSize - .01;
+				} else {
+					newX = mapX * game.map.tileSize;
+				}
+				this.positionX = newX;
+				this.positionY = newY;
+			} 
+			if(mapY != newMapY){
+				if(newMapY > mapY){
+					newY = newMapY * game.map.tileSize - .01;
+				} else {
+					newY = mapY * game.map.tileSize;
+				}
+				this.positionX = newX;
+				this.positionY = newY;
+			}
+			
 			console.log("collision");
 		}
 	}
