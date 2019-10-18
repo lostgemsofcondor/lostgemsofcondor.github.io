@@ -61,11 +61,17 @@ function drawDebugThings(){
 	drawDebugThings.mark(game.player.entity);
 	drawDebugThings.markSprite(game.player.entity.sprite);
 	drawDebugThings.direction(game.player.entity);
-	try {
-		drawDebugThings.markSprite(game.objects[0].sprite);
-		drawDebugThings.direction(game.objects[0]);
-		drawDebugThings.mark(game.objects[0]);
-	} catch {}
+	// try {
+	// 	drawDebugThings.markSprite(game.objects[0].sprite);
+	// 	drawDebugThings.direction(game.objects[0]);
+	// 	drawDebugThings.mark(game.objects[0]);
+	// } catch {}
+
+	for(var i = 0; i < game.objects.length; i++){
+		drawDebugThings.markSprite(game.objects[i].sprite);
+		drawDebugThings.direction(game.objects[i]);
+		drawDebugThings.mark(game.objects[i]);
+	}
 }
 
 class DebugInfo {

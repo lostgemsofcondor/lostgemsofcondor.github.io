@@ -17,20 +17,40 @@ class Game {
 		this.entityList = new EntityList();
 		this.map = new Map();
 		this.entityList.add(0); // Add player
-
-		//this.objects.push(new Entity("player", 0, 200, 200, 48, 48));
-		//this.objects.push(new Entity("player", 0, 2000, 2000, 48, 48));
+		
+		
+		this.add(new Entity("player", 1, 350, -35, 48, 48, true));
 		var m = 35;
-		for(var i = 0; i < 5*m; i += m){
-			for(var j = 0; j < 5*m; j += m){
-				this.add(new Entity("player", 1, i, j, 48, 48, true));
+		var c = 0;
+		for(var i = 0; i < 10*m; i += m){
+			for(var j = 0; j < 50*m; j += m){
+				var AI = new Entity("player", c*2+1, i, j, 48, 48, true);
+				AI.AI = new CircleAI(c++, 200);
+				this.add(AI);
+				//this.add(new Entity("player", 1, i, j, 48, 48, true));
 			}
 		}
-		
-		var copier = new Entity("player", 1, 350, -35, 48, 48, true);
-		copier.AI = new CopyAI(0, true);
-		this.add(copier);
 
+		var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0);
+		axe.AI = new WeaponAI();
+		this.add(axe);
+		//this.vectorField();
+		// var AI = new Entity("player", 1, 350, -35, 48, 48, true);
+		// AI.AI = new CircleAI(0, 200);
+		// this.add(AI);
+		
+	}
+
+
+	vectorField(){
+		var m = 35;
+		for(var i = 0; i < 50*m; i += m){
+			for(var j = 0; j < 50*m; j += m){
+				var AI = new Entity("player", 1, i, j, 0, 0, false)
+				AI.AI = new CircleAI(0, 500); // AI to implement
+				this.add(AI);
+			}
+		}
 	}
 
 	add(object){

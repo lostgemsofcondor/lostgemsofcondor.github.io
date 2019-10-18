@@ -113,7 +113,7 @@ function draw(){
 	drawObjects();
 	//drawPlayer();
 	counter();
-	drawDebugThings();
+	//drawDebugThings();
 	addDebugText();
 }
 
@@ -124,6 +124,7 @@ function drawObjects(){
 	});
 	//game.objects.forEach(e => addSprite(e.sprite));
 }
+
 
 function drawPlayer(){
 	addSprite(game.player.entity.sprite);
@@ -157,7 +158,16 @@ function resize(){
 	
 
 function addSprite(sprite){
-	addToContext(sprite.getImg(), sprite.adjustXCordSprite(), sprite.adjustYCordSprite(), sprite.width, sprite.height);
+	if(sprite.angle == null){
+		addToContext(sprite.getImg(), sprite.adjustXCordSprite(), sprite.adjustYCordSprite(), sprite.width, sprite.height);
+	} else {
+		
+		context.save();
+		context.translate(sprite.adjustXCord() , sprite.adjustYCord() - 6);
+		context.rotate(sprite.angle + game.angle);
+		addToContext(sprite.getImg(), -sprite.width/2, -sprite.height*.75, sprite.width, sprite.height);
+		context.restore();
+	}
 }
 
 function addToContext(img, x, y, width = null, height = null){
@@ -237,7 +247,8 @@ function counter(){
 		
 	}
 		context.font = "60px Verdana,sans-serif";
-		context.fillText(seconds, 300, 50);
+		context.fillText(fps.toFixed(0), 300, 50);
+		// context.fillText(seconds, 300, 50);
 }
 ///end temp
 

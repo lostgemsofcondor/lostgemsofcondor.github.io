@@ -31,14 +31,11 @@ class Map {
 		var y = 0;
 		var width = this.tileSize;
 		var height = this.tileSize;
-		var sum =0;
-		var sum2 =0;
 		for(var i = x; i <= x + width*100; i += width){
-			sum2++;
 			var line = [];
 			for(var j = y; j <= y + height*100; j += height){
 				// rotateAndPaintImage(img, 10, i, j, width, height);
-				if((i >= this.tileSize*4 && i <= this.tileSize*8 && j >= this.tileSize*3 && j <= this.tileSize*30) || (i >= this.tileSize*2 && j >= this.tileSize*15 && j <= this.tileSize*19)){
+				if((i >= this.tileSize*4 && i <= this.tileSize*8 && j >= this.tileSize*3 && j <= this.tileSize*15) || (i >= this.tileSize*2 && i <= this.tileSize*20 && j >= this.tileSize*15 && j <= this.tileSize*20)){
 					line.push(false);
 					this.water.draw(i, j);
 					// mapContext.drawImage(water, i, j, width, height);
@@ -48,7 +45,6 @@ class Map {
 					this.grass.draw(i, j);
 					// mapContext.drawImage(img, i, j, width, height);
 				}
-				sum++;
 				
 			}
 			this.collisionMap.push(line);
@@ -60,15 +56,10 @@ class Map {
 		var y = 0;
 		var width = this.tileSize;
 		var height = this.tileSize;
-		var sum =0;
-		var sum2 =0;
-		for(var i = x; i <= x + width*30; i += width/2){
-			sum2++;
-			for(var j = y; j <= y + height*30; j += height/2){
+		for(var i = x; i <= x + width*30; i += width){
+			for(var j = y; j <= y + height*30; j += height){
 				// rotateAndPaintImage(img, 10, i, j, width, height);
-				mapContext.drawImage(img, i, j, width, height);
-				sum++;
-				
+				this.grass.draw(i, j);
 			}
 		}
 	}

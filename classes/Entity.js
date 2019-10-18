@@ -22,8 +22,8 @@ class Entity {
 		this.adjustSpriteDirection();
 	}
 
-	constructor(path, speed, x, y, width, height, moving = false){
-		this.sprite = new Sprite(path, x, y, width, height);
+	constructor(path, speed, x, y, width, height, moving = false, spriteDirection = null){
+		this.sprite = new Sprite(path, x, y, width, height, spriteDirection);
 		this.positionX = x;
 		this.positionY = y;
 		this.speed = speed;
@@ -63,16 +63,16 @@ class Entity {
 			//this.positionY = newY;
 		} else {
 			if(this.speed == playerSpeed){
-				console.log("for debug");
+				//console.log("for debug");
 			}
 			var newMapX = Math.floor(newX / game.map.tileSize);
 			var newMapY = Math.floor(newY / game.map.tileSize);
 			var mapX = Math.floor(this.positionX / game.map.tileSize);
 			var mapY = Math.floor(this.positionY / game.map.tileSize);
 			if(mapX != newMapX && mapY != newMapY){
-				if(game.map.collisionMap[newMapX][mapY]){
+				if(game.map.collisionMap[newMapX] && game.map.collisionMap[newMapX][mapY]){
 					newMapX = mapX;
-				} else if(game.map.collisionMap[mapX][newMapY]){
+				} else if(game.map.collisionMap[mapX] && game.map.collisionMap[mapX][newMapY]){
 					newMapY = mapY;
 				}
 			} 
@@ -95,7 +95,6 @@ class Entity {
 				this.positionY = newY;
 			}
 			
-			console.log("collision");
 		}
 	}
 }
