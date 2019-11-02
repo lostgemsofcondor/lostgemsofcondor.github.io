@@ -36,9 +36,9 @@ window.onload = startUp;
 
 function startUp(){
 	resize();
-	//canvas.addEventListener("mousedown", handelMouseDown);
-	//canvas.addEventListener("mouseup", handelMouseUp);
-	//canvas.addEventListener("mousemove", handelMouseMove);
+	window.addEventListener("mousedown", handelMouseDown);
+	window.addEventListener("mouseup", handelMouseUp);
+	//window.addEventListener("mousemove", handelMouseMove);
 	//window.addEventListener("keypress", keypress, false);
 	window.addEventListener("resize", resize);
 	
@@ -97,6 +97,7 @@ function sleep(ms){
 function gameLoop(){
 	mainGameLoop(game);
 	redraw();
+	game.blockIO = false;
 }
 
 function redraw(){
@@ -262,6 +263,27 @@ onkeydown = onkeyup = function(e){
 	// console.log(game.map)
 }
 
+function handelMouseDown(){
+	var canvasX = event.clientX;
+	var canvasY = event.clientY;
+	//0 left, 1 middle, 2 right
+	if(event.button == 0){
+		game.mouse.clickDownLeft(canvasX, canvasY);
+	}
+	if(event.button == 2){
+		game.mouse.clickDownRight(canvasX, canvasY);
+	}
+}
+
+function handelMouseUp(){
+	//0 left, 1 middle, 2 right
+	if(event.button == 0){
+		game.mouse.clickUpLeft();
+	}
+	if(event.button == 2){
+		game.mouse.clickUpRight();
+	}
+}
 
 /*
 var num = 0;

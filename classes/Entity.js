@@ -30,6 +30,7 @@ class Entity {
 		this.angle = Math.random() * Math.PI*2;
 		this.moving = moving;
 		//this.adjustSpriteDirection();
+		this.key; //defined in adding to game
 		this.AI = new AI(this);
 	}
 

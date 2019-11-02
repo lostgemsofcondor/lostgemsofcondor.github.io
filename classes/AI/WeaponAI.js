@@ -3,11 +3,16 @@ class WeaponAI {
 	}
 	
 	calculate(entity){
-		entity.angle = game.player.entity.angle;
-		entity.sprite.angle = game.player.entity.angle;
+		entity.angle = this.angle();
+		entity.sprite.angle = this.angle();
 		// entity.positionX = game.player.positionX + Math.cos(-game.angle - Math.PI/2);
 		// entity.positionY = game.player.positionY + Math.sin(-game.angle - Math.PI/2);
 		entity.positionX = game.player.positionX + Math.cos(game.player.entity.angle - .1);
 		entity.positionY = game.player.positionY + Math.sin(game.player.entity.angle - .1);
+	}
+	
+	angle(){
+		var absoluteAngle = game.player.entity.angle + game.angle;
+		return (absoluteAngle > 3*Math.PI/2 || absoluteAngle <= Math.PI/2 ?  Math.PI/2 : 3*Math.PI/2) - game.angle;
 	}
 }

@@ -2,6 +2,7 @@ class Game {
 	constructor(){
 		game = this;
 		this.keyMap = {};
+		this.mouse = new Mouse();
 		this.player = new Player(playerSpeed);
 		this.width;
 		this.height;
@@ -12,6 +13,7 @@ class Game {
 		this.angle = 0;
 		this.rotateSpeed = rotateSpeed/180 * Math.PI;
 		this.gameTick = 0;
+		this.blockIO = false;
 		
 		this.objects = [];
 		this.entityList = new EntityList();
@@ -22,15 +24,24 @@ class Game {
 		this.add(new Entity("player", 1, 350, -35, 48, 48, true));
 		var m = 35;
 		var c = 0;
-		for(var i = 0; i < 10*m; i += m){
-			for(var j = 0; j < 50*m; j += m){
-				var AI = new Entity("player", c*2+1, i, j, 48, 48, true);
-				AI.AI = new CircleAI(c++, 200);
-				this.add(AI);
-				//this.add(new Entity("player", 1, i, j, 48, 48, true));
-			}
-		}
-
+		// for(var i = 0; i < 10*m; i += m){
+			// for(var j = 0; j < 1*m; j += m){
+				// var AI = new Entity("player", c*2+1, i, j, 48, 48, true);
+				// AI.AI = new CircleAI(c++, 200);
+				// this.add(AI);
+				// //this.add(new Entity("player", 1, i, j, 48, 48, true));
+			// }
+		// }
+		
+		var AI1 = new Entity("player", 5, 100, 100, 48, 48, true);
+		var AI2 = new Entity("player", 5, 100, 100, 48, 48, true);
+		var AI3 = new Entity("player", 5, 100, 100, 48, 48, true);
+		this.add(AI1);
+		this.add(AI2);
+		this.add(AI3);
+		AI1.AI = new CircleAI(AI2.key, 200);
+		AI2.AI = new CircleAI(AI3.key, 200);
+		AI3.AI = new CircleAI(AI1.key, 200);
 		var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0);
 		axe.AI = new WeaponAI();
 		this.add(axe);
@@ -46,7 +57,8 @@ class Game {
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
 			for(var j = 0; j < 50*m; j += m){
-				var AI = new Entity("player", 1, i, j, 0, 0, false)
+				var AI = new Entity("empty", 1, i, j, 0, 0, false)
+				var AI = new Entity("empty", 1, i, j, 0, 0, false)
 				AI.AI = new CircleAI(0, 500); // AI to implement
 				this.add(AI);
 			}

@@ -68,7 +68,7 @@ function drawDebugThings(){
 	// } catch {}
 
 	for(var i = 0; i < game.objects.length; i++){
-		drawDebugThings.markSprite(game.objects[i].sprite);
+		//drawDebugThings.markSprite(game.objects[i].sprite);
 		drawDebugThings.direction(game.objects[i]);
 		drawDebugThings.mark(game.objects[i]);
 	}
@@ -106,6 +106,7 @@ function addDebugText(){
 	debugInfo.add("Frame Time " + frameTime, 4);
 	debugInfo.add("adjust " + adjust, 4);
 	debugInfo.add("Keys Pressed " + getKeys(), 3);
+	debugInfo.add("Mouse clicked " + getMouse(), 3);
 	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 4);
 	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
 	debugInfo.add("Player Angle " + game.player.entity.angle, 4);
@@ -123,4 +124,13 @@ function getKeys(){
 		keys += key + " ";
 	});
 	return keys;
+}
+
+function getMouse(){
+	str = "";
+	str += game.mouse.leftClickDown ? "left " : "";
+	str += game.mouse.leftClickDownStart ? "pressed " : "";
+	str += game.mouse.rightClickDown ? "right " : "";
+	str += game.mouse.rightClickDownStart ? "pressed " : "";
+	return str;
 }

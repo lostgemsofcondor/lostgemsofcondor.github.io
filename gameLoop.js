@@ -13,21 +13,36 @@ var keyResetRotation = "82";
 /// end constants
 
 function mainGameLoop(){
+	game.blockIO = true; // gets set to false after redraw
 	game.gameTick++;
 	readKeys();
 	handleRotate();
 	handleMove();
+	
+	shootArrow();
 	game.updateAI();
 	game.moveAllObjects();
 
 	game.adjustCameraToPlayer();
 }
 
-/*
-function mapActions(){
-
+function handleClick(){
+	if(game.mouse.leftClickDownStart){
+		
+		var AI = new Entity("player", 5, game.mouse.point.positionX, game.mouse.point.positionY, 48, 48);
+		game.add(AI);
+	}
 }
-*/
+
+function shootArrow(){
+	if(game.mouse.leftClickDownStart){
+		
+		var arrow = new Entity("./sprites/bullets/arrows/arrowGreen.png", 5, game.mouse.point.positionX, game.mouse.point.positionY, 48, 48, true, Math.PI/4);
+		
+		game.add(arrow);
+	}
+}
+
 function XNOR(a, b){
 	return (a && !b) || (!a && b);
 }
