@@ -14,7 +14,6 @@ class Entity {
 		return this.y;
 	}
 	get angle(){
-		//return this.angleAbsolute;
 		return this.angleAbsolute;
 	}
 	set angle(theta){
@@ -52,7 +51,7 @@ class Entity {
 	}
 
 	move(){
-		if(!this.moving){
+		if((!this.moving || game.paused) && this.key != 0){
 			return;
 		}
 		var newX = this.positionX + Math.cos(this.angle)*this.speed;
@@ -60,12 +59,7 @@ class Entity {
 		if(game.map.noCollsion(newX, newY)){
 			this.positionX = newX;
 			this.positionY = newY;
-			//this.positionX = newX;
-			//this.positionY = newY;
 		} else {
-			if(this.speed == playerSpeed){
-				//console.log("for debug");
-			}
 			var newMapX = Math.floor(newX / game.map.tileSize);
 			var newMapY = Math.floor(newY / game.map.tileSize);
 			var mapX = Math.floor(this.positionX / game.map.tileSize);

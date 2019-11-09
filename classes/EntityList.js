@@ -8,11 +8,27 @@ class EntityList {
         this.list.push(objectLink);
     }
 
+    delete(key){
+        // for(var i = 0; i < this.list.length; i++){
+        //     if(key == this.list[i].key){
+        //         delete this.list[i];
+        //         return true;
+        //     }
+        // }
+        Object.keys(this.list).forEach(i => {
+            if(key == this.list[i].key){
+                delete this.list[i];
+            }
+        });
+    }
+
     sort(){
         this.list.sort((a, b) => {
             return a.getVertical() - b.getVertical();
         })
     }
+
+
 
 }
 

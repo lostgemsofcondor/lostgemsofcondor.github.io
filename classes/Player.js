@@ -1,26 +1,8 @@
-class Player {
-	set positionX(x) {
-		this.entity.positionX = x;
-	}
-	set positionY(y) {
-		this.entity.positionY = y;
-	}
-	get positionX(){
-		return this.entity.positionX;
-	}
-	get positionY(){
-		return this.entity.positionY;
-	}
-	set speed(x) {
-		this.entity.speed = x;
-	}
-	get speed(){
-		return this.entity.speed;
-	}
-
+class Player extends Entity{
 	constructor(speed){
-		this.entity = new Entity("player", speed, 0, 0, 48, 48);
-		this.positionX = 0;
-		this.positionY = 0;
+		super("player", speed, 0, 0, 48, 48);
+		this.key = 0; // for game class
+		// this.positionX = 0;
+		// this.positionY = 0;
 	}
 }

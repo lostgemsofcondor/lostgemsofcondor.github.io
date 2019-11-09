@@ -21,13 +21,10 @@ class Mouse {
 		this.point.setCords(x, y);
 		this.leftClickTick = game.gameTick + game.blockIO + 1;
 		this.leftClickDown = true;
-		
-		console.log("clickDownLeft");
 	}
 	
 	clickUpLeft(){
 		this.leftClickDown = false;
-		console.log("clickUpLeft");
 		
 	}
 	
@@ -35,13 +32,11 @@ class Mouse {
 		this.point.setCords(x, y);
 		this.rightClickTick = game.gameTick + game.blockIO + 1;
 		this.rightClickDown = true;
-		console.log("clickDownRight");
 		
 	}
 	
 	clickUpRight(){
 		this.rightClickDown = false;
-		console.log("clickUpRight");
 		
 	}
 }

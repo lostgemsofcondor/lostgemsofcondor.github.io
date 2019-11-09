@@ -20,8 +20,8 @@ var adjust = 0;
 
 /// constants
 
-var debug = true;
-var debugDrawing = true;
+var debug = false;
+var debugDrawing = false;
 var debugLevel = 4;
 var adjustment = 1/32;
 
@@ -114,7 +114,7 @@ function draw(){
 	drawObjects();
 	//drawPlayer();
 	counter();
-	//drawDebugThings();
+	drawDebugThings();
 	addDebugText();
 }
 
@@ -128,7 +128,7 @@ function drawObjects(){
 
 
 function drawPlayer(){
-	addSprite(game.player.entity.sprite);
+	addSprite(game.player.sprite);
 }
 
 function copyMap(){
@@ -164,9 +164,9 @@ function addSprite(sprite){
 	} else {
 		
 		context.save();
-		context.translate(sprite.adjustXCord() , sprite.adjustYCord() - 6);
+		context.translate(sprite.adjustXCord() , sprite.adjustYCord());
 		context.rotate(sprite.angle + game.angle);
-		addToContext(sprite.getImg(), -sprite.width/2, -sprite.height*.75, sprite.width, sprite.height);
+		addToContext(sprite.getImg(), -sprite.width/2, -sprite.height/2, sprite.width, sprite.height);
 		context.restore();
 	}
 }

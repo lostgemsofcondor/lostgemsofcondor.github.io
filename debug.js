@@ -58,20 +58,20 @@ function drawDebugThings(){
     //drawDebugThings.drawCircle(game.player.positionX, game.player.positionY, 30);
     //drawDebugThings.drawPixel(200, 200);
 	//drawDebugThings.drawCircle(200, 200, 30);
-	drawDebugThings.mark(game.player.entity);
-	drawDebugThings.markSprite(game.player.entity.sprite);
-	drawDebugThings.direction(game.player.entity);
+	drawDebugThings.mark(game.player);
+	drawDebugThings.markSprite(game.player.sprite);
+	drawDebugThings.direction(game.player);
 	// try {
 	// 	drawDebugThings.markSprite(game.objects[0].sprite);
 	// 	drawDebugThings.direction(game.objects[0]);
 	// 	drawDebugThings.mark(game.objects[0]);
 	// } catch {}
 
-	for(var i = 0; i < game.objects.length; i++){
+	Object.keys(game.objects).forEach(i => {
 		//drawDebugThings.markSprite(game.objects[i].sprite);
 		drawDebugThings.direction(game.objects[i]);
 		drawDebugThings.mark(game.objects[i]);
-	}
+	});
 }
 
 class DebugInfo {
@@ -109,8 +109,8 @@ function addDebugText(){
 	debugInfo.add("Mouse clicked " + getMouse(), 3);
 	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 4);
 	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
-	debugInfo.add("Player Angle " + game.player.entity.angle, 4);
-	debugInfo.add("Player Angle Absolute " + game.player.entity.angleAbsolute, 4);
+	debugInfo.add("Player Angle " + game.player.angle, 4);
+	debugInfo.add("Player Angle Absolute " + game.player.angleAbsolute, 4);
 	debugInfo.add("Game Angle " + game.angle, 4);
 	debugInfo.add("Game cameraX " + game.cameraX, 4);
 	debugInfo.add("Game cameraY " + game.cameraY, 4);

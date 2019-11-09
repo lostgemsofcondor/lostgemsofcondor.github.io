@@ -14,8 +14,10 @@ class Game {
 		this.rotateSpeed = rotateSpeed/180 * Math.PI;
 		this.gameTick = 0;
 		this.blockIO = false;
+		this.paused = false;
 		
-		this.objects = [];
+		this.objects = []; //does not include player
+		this.objectIDNext = 1;
 		this.entityList = new EntityList();
 		this.map = new Map();
 		this.entityList.add(0); // Add player
@@ -24,14 +26,14 @@ class Game {
 		this.add(new Entity("player", 1, 350, -35, 48, 48, true));
 		var m = 35;
 		var c = 0;
-		// for(var i = 0; i < 10*m; i += m){
-			// for(var j = 0; j < 1*m; j += m){
-				// var AI = new Entity("player", c*2+1, i, j, 48, 48, true);
-				// AI.AI = new CircleAI(c++, 200);
-				// this.add(AI);
-				// //this.add(new Entity("player", 1, i, j, 48, 48, true));
-			// }
-		// }
+		for(var i = 0; i < 10*m; i += m){
+			for(var j = 0; j < 10*m; j += m){
+				var AI = new Entity("player", c*2+1, i, j, 48, 48, true);
+				//AI.AI = new CircleAI(c++, 200);
+				this.add(AI);
+				//this.add(new Entity("player", 1, i, j, 48, 48, true));
+			}
+		}
 		
 		var AI1 = new Entity("player", 5, 100, 100, 48, 48, true);
 		var AI2 = new Entity("player", 5, 100, 100, 48, 48, true);
@@ -45,6 +47,12 @@ class Game {
 		var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0);
 		axe.AI = new WeaponAI();
 		this.add(axe);
+
+		
+		var name = new Entity("player", 5, 100, 100, 48, 48, true);
+		this.add(name);
+		name.AI = new CircleAI(game.player.key, 200);
+
 		//this.vectorField();
 		// var AI = new Entity("player", 1, 350, -35, 48, 48, true);
 		// AI.AI = new CircleAI(0, 200);
@@ -59,34 +67,36 @@ class Game {
 			for(var j = 0; j < 50*m; j += m){
 				var AI = new Entity("empty", 1, i, j, 0, 0, false)
 				var AI = new Entity("empty", 1, i, j, 0, 0, false)
-				AI.AI = new CircleAI(0, 500); // AI to implement
+				AI.AI = new CircleAI(0, 200); // AI to implement
 				this.add(AI);
 			}
 		}
 	}
 
 	add(object){
-		object.key = this.objects.length + 1; // Player reserves the 0th space
-		this.objects.push(object);
-
+		object.key = this.objectIDNext; // Player reserves the 0th space
+		this.objectIDNext++;
+		this.objects[object.key] = object;
+		
 		this.entityList.add(object.key);
 	}
 
 	delete(object){ //todo
-
+		this.entityList.delete(object.key)
+		delete this.objects[object.key];
 	}
 
 	get(key){
 		if(key == 0){
-			return this.player.entity;
+			return this.player;
 		} else {
-			return this.objects[key - 1];
+			return this.objects[key];
 		}
 			
 	}
 
 	adjustAllSpriteDirections(){
-		this.player.entity.adjustSpriteDirection();
+		this.player.adjustSpriteDirection();
 		this.objects.forEach(e => e.adjustSpriteDirection());
 	}
 	

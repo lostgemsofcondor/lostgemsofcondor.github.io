@@ -9,6 +9,7 @@ var keyRight = "68";
 var keyRotateClockwise = "81";
 var keyRotateCounterClockwise = "69";
 var keyResetRotation = "82";
+var startDebug = "192";
 
 /// end constants
 
@@ -20,25 +21,27 @@ function mainGameLoop(){
 	handleMove();
 	
 	shootArrow();
+	handleDebug();
+
 	game.updateAI();
 	game.moveAllObjects();
 
 	game.adjustCameraToPlayer();
 }
 
-function handleClick(){
-	if(game.mouse.leftClickDownStart){
-		
-		var AI = new Entity("player", 5, game.mouse.point.positionX, game.mouse.point.positionY, 48, 48);
-		game.add(AI);
+function handleDebug(){
+	if(key.startDebug){
+		debug = true;
+		debugDrawing = true;
 	}
 }
 
 function shootArrow(){
 	if(game.mouse.leftClickDownStart){
 		
-		var arrow = new Entity("./sprites/bullets/arrows/arrowGreen.png", 5, game.mouse.point.positionX, game.mouse.point.positionY, 48, 48, true, Math.PI/4);
-		
+		var angle =  Math.atan2(game.mouse.point.positionY - game.player.positionY, game.mouse.point.positionX - game.player.positionX);
+		var arrow = new Entity("./sprites/bullets/arrows/arrowGreen.png", 10, game.player.positionX, game.player.positionY, 48, 48, true, angle + Math.PI/4);
+		arrow.AI = new BulletAI(arrow, angle, 100);
 		game.add(arrow);
 	}
 }
@@ -72,17 +75,17 @@ function handleMove(){
 	var angle = angles[key.right + key.left*2 + key.down*4 + key.up*8];
 	if(angle != null){
 		var angleInRad = angle*Math.PI/180;
-		game.player.entity.angle = angleInRad - game.angle;
-		//game.player.entity.angle = angleInRad - game.angle;
-		// game.player.positionY += Math.sin(game.player.entity.angle)*game.player.entity.speed;
-		// game.player.positionX += Math.cos(game.player.entity.angle)*game.player.entity.speed;
-		game.player.entity.moving = true;
-		game.player.entity.move();
+		game.player.angle = angleInRad - game.angle;
+		//game.player.angle = angleInRad - game.angle;
+		// game.player.positionY += Math.sin(game.player.angle)*game.player.speed;
+		// game.player.positionX += Math.cos(game.player.angle)*game.player.speed;
+		game.player.moving = true;
+		game.player.move();
 	} else {
-		game.player.entity.moving = false;
+		game.player.moving = false;
 	}
 
-	//game.player.entity.adjustSpriteDirection();	
+	//game.player.adjustSpriteDirection();	
 }
 
 function readKeys(){
@@ -94,4 +97,5 @@ function readKeys(){
 	key.rotateClockwise = keys.includes(keyRotateClockwise);
 	key.rotateCounterClockwise = keys.includes(keyRotateCounterClockwise);
 	key.resetRotation = keys.includes(keyResetRotation);
+	key.startDebug = keys.includes(startDebug);
 }
