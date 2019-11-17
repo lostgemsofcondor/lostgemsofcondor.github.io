@@ -23,24 +23,20 @@ class Game {
 		this.entityList.add(0); // Add player
 		
 		
-		this.add(new Entity("player", 1, 350, -35, 48, 48, true));
+		new Enemy("player", 1, 350, -35, 48, 48, true);
 		var m = 35;
-		var c = 0;
 		for(var i = 0; i < 10*m; i += m){
 			for(var j = 0; j < 10*m; j += m){
-				var AI = new Entity("player", c*2+1, i, j, 48, 48, true);
+				new Enemy("player", 1, i, j, 48, 48, true);
 				//AI.AI = new CircleAI(c++, 200);
-				this.add(AI);
+				//this.add(AI);
 				//this.add(new Entity("player", 1, i, j, 48, 48, true));
 			}
 		}
 		
-		var AI1 = new Entity("player", 5, 100, 100, 48, 48, true);
-		var AI2 = new Entity("player", 5, 100, 100, 48, 48, true);
-		var AI3 = new Entity("player", 5, 100, 100, 48, 48, true);
-		this.add(AI1);
-		this.add(AI2);
-		this.add(AI3);
+		var AI1 = new Enemy("player", 5, 100, 100, 48, 48, true);
+		var AI2 = new Enemy("player", 5, 100, 100, 48, 48, true);
+		var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
 		AI1.AI = new CircleAI(AI2.key, 200);
 		AI2.AI = new CircleAI(AI3.key, 200);
 		AI3.AI = new CircleAI(AI1.key, 200);
@@ -81,7 +77,7 @@ class Game {
 		this.entityList.add(object.key);
 	}
 
-	delete(object){ //todo
+	delete(object){
 		this.entityList.delete(object.key)
 		delete this.objects[object.key];
 	}

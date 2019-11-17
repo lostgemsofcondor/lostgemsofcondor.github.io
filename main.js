@@ -95,7 +95,7 @@ function sleep(ms){
 }
 
 function gameLoop(){
-	mainGameLoop(game);
+	mainGameLoop();
 	redraw();
 	game.blockIO = false;
 }
@@ -112,7 +112,7 @@ function clearCanvas(){
 function draw(){
 	copyMap();
 	drawObjects();
-	//drawPlayer();
+
 	counter();
 	drawDebugThings();
 	addDebugText();
@@ -123,12 +123,6 @@ function drawObjects(){
 	game.entityList.list.forEach(o => {
 		addSprite(game.get(o.key).sprite);
 	});
-	//game.objects.forEach(e => addSprite(e.sprite));
-}
-
-
-function drawPlayer(){
-	addSprite(game.player.sprite);
 }
 
 function copyMap(){
