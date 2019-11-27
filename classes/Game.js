@@ -45,8 +45,7 @@ class Game {
 		this.add(axe);
 
 		
-		var name = new Entity("player", 5, 100, 100, 48, 48, true);
-		this.add(name);
+		var name = new Enemy("player", 5, 100, 100, 48, 48, true);
 		name.AI = new CircleAI(game.player.key, 200);
 
 		//this.vectorField();
@@ -119,4 +118,52 @@ class Game {
 			}
 		});
 	}
+
+	bulletCollisionDetection(){
+		var vert = -99999;
+		game.entityList.list.forEach(o => {
+			if(vert > o.vertical){
+				console.log("failed");
+			}
+			vert = o.vertical;
+		});
+		
+		// game.entityList.list and enemies is sorted here
+		// can do binary search
+
+		var enemies = this.getEnemies();
+		var bullets = this.getBullets();
+
+		bullets.forEach(b => {
+			enemies.forEach(e => {
+				if(b.collides(e)){
+					this.delete(b);
+					this.delete(e);
+				}
+			});
+		});
+
+	}
+
+	getEnemies(){
+		var enemies = [];
+		game.objects.forEach(e => {
+			if(e instanceof Enemy){
+				enemies.push(e);
+			}
+		});
+		return enemies;
+	}
+	
+	getBullets(){
+		var bullets = [];
+		game.objects.forEach(e => {
+			if(e instanceof Bullet){
+				bullets.push(e);
+			}
+		});
+		return bullets;
+	}
+
+
 }

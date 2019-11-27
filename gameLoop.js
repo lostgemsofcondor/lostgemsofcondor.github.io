@@ -16,17 +16,20 @@ var startDebug = "192";
 function mainGameLoop(){
 	game.blockIO = true; // gets set to false after redraw
 	game.gameTick++;
+	game.bulletCollisionDetection();
+	
 	readKeys();
 	handleRotate();
 	handleMove();
 	
 	shootArrow();
 	handleDebug();
-
+	
 	game.updateAI();
 	game.moveAllObjects();
-
+	
 	game.adjustCameraToPlayer();
+	//game.entityList.sort();
 }
 
 function handleDebug(){
@@ -40,9 +43,9 @@ function shootArrow(){
 	if(game.mouse.leftClickDownStart){
 		
 		var angle =  Math.atan2(game.mouse.point.positionY - game.player.positionY, game.mouse.point.positionX - game.player.positionX);
-		var arrow = new Entity("./sprites/bullets/arrows/arrowGreen.png", 10, game.player.positionX, game.player.positionY, 48, 48, true, angle + Math.PI/4);
+		var arrow = new Bullet("./sprites/bullets/arrows/arrowGreen.png", 10, game.player.positionX, game.player.positionY, 48, 48, true, angle + Math.PI/4);
 		arrow.AI = new BulletAI(arrow, angle, 100);
-		game.add(arrow);
+		// game.add(arrow);
 	}
 }
 

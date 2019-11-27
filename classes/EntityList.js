@@ -9,12 +9,7 @@ class EntityList {
     }
 
     delete(key){
-        // for(var i = 0; i < this.list.length; i++){
-        //     if(key == this.list[i].key){
-        //         delete this.list[i];
-        //         return true;
-        //     }
-        // }
+        // might be optimized with binary search on vertical
         Object.keys(this.list).forEach(i => {
             if(key == this.list[i].key){
                 delete this.list[i];
@@ -27,9 +22,6 @@ class EntityList {
             return a.getVertical() - b.getVertical();
         })
     }
-
-
-
 }
 
 class ObjectLink {
@@ -39,6 +31,7 @@ class ObjectLink {
         this.tickUpdated = tickUpdated;
     }
 
+    //only use for sorting
     getVertical(){
         if(this.tickUpdated >= game.gameTick){
             return this.vertical;
@@ -47,5 +40,4 @@ class ObjectLink {
         this.vertical = game.get(this.key).sprite.adjustYCord();
         return this.vertical;
     }
-
 }

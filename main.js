@@ -120,6 +120,7 @@ function draw(){
 
 function drawObjects(){
 	game.entityList.sort();
+	//sorting gets handled after all movement 
 	game.entityList.list.forEach(o => {
 		addSprite(game.get(o.key).sprite);
 	});

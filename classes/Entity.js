@@ -23,6 +23,8 @@ class Entity {
 
 	constructor(path, speed, x, y, width, height, moving = false, spriteDirection = null){
 		this.sprite = new Sprite(path, x, y, width, height, spriteDirection);
+		this.width = width;
+		this.height = height;
 		this.positionX = x;
 		this.positionY = y;
 		this.speed = speed;
@@ -89,7 +91,12 @@ class Entity {
 				this.positionX = newX;
 				this.positionY = newY;
 			}
-			
 		}
+	}
+
+	collides(e){
+		var d = Math.sqrt(Math.pow(this.positionX - e.positionX, 2) + Math.pow(this.positionY - e.positionY, 2));
+		
+		return d <= (this.width + e.width) / 2;
 	}
 }
