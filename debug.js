@@ -51,6 +51,7 @@ class DrawDebugThings {
 
 function drawDebugThings(){
 	if(!debugDrawing) return;
+	context.fillStyle = "#000000";
 	var drawDebugThings = new DrawDebugThings(debugLevel);
     drawDebugThings.drawPixel(0, 0);
     drawDebugThings.drawCircle(0, 0, 30);
@@ -95,6 +96,7 @@ class DebugInfo {
 
 function addDebugText(){
 	if(!debug) return;
+	context.fillStyle = "#000000";
 	var debugInfo = new DebugInfo(debugLevel);
 	debugInfo.add("fps: " + fps.toFixed(0), 1);
 	debugInfo.add("Width: " + canvas.width, 4);

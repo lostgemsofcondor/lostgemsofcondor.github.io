@@ -122,8 +122,26 @@ function drawObjects(){
 	game.entityList.sort();
 	//sorting gets handled after all movement 
 	game.entityList.list.forEach(o => {
-		addSprite(game.get(o.key).sprite);
+		var e = game.get(o.key);
+		addSprite(e.sprite);
+		if(e.drawHealth){
+			drawHealth(e);
+		}
+		
 	});
+}
+
+function drawHealth(e){
+	var x = e.sprite.adjustXCord() - e.sprite.width / 2;
+	var y = e.sprite.adjustYCord() + 3;
+	var width = e.sprite.width;
+	var height = 6;
+	context.fillStyle = "#00FF00";
+	context.fillRect(x, y, width, height);
+	
+	context.fillStyle = "#FF0000";
+	context.fillRect(x + width * e.health/e.maxHealth, y, width - width * e.health/e.maxHealth, height);
+	
 }
 
 function copyMap(){
@@ -157,7 +175,6 @@ function addSprite(sprite){
 	if(sprite.angle == null){
 		addToContext(sprite.getImg(), sprite.adjustXCordSprite(), sprite.adjustYCordSprite(), sprite.width, sprite.height);
 	} else {
-		
 		context.save();
 		context.translate(sprite.adjustXCord() , sprite.adjustYCord());
 		context.rotate(sprite.angle + game.angle);
@@ -242,9 +259,10 @@ function counter(){
 		seconds++;
 		
 	}
-		context.font = "60px Verdana,sans-serif";
-		context.fillText(fps.toFixed(0), 300, 50);
-		// context.fillText(seconds, 300, 50);
+	context.fillStyle = "#000000";
+	context.font = "60px Verdana,sans-serif";
+	context.fillText(fps.toFixed(0), 300, 50);
+	// context.fillText(seconds, 300, 50);
 }
 ///end temp
 

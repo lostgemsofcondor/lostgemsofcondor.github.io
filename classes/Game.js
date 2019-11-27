@@ -134,14 +134,27 @@ class Game {
 		var enemies = this.getEnemies();
 		var bullets = this.getBullets();
 
-		bullets.forEach(b => {
-			enemies.forEach(e => {
-				if(b.collides(e)){
-					this.delete(b);
-					this.delete(e);
+		for(var j = 0; j < bullets.length; j++){
+			for(var i = 0; i < enemies.length; i++){
+				if(bullets[j] && enemies[i] && bullets[j].collides(enemies[i])){
+					enemies[i].struck(bullets[j]);
+					this.delete(bullets[j]);
+					delete bullets[j];
+					j++
 				}
-			});
-		});
+			}
+			
+		}
+		
+		
+		// enemies.forEach(e => {
+			// bullets.forEach(b => {
+				// if(b.collides(e)){
+					// this.delete(b);
+					// this.delete(e);
+				// }
+			// });
+		// });
 
 	}
 
