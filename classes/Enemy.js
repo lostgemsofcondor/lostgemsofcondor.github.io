@@ -12,7 +12,9 @@ class Enemy extends Entity{
 	}
 	
 	struck(bullet){
-		this.health -= 25; 
+		var damage = 25;
+		var t = new Text(this.x, this.y, damage);
+		this.health -= damage; 
 		if(this.health <= 0){
 			this.die()
 		}

@@ -127,7 +127,11 @@ function drawObjects(){
 		if(e.drawHealth){
 			drawHealth(e);
 		}
-		
+	});
+	context.fillStyle = "#222222";
+	context.font = "bold 22px Stencil Std";
+	game.text.forEach(t => {
+		context.fillText(t.str, t.adjustXCord(), t.adjustYCord());
 	});
 }
 
@@ -221,33 +225,33 @@ function drawMap(){
 }
 
 ///temp
-var img = new Image();
-img.src = "./sprites/background/grassBasicDebug.png";
-var water = new Image();
-water.src = "./sprites/background/waterBasic.png";
-function drawGrass(){
-	var x = 0;
-	var y = 0;
-	var width = 96;
-	var height = 96;
-	var sum =0;
-	var sum2 =0;
-	for(var i = x; i <= x + width*30; i += width/2){
-		sum2++;
-		for(var j = y; j <= y + height*30; j += height/2){
-			// rotateAndPaintImage(img, 10, i, j, width, height);
-			if((i >= 96*4 && i <= 96*6 && j >= 96*3 && j <= 96*5) || (j >= 96*12 && j <= 96*14)){
-				mapContext.drawImage(water, i, j, width, height);
+// var img = new Image();
+// img.src = "./sprites/background/grassBasicDebug.png";
+// var water = new Image();
+// water.src = "./sprites/background/waterBasic.png";
+// function drawGrass(){
+	// var x = 0;
+	// var y = 0;
+	// var width = 96;
+	// var height = 96;
+	// var sum =0;
+	// var sum2 =0;
+	// for(var i = x; i <= x + width*30; i += width/2){
+		// sum2++;
+		// for(var j = y; j <= y + height*30; j += height/2){
+			// // rotateAndPaintImage(img, 10, i, j, width, height);
+			// if((i >= 96*4 && i <= 96*6 && j >= 96*3 && j <= 96*5) || (j >= 96*12 && j <= 96*14)){
+				// mapContext.drawImage(water, i, j, width, height);
 
-			} else {
+			// } else {
 
-				mapContext.drawImage(img, i, j, width, height);
-			}
-			sum++;
+				// mapContext.drawImage(img, i, j, width, height);
+			// }
+			// sum++;
 			
-		}
-	}
-}
+		// }
+	// }
+// }
 
 
 var count = 0;

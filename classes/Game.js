@@ -19,6 +19,8 @@ class Game {
 		this.objects = []; //does not include player
 		this.objectIDNext = 1;
 		this.entityList = new EntityList();
+		this.text = [];
+		this.textIDNext = 0;
 		this.map = new Map();
 		this.entityList.add(0); // Add player
 		
@@ -54,8 +56,7 @@ class Game {
 		// this.add(AI);
 		
 	}
-
-
+	
 	vectorField(){
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
@@ -80,16 +81,24 @@ class Game {
 		this.entityList.delete(object.key)
 		delete this.objects[object.key];
 	}
-
+	
 	get(key){
 		if(key == 0){
 			return this.player;
 		} else {
 			return this.objects[key];
 		}
-			
 	}
-
+	
+	addText(text){
+		text.key = this.textIDNext;
+		this.text[this.textIDNext++] = text;		
+	}
+	
+	deleteText(text){
+		delete this.text[text.key];
+	}
+	
 	adjustAllSpriteDirections(){
 		this.player.adjustSpriteDirection();
 		this.objects.forEach(e => e.adjustSpriteDirection());
@@ -178,5 +187,14 @@ class Game {
 		return bullets;
 	}
 
+	updateText(){
+		game.text.forEach(t => {
+			if(game.gameTick >= t.deathTick){
+				this.deleteText(t);
+			} else {
+				t.update();
+			}
+		})
+	}
 
 }

@@ -27,6 +27,7 @@ function mainGameLoop(){
 	
 	game.updateAI();
 	game.moveAllObjects();
+	game.updateText();
 	
 	game.adjustCameraToPlayer();
 	//game.entityList.sort();
