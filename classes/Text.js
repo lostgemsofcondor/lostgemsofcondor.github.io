@@ -1,11 +1,11 @@
 class Text extends Point {
-	constructor(x, y, str, life = 60){
+	constructor(x, y, str, life = 60, speed = 2){
 		super(x, y);
 		
 		this.str = str;
+		this.speed = speed;
 		this.deathTick = game.gameTick + life;
 		
-		this.speed = 1;
 		
 		game.addText(this);
 	}

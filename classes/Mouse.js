@@ -37,6 +37,9 @@ class Mouse {
 	
 	clickUpRight(){
 		this.rightClickDown = false;
-		
+	}
+	
+	move(x, y){
+		this.point.setCords(x, y);
 	}
 }

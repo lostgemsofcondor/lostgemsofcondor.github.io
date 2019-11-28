@@ -38,7 +38,7 @@ function startUp(){
 	resize();
 	window.addEventListener("mousedown", handelMouseDown);
 	window.addEventListener("mouseup", handelMouseUp);
-	//window.addEventListener("mousemove", handelMouseMove);
+	window.addEventListener("mousemove", handelMouseMove);
 	//window.addEventListener("keypress", keypress, false);
 	window.addEventListener("resize", resize);
 	
@@ -300,6 +300,13 @@ function handelMouseUp(){
 	if(event.button == 2){
 		game.mouse.clickUpRight();
 	}
+}
+
+function handelMouseMove(){
+	var canvasX = event.clientX;
+	var canvasY = event.clientY;
+	
+	game.mouse.move(canvasX, canvasY);
 }
 
 /*
