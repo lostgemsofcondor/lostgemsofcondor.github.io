@@ -32,7 +32,7 @@ class Entity {
 		this.moving = moving;
 		//this.adjustSpriteDirection();
 		this.key; //defined in adding to game
-		this.AI = new AI(this);
+		this.AI = new AI();
 	}
 
 	correctMod(a, b){

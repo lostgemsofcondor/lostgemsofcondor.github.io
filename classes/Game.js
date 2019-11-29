@@ -25,11 +25,16 @@ class Game {
 		this.entityList.add(0); // Add player
 		
 		
-		new Enemy("player", 1, 350, -35, 48, 48, true);
+		// new Enemy("player", 1, 350, -35, 48, 48, true);
 		var m = 35;
 		for(var i = 0; i < 10*m; i += m){
 			for(var j = 0; j < 10*m; j += m){
-				new Enemy("player", 1, i, j, 48, 48, true);
+				var e = new Enemy("player", 1, i, j, 48, 48, true);
+				e.AI = new CombineAI(
+				            new ShootAI(),
+				            new BuilderAI(3000, 6000,
+				             new CircleAI(0, 200, Math.random() > .5),
+							 new AI()));
 				//AI.AI = new CircleAI(c++, 200);
 				//this.add(AI);
 				//this.add(new Entity("player", 1, i, j, 48, 48, true));
@@ -47,8 +52,10 @@ class Game {
 		this.add(axe);
 
 		
-		var name = new Enemy("player", 5, 100, 100, 48, 48, true);
-		name.AI = new CircleAI(game.player.key, 200);
+		// var name = new Enemy("player", 5, 100, 100, 48, 48, true);
+		// name.AI = new BuilderAI(name, 5*60, 60,
+				             // new CircleAI(0, 100),
+							 // new AI(name));
 
 		//this.vectorField();
 		// var AI = new Entity("player", 1, 350, -35, 48, 48, true);
@@ -61,10 +68,9 @@ class Game {
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
 			for(var j = 0; j < 50*m; j += m){
-				var AI = new Entity("empty", 1, i, j, 0, 0, false)
-				var AI = new Entity("empty", 1, i, j, 0, 0, false)
-				AI.AI = new CircleAI(0, 200); // AI to implement
-				this.add(AI);
+				var vector = new Entity("empty", 1, i, j, 0, 0, false)
+				vector.AI = new CircleAI(0, 100, false); // AI to implement
+				this.add(vector);
 			}
 		}
 	}
@@ -129,13 +135,13 @@ class Game {
 	}
 
 	bulletCollisionDetection(){
-		var vert = -99999;
-		game.entityList.list.forEach(o => {
-			if(vert > o.vertical){
-				console.log("failed");
-			}
-			vert = o.vertical;
-		});
+		// var vert = -99999;
+		// game.entityList.list.forEach(o => {
+			// if(vert > o.vertical){
+				// console.log("failed");
+			// }
+			// vert = o.vertical;
+		// });
 		
 		// game.entityList.list and enemies is sorted here
 		// can do binary search
@@ -145,7 +151,7 @@ class Game {
 
 		for(var j = 0; j < bullets.length; j++){
 			for(var i = 0; i < enemies.length; i++){
-				if(bullets[j] && enemies[i] && bullets[j].collides(enemies[i])){
+				if(bullets[j] && enemies[i] && bullets[j].friendly && bullets[j].collides(enemies[i])){
 					enemies[i].struck(bullets[j]);
 					this.delete(bullets[j]);
 					delete bullets[j];

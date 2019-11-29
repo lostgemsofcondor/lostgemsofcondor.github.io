@@ -218,8 +218,8 @@ function loadSprite(url) {
 
 function drawMap(){
 	
-	mapCanvas.width = 3000;
-	mapCanvas.height = 3000;
+	mapCanvas.width = 5000;
+	mapCanvas.height = 5000;
 	game.map.currentMap();
 	//drawGrass();
 }
