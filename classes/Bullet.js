@@ -1,6 +1,6 @@
 class Bullet extends Entity{
 	constructor(path, speed, x, y, width, height, moving = false, angle, noCollsion = true, friendly = true){
-		super(path, speed, x, y, width, height, moving, angle);
+		super(path, speed, x, y, width, height, moving, angle, false);
 		this.noCollsion = noCollsion;
 		this.friendly = friendly;
 

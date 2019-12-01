@@ -45,7 +45,9 @@ class DrawDebugThings {
 	}
 
 	direction(entity){
-		this.drawLine(entity.positionX, entity.positionY, entity.angle + game.angle, 40);
+		if(entity.moving || debugLevel >= 4){
+			this.drawLine(entity.positionX, entity.positionY, entity.angle + game.angle, 40);
+		}
 	}
 }
 
@@ -109,8 +111,8 @@ function addDebugText(){
 	debugInfo.add("adjust " + adjust, 4);
 	debugInfo.add("Keys Pressed " + getKeys(), 3);
 	debugInfo.add("Mouse clicked " + getMouse(), 3);
-	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 4);
-	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 4);
+	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 2);
+	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 2);
 	debugInfo.add("Player Angle " + game.player.angle, 4);
 	debugInfo.add("Player Angle Absolute " + game.player.angleAbsolute, 4);
 	debugInfo.add("Game Angle " + game.angle, 4);

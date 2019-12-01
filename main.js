@@ -22,11 +22,11 @@ var adjust = 0;
 
 var debug = false;
 var debugDrawing = false;
-var debugLevel = 4;
+var debugLevel = 3;
 var adjustment = 1/32;
 
 var rotateSpeed = 2;
-var playerSpeed = 15;
+var playerSpeed = 5;
 
 /// end constants
 
@@ -176,7 +176,7 @@ function resize(){
 	
 
 function addSprite(sprite){
-	if(sprite.angle == null){
+	if(sprite.rotates){
 		addToContext(sprite.getImg(), sprite.adjustXCordSprite(), sprite.adjustYCordSprite(), sprite.width, sprite.height);
 	} else {
 		context.save();

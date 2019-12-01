@@ -21,8 +21,8 @@ class Entity {
 		this.adjustSpriteDirection();
 	}
 
-	constructor(path, speed, x, y, width, height, moving = false, spriteDirection = null){
-		this.sprite = new Sprite(path, x, y, width, height, spriteDirection);
+	constructor(path, speed, x, y, width, height, moving = false, spriteDirection = null, rotates = true){
+		this.sprite = new Sprite(path, x, y, width, height, spriteDirection, rotates);
 		this.width = width;
 		this.height = height;
 		this.positionX = x;
@@ -30,9 +30,10 @@ class Entity {
 		this.speed = speed;
 		this.angle = Math.random() * Math.PI*2;
 		this.moving = moving;
+		this.solid = false;
 		//this.adjustSpriteDirection();
 		this.key; //defined in adding to game
-		this.AI = new AI();
+		//this.AI = new AI();
 	}
 
 	correctMod(a, b){
@@ -92,6 +93,31 @@ class Entity {
 				this.positionY = newY;
 			}
 		}
+		
+		if(!this.noCollsion){
+			this.solidCollision();
+		}
+	}
+	
+	solidCollision(){
+		game.getSolids().forEach(e => {
+			if(this.strictCollides(e)){
+				var d = Math.sqrt(Math.pow(this.positionX - e.positionX, 2) + Math.pow(this.positionY - e.positionY, 2));
+				if(d != 0){
+					var r = e.width/2
+					var newX = e.positionX + r * (this.positionX - e.positionX) / d;
+					var newY = e.positionY + r * (this.positionY - e.positionY) / d;
+					this.positionX = newX;
+					this.positionY = newY;
+				}
+			}
+		})
+	}
+
+	strictCollides(e){
+		var d = Math.sqrt(Math.pow(this.positionX - e.positionX, 2) + Math.pow(this.positionY - e.positionY, 2));
+		
+		return d <= e.width / 2;
 	}
 
 	collides(e){

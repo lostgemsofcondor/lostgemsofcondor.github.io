@@ -1,6 +1,6 @@
 class Enemy extends Entity{
-	constructor(path, speed, x, y, width, height, moving = false){
-		super(path, speed, x, y, width, height, moving);
+	constructor(path, speed, x, y, width, height, moving = false, spriteDirection = null, rotates = true){
+		super(path, speed, x, y, width, height, moving, spriteDirection, rotates);
 
 		game.add(this);
 		this.maxHealth = 100;

@@ -41,13 +41,21 @@ class Game {
 			}
 		}
 		
+		var m = 100;
+		for(var i = 500; i < 500 + 5*m; i += m){
+			for(var j = 800; j < 800 + 5*m; j += m){
+				var tree = new Enemy("./sprites/trees/tree.png", 0, i, j, 60, 60, false, 0, true);
+				tree.solid = true;
+			}
+		}
+		
 		var AI1 = new Enemy("player", 5, 100, 100, 48, 48, true);
 		var AI2 = new Enemy("player", 5, 100, 100, 48, 48, true);
 		var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
 		AI1.AI = new CircleAI(AI2.key, 200);
 		AI2.AI = new CircleAI(AI3.key, 200);
 		AI3.AI = new CircleAI(AI1.key, 200);
-		var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0);
+		var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0, false);
 		axe.AI = new WeaponAI();
 		this.add(axe);
 
@@ -191,6 +199,16 @@ class Game {
 			}
 		});
 		return bullets;
+	}
+	
+	getSolids(){
+		var solids = [];
+		game.objects.forEach(e => {
+			if(e.solid){
+				solids.push(e);
+			}
+		});
+		return solids;
 	}
 
 	updateText(){

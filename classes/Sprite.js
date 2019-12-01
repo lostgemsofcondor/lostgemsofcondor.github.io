@@ -1,11 +1,12 @@
 class Sprite extends Point {
-	constructor(path, x, y, width, height, angle = null){
+	constructor(path, x, y, width, height, angle = null, rotates){
 		super(x, y);
 		//this.x = x;
 		//this.y = y;
 		this.width = width;
 		this.height = height;
 		this.angle = angle;
+		this.rotates = rotates;
 		if(this.angle === null){
 			this.turn("right");
 			this.images = {}
