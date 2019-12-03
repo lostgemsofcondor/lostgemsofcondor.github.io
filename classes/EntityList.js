@@ -4,7 +4,7 @@ class EntityList {
     }
 
     add(key){
-        var objectLink = new ObjectLink(key, null, -1);
+        var objectLink = new ObjectLink(key);
         this.list.push(objectLink);
     }
 
@@ -25,10 +25,10 @@ class EntityList {
 }
 
 class ObjectLink {
-    constructor(key, vertical, tickUpdated){
+    constructor(key){
         this.key = key;
-        this.vertical = vertical;
-        this.tickUpdated = tickUpdated;
+        this.vertical = null;
+        this.tickUpdated = -1;
     }
 
     //only use for sorting

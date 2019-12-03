@@ -24,6 +24,8 @@ class Game {
 		this.map = new Map();
 		this.entityList.add(0); // Add player
 		
+        this.solids = null;
+        this.solidsTickUpdated = -1;
 		
 		// new Enemy("player", 1, 350, -35, 48, 48, true);
 		var m = 35;
@@ -183,42 +185,51 @@ class Game {
 
 	getEnemies(){
 		var enemies = [];
-		game.objects.forEach(e => {
+		for(var i in game.objects){
+			var e = game.objects[i];
 			if(e instanceof Enemy){
 				enemies.push(e);
 			}
-		});
+		}
 		return enemies;
 	}
 	
 	getBullets(){
 		var bullets = [];
-		game.objects.forEach(e => {
+		for(var i in game.objects){
+			var e = game.objects[i];
 			if(e instanceof Bullet){
 				bullets.push(e);
 			}
-		});
+		}
 		return bullets;
 	}
-	
-	getSolids(){
-		var solids = [];
-		game.objects.forEach(e => {
+		
+    getSolids(){
+        if(this.tickUpdated >= game.gameTick){
+			return this.solids;
+		}
+		
+		this.solids = [];
+		for(var i in game.objects){
+			var e = game.objects[i];
 			if(e.solid){
-				solids.push(e);
+				this.solids.push(e);
 			}
-		});
-		return solids;
-	}
+		}
+		this.tickUpdated = game.gameTick;
+        return this.solids;
+    }
 
 	updateText(){
-		game.text.forEach(t => {
+		for(var i in game.text){
+			var t = game.text[i];
 			if(game.gameTick >= t.deathTick){
 				this.deleteText(t);
 			} else {
 				t.update();
 			}
-		})
+		}
 	}
 
 }

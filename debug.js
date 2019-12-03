@@ -35,7 +35,7 @@ class DrawDebugThings {
 	}
 
 	mark(entity){
-		this.drawPixel(entity.positionX, entity.positionY);
+		//this.drawPixel(entity.positionX, entity.positionY);
 		this.drawCircle(entity.positionX, entity.positionY, entity.sprite.width/2);
 	}
 

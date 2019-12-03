@@ -1,5 +1,3 @@
-
-
 var canvas = document.getElementById("mainCanvas");
 var convasDiv = document.getElementById("mainCanvasDiv")
 var context = canvas.getContext("2d");
@@ -22,7 +20,7 @@ var adjust = 0;
 
 var debug = false;
 var debugDrawing = false;
-var debugLevel = 3;
+var debugLevel = 5;
 var adjustment = 1/32;
 
 var rotateSpeed = 2;
