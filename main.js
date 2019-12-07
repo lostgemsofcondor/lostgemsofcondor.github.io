@@ -128,9 +128,10 @@ function drawObjects(){
 	});
 	context.fillStyle = "#222222";
 	context.font = "bold 22px Stencil Std";
-	game.text.forEach(t => {
+	for(var i in game.text){
+		var t = game.text[i];
 		context.fillText(t.str, t.adjustXCord(), t.adjustYCord());
-	});
+	}
 }
 
 function drawHealth(e){

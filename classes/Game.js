@@ -117,7 +117,9 @@ class Game {
 	
 	adjustAllSpriteDirections(){
 		this.player.adjustSpriteDirection();
-		this.objects.forEach(e => e.adjustSpriteDirection());
+		for(var i in game.objects){
+			this.objects[i].adjustSpriteDirection();
+		}
 	}
 	
 	adjustCameraToPlayer(){
@@ -133,15 +135,20 @@ class Game {
 	}
 
 	moveAllObjects(){
-		game.objects.forEach(e => e.move());
+		
+		for(var i in game.objects){
+			this.objects[i].move();
+		}
 	}
 
 	updateAI(){
-		game.objects.forEach(e => {
+		
+		for(var i in game.objects){
+			var e = this.objects[i];
 			if(e.AI){
 				e.AI.calculate(e);
 			}
-		});
+		}
 	}
 
 	bulletCollisionDetection(){

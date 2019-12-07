@@ -10,11 +10,12 @@ class EntityList {
 
     delete(key){
         // might be optimized with binary search on vertical
-        Object.keys(this.list).forEach(i => {
+        for(var i = 0; i < this.list.length; i++){
             if(key == this.list[i].key){
-                delete this.list[i];
+                return this.list.splice(i, 1);
             }
-        });
+        }
+        console.log("could not delete key: " + key)
     }
 
     sort(){
