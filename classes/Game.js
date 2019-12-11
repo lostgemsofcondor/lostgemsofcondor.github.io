@@ -3,7 +3,7 @@ class Game {
 		game = this;
 		this.keyMap = {};
 		this.mouse = new Mouse();
-		this.player = new Player(playerSpeed);
+		this.player = new Player().setImage("player").setSpeed(playerSpeed).setDimensions(48, 48);
 		this.width;
 		this.height;
 		this.cameraX = 0;
@@ -31,7 +31,7 @@ class Game {
 		var m = 35;
 		for(var i = 0; i < 10*m; i += m){
 			for(var j = 0; j < 10*m; j += m){
-				var e = new Enemy("player", 1, i, j, 48, 48, true);
+				var e = new Enemy(i, j).setImage("player").setDimensions(48, 48).setMoving(true).setSpeed(1);
 				e.AI = new CombineAI(
 				            new ShootAI(),
 				            new BuilderAI(3000, 6000,
@@ -46,20 +46,24 @@ class Game {
 		var m = 100;
 		for(var i = 500; i < 500 + 5*m; i += m){
 			for(var j = 800; j < 800 + 5*m; j += m){
-				var tree = new Enemy("./sprites/trees/tree.png", 0, i, j, 60, 60, false, 0, true);
-				tree.solid = true;
+				//var tree = new Enemy("./sprites/trees/tree.png", 0, i, j, 60, 60, false, 0, true);
+				var tree = new Enemy(i, j).setImage("./sprites/trees/tree.png", 0).setDimensions(60, 60).setSolid(true);
 			}
 		}
 		
-		var AI1 = new Enemy("player", 5, 100, 100, 48, 48, true);
-		var AI2 = new Enemy("player", 5, 100, 100, 48, 48, true);
-		var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
+		// var AI1 = new Enemy("player", 5, 100, 100, 48, 48, true);
+		// var AI2 = new Enemy("player", 5, 100, 100, 48, 48, true);
+		// var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
+
+		var AI1 = new Enemy(100, 100).setImage("player").setDimensions(48, 48).setMoving(true).setSpeed(5);
+		var AI2 = new Enemy(100, 100).setImage("player").setDimensions(48, 48).setMoving(true).setSpeed(5);
+		var AI3 = new Enemy(100, 100).setImage("player").setDimensions(48, 48).setMoving(true).setSpeed(5);
 		AI1.AI = new CircleAI(AI2.key, 200);
 		AI2.AI = new CircleAI(AI3.key, 200);
 		AI3.AI = new CircleAI(AI1.key, 200);
-		var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0, false);
-		axe.AI = new WeaponAI();
-		this.add(axe);
+		// var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0, false);
+		// axe.AI = new WeaponAI();
+		// this.add(axe);
 
 		
 		// var name = new Enemy("player", 5, 100, 100, 48, 48, true);
@@ -78,7 +82,7 @@ class Game {
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
 			for(var j = 0; j < 50*m; j += m){
-				var vector = new Entity("empty", 1, i, j, 0, 0, false)
+				var vector = new Entity("empty", 1, i, j, 0, 0, false);
 				vector.AI = new CircleAI(0, 100, false); // AI to implement
 				this.add(vector);
 			}

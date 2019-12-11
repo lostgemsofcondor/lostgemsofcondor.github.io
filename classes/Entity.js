@@ -21,21 +21,66 @@ class Entity {
 		this.adjustSpriteDirection();
 	}
 
-	constructor(path, speed, x, y, width, height, moving = false, spriteDirection = null, rotates = true){
-		this.sprite = new Sprite(path, x, y, width, height, spriteDirection, rotates);
-		this.width = width;
-		this.height = height;
+	constructor(x, y){
+		this.sprite = new Sprite(x, y);
 		this.positionX = x;
 		this.positionY = y;
-		this.speed = speed;
+		this.speed = 1;
 		this.angle = Math.random() * Math.PI*2;
-		this.moving = moving;
+		this.moving = false;
 		this.solid = false;
-		//this.adjustSpriteDirection();
+		this.setRotates(true);
+		
 		this.key; //defined in adding to game
-		//this.AI = new AI();
+		
 	}
 
+	//builder functions
+	setSpeed(speed){
+		this.speed = speed;
+		return this;
+	}
+
+	setAngle(angle){
+		this.angle = angle;
+		return this;
+	}
+
+	
+	setMoving(moving){
+		this.moving = moving;
+		return this;
+	}
+	
+	setSolid(solid){
+		this.solid = solid;
+		return this;
+	}
+
+	setDimensions(width, height){
+		this.sprite.setDimensions(width, height);
+		this.width = width;
+		this.height = height;
+		return this;
+	}
+
+	setRotates(rotates){
+		this.sprite.setRotates(rotates);
+		this.rotates = rotates;
+		return this;
+	}
+
+	setImage(path, spriteDirection){
+		this.sprite.setImage(path, spriteDirection);
+		return this;
+	}
+
+	setSpriteDirection(spriteDirection){
+		this.sprite.setAngle(spriteDirection);
+		return this;
+	}
+
+	//logic functions
 	correctMod(a, b){
 		return ((a % b) + b) % b;
 	}
@@ -43,13 +88,13 @@ class Entity {
 	adjustSpriteDirection(){
 		var angle = this.correctMod((this.angleAbsolute + game.angle)/Math.PI*180, 360) ;
 		if(angle >= 315 || angle <= 45){
-			this.sprite.turn("right");
+			this.sprite.setDirection("right");
 		} else if(angle > 45 && angle < 135){
-			this.sprite.turn("down");
+			this.sprite.setDirection("down");
 		} else if(angle >= 135 && angle <= 225){
-			this.sprite.turn("left");
+			this.sprite.setDirection("left");
 		} else {
-			this.sprite.turn("up");
+			this.sprite.setDirection("up");
 		}
 	}
 

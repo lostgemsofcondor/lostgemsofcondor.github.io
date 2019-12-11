@@ -1,14 +1,35 @@
 class Sprite extends Point {
-	constructor(path, x, y, width, height, angle = null, rotates){
+	constructor(x, y){
 		super(x, y);
-		//this.x = x;
-		//this.y = y;
+	}
+
+	//builder functions
+	setDimensions(width, height){
 		this.width = width;
 		this.height = height;
+		return this;
+	}
+
+	setAngle(angle){
 		this.angle = angle;
+		return this;
+	}
+
+	setRotates(rotates){
 		this.rotates = rotates;
+		return this;
+	}
+	
+	setDirection(direction){
+		this.direction = direction;
+		return this;
+	}
+	
+	//logic functions
+	setImage(path, angle = null){
+		this.angle = angle;
 		if(this.angle === null){
-			this.turn("right");
+			this.setDirection("right");
 			this.images = {}
 			this.images.up = new Image();
 			this.images.up.src = "./sprites/" + path + "/up.png";
@@ -22,19 +43,16 @@ class Sprite extends Point {
 			this.image = new Image();
 			this.image.src = path;
 		}
-
+		return this;
 	}
-	
+
+
 	getImg(){
 		if(this.angle === null){
 			return this.images[this.direction];
 		} else {
 			return this.image
 		}
-	}
-	
-	turn(direction){
-		this.direction = direction;
 	}
 
 	adjustXCordSprite(){

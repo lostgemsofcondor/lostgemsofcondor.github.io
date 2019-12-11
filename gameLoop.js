@@ -44,7 +44,8 @@ function shootArrow(){
 	if(game.mouse.leftClickDownStart || (debug && game.mouse.leftClickDown)){
 		
 		var angle =  Math.atan2(game.mouse.point.positionY - game.player.positionY, game.mouse.point.positionX - game.player.positionX);
-		var arrow = new Bullet("./sprites/bullets/arrows/arrowGreen.png", 10, game.player.positionX, game.player.positionY, 48, 48, true, angle + Math.PI/4, Math.random() > .3);
+		// var arrow = new Bullet("./sprites/bullets/arrows/arrowGreen.png", 10, game.player.positionX, game.player.positionY, 48, 48, true, angle + Math.PI/4, Math.random() > .3);
+		var arrow = new Bullet(game.player.positionX, game.player.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4).setSpeed(10).setDimensions(48, 48).setRotates(false);
 		arrow.AI = new BulletAI(arrow, angle, 100);
 		// game.add(arrow);
 	}

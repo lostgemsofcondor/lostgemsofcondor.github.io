@@ -24,7 +24,7 @@ var debugLevel = 5;
 var adjustment = 1/32;
 
 var rotateSpeed = 2;
-var playerSpeed = 5;
+var playerSpeed = 15;
 
 /// end constants
 

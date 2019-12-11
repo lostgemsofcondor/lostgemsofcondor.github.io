@@ -1,12 +1,25 @@
 class Bullet extends Entity{
-	constructor(path, speed, x, y, width, height, moving = false, angle, noCollsion = true, friendly = true){
-		super(path, speed, x, y, width, height, moving, angle, false);
-		this.noCollsion = noCollsion;
-		this.friendly = friendly;
+	constructor(x, y){
+		super(x, y);
+		this.moving = true;
+		this.noCollsion = true;
+		this.friendly = true;
 
 		game.add(this);
 		// this.key = 0; // for game class
 		// this.positionX = 0;
 		// this.positionY = 0;
 	}
+
+	
+	setFriendly(friendly){
+		this.friendly = friendly;
+		return this;
+	}
+
+	setNoCollsion(noCollsion){
+		this.noCollsion = noCollsion;
+		return this;
+	}
+
 }

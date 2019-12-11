@@ -7,11 +7,11 @@ class ShootAI {
 	calculate(entity){
 		if((game.gameTick + this.offset) % (60*20) == 0){
 			var angle =  Math.atan2(game.player.positionY - entity.positionY, game.player.positionX - entity.positionX);
-			var arrow = new Bullet("./sprites/bullets/arrows/arrowGreen.png", 10, entity.positionX, entity.positionY, 48, 48, true, angle + Math.PI/4, Math.random() > .3, false);
+			var arrow = new Bullet(entity.positionX, entity.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4).setSpeed(10).setDimensions(48, 48).setRotates(false).setFriendly(false);
 			arrow.AI = new BulletAI(arrow, angle, 100);
-			var arrow2 = new Bullet("./sprites/bullets/arrows/arrowGreen.png", 10, entity.positionX, entity.positionY, 48, 48, true, angle + Math.PI/4 + Math.PI/16, Math.random() > .3, false);
+			var arrow2 = new Bullet(entity.positionX, entity.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4 + Math.PI/16).setSpeed(10).setDimensions(48, 48).setRotates(false).setFriendly(false);
 			arrow2.AI = new BulletAI(arrow2, angle + Math.PI/16, 100);
-			var arrow3 = new Bullet("./sprites/bullets/arrows/arrowGreen.png", 10, entity.positionX, entity.positionY, 48, 48, true, angle + Math.PI/4 - Math.PI/16, Math.random() > .3, false);
+			var arrow3 = new Bullet(entity.positionX, entity.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4 - Math.PI/16).setSpeed(10).setDimensions(48, 48).setRotates(false).setFriendly(false);
 			arrow3.AI = new BulletAI(arrow3, angle - Math.PI/16, 100);
 		}
 	}
