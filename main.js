@@ -2,8 +2,9 @@ var canvas = document.getElementById("mainCanvas");
 var convasDiv = document.getElementById("mainCanvasDiv")
 var context = canvas.getContext("2d");
 
-var mapCanvas = document.getElementById("mapCanvas");
-var mapConvasDiv = document.getElementById("mapCanvasDiv")
+var mapCanvas = addCanvas();
+// var mapCanvas = document.getElementById("mapCanvas");
+// var mapConvasDiv = document.getElementById("mapCanvasDiv")
 var mapContext = mapCanvas.getContext("2d");
 
 var drawTime = 0;
@@ -34,6 +35,7 @@ window.onload = startUp;
 
 function startUp(){
 	resize();
+	drawMap();
 	window.addEventListener("mousedown", handelMouseDown);
 	window.addEventListener("mouseup", handelMouseUp);
 	window.addEventListener("mousemove", handelMouseMove);
@@ -166,8 +168,6 @@ function copyMap(){
 function resize(){
 	canvas.width = game.width = convasDiv.offsetWidth;
 	canvas.height = game.height = convasDiv.offsetHeight;
-	
-	drawMap();
 	
 	//blueprint.draw();
 	draw();
@@ -308,6 +308,10 @@ function handelMouseMove(){
 	game.mouse.move(canvasX, canvasY);
 }
 
+function addCanvas(){
+	var canvas = document.createElement("canvas");
+	return canvas;
+}
 /*
 var num = 0;
 class t {
