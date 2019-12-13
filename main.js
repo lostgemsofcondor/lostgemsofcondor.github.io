@@ -33,9 +33,11 @@ var game = new Game();
 //game.keyMap = {};
 window.onload = startUp;
 
+var p = new Perlin();
 function startUp(){
 	resize();
 	drawMap();
+
 	window.addEventListener("mousedown", handelMouseDown);
 	window.addEventListener("mouseup", handelMouseUp);
 	window.addEventListener("mousemove", handelMouseMove);
@@ -52,6 +54,10 @@ async function main(){
 		var fast = false;
 		var start = performance.now();
 		gameLoop();
+
+		addToContext(p.canvas, 0, 0);
+
+
 		await sleep(0)
 		drawTime = performance.now() - start;
 		if(drawTime < 1/(fpsMax) * 1000){

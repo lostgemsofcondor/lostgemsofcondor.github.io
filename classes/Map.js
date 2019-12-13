@@ -34,7 +34,7 @@ class Map {
 			var line = [];
 			for(var j = y; j <= y + height*100; j += height){
 				// rotateAndPaintImage(img, 10, i, j, width, height);
-				if((i >= this.tileSize*4 && i <= this.tileSize*8 && j >= this.tileSize*3 && j <= this.tileSize*30) || (i >= this.tileSize*2 && j >= this.tileSize*15 && j <= this.tileSize*20)){
+				if(p.perlin(i/width, j/height) < .3){
 					line.push(false);
 					this.water.draw(i, j);
 					// mapContext.drawImage(water, i, j, width, height);
