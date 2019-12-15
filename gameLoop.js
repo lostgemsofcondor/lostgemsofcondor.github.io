@@ -30,6 +30,7 @@ function mainGameLoop(){
 	game.updateText();
 	
 	game.adjustCameraToPlayer();
+	game.map.adjustChunks();
 	//game.entityList.sort();
 }
 
@@ -72,8 +73,20 @@ function handleRotate(){
 			game.adjustAllSpriteDirections();
 		}
 	}
-}
 
+	//temp
+	var x = game.player.positionX;
+	var y = game.player.positionY;
+	if(Math.floor(x / 48) != tempX || Math.floor(y / 48) != tempY){
+		//game.map.currentMap();
+		tempX = Math.floor(x / 48);
+		tempY = Math.floor(y / 48);
+	}
+
+	//end temp
+}
+var tempX = 0;
+var tempY = 0;
 function handleMove(){
 	
 	var angles = [null, 0, 180, null, 90, 45, 135, null, 270, 315, 225, null, null, null, null, null]; // udlr as binary

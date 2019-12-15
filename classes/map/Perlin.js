@@ -1,9 +1,9 @@
-class Perlin{
+class Perlin {
 	constructor(seed = 10){
-        this.canvas = addCanvas();
-        this.context = this.canvas.getContext("2d");
-        this.canvas.width = 3000;
-        this.canvas.height = 3000;
+        // this.canvas = addCanvas();
+        // this.context = this.canvas.getContext("2d");
+        // this.canvas.width = 3000;
+        // this.canvas.height = 3000;
 
         this.bigPrime = 593441843;
         this.bigPrime2 = 674506081;
@@ -21,7 +21,17 @@ class Perlin{
         return;
         for(var i = -200; i < 200; i++){
             for(var j = -200; j < 200; j++){
-                this.drawPixel(i+200, j+200, this.perlin(i,j));
+                this.drawPixel(i+200, j+200, this.perlinRec(i, j, [35], [1]));
+            }
+        }
+    }
+
+    async temp(){
+        for(var i = 0; i < 50; i++){
+            for(var j = 0; j < 50; j++){
+                p.drawPixel(i+200, j+200, p.perlinRec(i, j, [35], [1]));
+                // setTimeout(function (){
+                // })
             }
         }
     }
@@ -32,9 +42,6 @@ class Perlin{
     
     // Computes the dot product of the distance and gradient vectors.
     dotGridGradient(ix, iy, x, y) {
-    
-        // Precomputed (or otherwise) gradient vectors at each grid node
-        // extern float Gradient[IYMAX][IXMAX][2];
     
         // Compute the distance vector
         var dx = x - ix;
@@ -48,7 +55,18 @@ class Perlin{
         return (6*(x**5)) - (15*(x**4)) +(10*(x**3));
     }
 
-    perlin(x, y, seed){
+    perlinRec(x, y, levels, weights){
+        var len = levels.length;
+        if(len <= 0){
+            return 0;
+        } else {
+            this.gridSize = levels.pop();
+            var weight = weights.pop();
+            return this.perlin(x, y)*weight + this.perlinRec(x, y, levels, weights);
+        }
+    }
+
+    perlin(x, y){
         x = x / this.gridSize;
         y = y / this.gridSize;
 
@@ -71,18 +89,15 @@ class Perlin{
         var ix1 = this.lerp(n0, n1, sx);
     
         return (this.lerp(ix0, ix1, sy)+1)/2;
-
-        return (this.hash(x, y))*255/4
     }
 
 
     hash(x, y){
-        var temp = ((x * this.bigPrime) % this.billion + (y * this.bigPrime2) % this.billion) / this.billion;
         var v1 = x;
         var v0 = y;
         
         var sum = 0;
-        for (var i = 0; i < 32; i++) {                         /* basic cycle start */
+        for (var i = 0; i < 32; i++) {
             sum += this.seed;
             v0 += ((v1<<4) + this.bigPrime) ^ (v1 + sum) ^ ((v1>>5) + this.bigPrime2);
             v1 += ((v0<<4) + this.bigPrime) ^ (v0 + sum) ^ ((v0>>5) + this.bigPrime2);

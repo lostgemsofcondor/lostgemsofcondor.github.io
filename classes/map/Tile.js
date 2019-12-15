@@ -6,7 +6,7 @@ class Tile {
         this.height = height;
     }
 
-    draw(i, j){
+    draw(mapContext, i, j){
         
         mapContext.drawImage(this.img, i - (this.width - game.map.tileSize)/2, j - (this.height - game.map.tileSize)/2, this.width, this.height);
     }

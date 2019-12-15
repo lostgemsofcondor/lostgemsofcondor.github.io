@@ -75,6 +75,8 @@ function drawDebugThings(){
 		drawDebugThings.direction(game.objects[i]);
 		drawDebugThings.mark(game.objects[i]);
 	});
+
+	drawDebugThings.drawCircle(game.mouse.point.x, game.mouse.point.y, 10);
 }
 
 class DebugInfo {
@@ -119,6 +121,8 @@ function addDebugText(){
 	debugInfo.add("Game cameraX " + game.cameraX, 4);
 	debugInfo.add("Game cameraY " + game.cameraY, 4);
 	debugInfo.add("Game tick " + game.gameTick, 4);
+	debugInfo.add("Chunk X " + game.map.currentChunkX(), 4);
+	debugInfo.add("Chunk Y " + game.map.currentChunkY(), 4);
 }
 
 function getKeys(){

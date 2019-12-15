@@ -108,31 +108,32 @@ class Entity {
 			this.positionX = newX;
 			this.positionY = newY;
 		} else {
-			var newMapX = Math.floor(newX / game.map.tileSize);
-			var newMapY = Math.floor(newY / game.map.tileSize);
-			var mapX = Math.floor(this.positionX / game.map.tileSize);
-			var mapY = Math.floor(this.positionY / game.map.tileSize);
+			var newMapX = Math.floor(newX / game.map.tileSize) * game.map.tileSize;
+			var newMapY = Math.floor(newY / game.map.tileSize) * game.map.tileSize;
+			var mapX = Math.floor(this.positionX / game.map.tileSize) * game.map.tileSize;
+			var mapY = Math.floor(this.positionY / game.map.tileSize) * game.map.tileSize;
+			
 			if(mapX != newMapX && mapY != newMapY){
-				if(game.map.collisionMap[newMapX] && game.map.collisionMap[newMapX][mapY]){
+				if(game.map.noCollsion(newMapX, mapY)){
 					newMapX = mapX;
-				} else if(game.map.collisionMap[mapX] && game.map.collisionMap[mapX][newMapY]){
+				} else if(game.map.noCollsion(mapX, newMapY)){
 					newMapY = mapY;
 				}
-			} 
+			}
 			if(mapX != newMapX){
 				if(newMapX > mapX){
-					newX = newMapX * game.map.tileSize - .01;
+					newX = newMapX - .01;
 				} else {
-					newX = mapX * game.map.tileSize;
+					newX = mapX;
 				}
 				this.positionX = newX;
 				this.positionY = newY;
 			} 
 			if(mapY != newMapY){
 				if(newMapY > mapY){
-					newY = newMapY * game.map.tileSize - .01;
+					newY = newMapY - .01;
 				} else {
-					newY = mapY * game.map.tileSize;
+					newY = mapY;
 				}
 				this.positionX = newX;
 				this.positionY = newY;

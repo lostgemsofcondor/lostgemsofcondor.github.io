@@ -29,11 +29,11 @@ var playerSpeed = 15;
 
 /// end constants
 
+var p = new Perlin();
 var game = new Game();
 //game.keyMap = {};
 window.onload = startUp;
 
-var p = new Perlin();
 function startUp(){
 	resize();
 	drawMap();
@@ -55,7 +55,7 @@ async function main(){
 		var start = performance.now();
 		gameLoop();
 
-		addToContext(p.canvas, 0, 0);
+		//addToContext(p.canvas, 0, 0);
 
 
 		await sleep(0)
@@ -116,7 +116,10 @@ function clearCanvas(){
 }
 
 function draw(){
-	copyMap();
+	game.map.chunks.forEach(c => {
+		copyMap(c);
+	})
+	//copyMap(game.map.chunks[0].canvas);
 	drawObjects();
 
 	counter();
@@ -155,17 +158,17 @@ function drawHealth(e){
 	
 }
 
-function copyMap(){
-	var p = new Point(0, 0);
-	var adjXPlayer = game.player.positionX + game.cameraX;
-	var adjYPlayer = game.player.positionY + game.cameraY;
-	var adjXZero = p.positionX + game.cameraX;
-	var adjYZero = p.positionY + game.cameraY;
+function copyMap(chunk){
+	// var p = new Point(0, 0);
+	var adjXPlayer = game.cameraCenterX + game.cameraX;
+	var adjYPlayer = game.cameraCenterY + game.cameraY;
+	var adjXZero = chunk.positionX + game.cameraX;
+	var adjYZero = chunk.positionY + game.cameraY;
 	context.save();
 	context.translate(adjXPlayer , adjYPlayer);
 	context.rotate(game.angle);
 	context.translate(-adjXPlayer, -adjYPlayer);
-	addToContext(mapCanvas, adjXZero, adjYZero);
+	addToContext(chunk.canvas, adjXZero, adjYZero);
 	//context.drawImage(mapCanvas, 0, 0);
 	//context.translate(-positionX, -positionY);
 	context.restore();
