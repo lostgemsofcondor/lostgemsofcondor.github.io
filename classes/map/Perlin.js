@@ -29,7 +29,7 @@ class Perlin {
     async temp(){
         for(var i = 0; i < 50; i++){
             for(var j = 0; j < 50; j++){
-                p.drawPixel(i+200, j+200, p.perlinRec(i, j, [35], [1]));
+                p.drawPixel(i+200, j+200, p.perlinRec(i, j, [45], [1]));
                 // setTimeout(function (){
                 // })
             }

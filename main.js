@@ -53,10 +53,8 @@ async function main(){
 	while(true){
 		var fast = false;
 		var start = performance.now();
+
 		gameLoop();
-
-		//addToContext(p.canvas, 0, 0);
-
 
 		await sleep(0)
 		drawTime = performance.now() - start;
@@ -122,7 +120,6 @@ function draw(){
 	//copyMap(game.map.chunks[0].canvas);
 	drawObjects();
 
-	counter();
 	drawDebugThings();
 	addDebugText();
 }
@@ -162,8 +159,8 @@ function copyMap(chunk){
 	// var p = new Point(0, 0);
 	var adjXPlayer = game.cameraCenterX + game.cameraX;
 	var adjYPlayer = game.cameraCenterY + game.cameraY;
-	var adjXZero = chunk.positionX + game.cameraX;
-	var adjYZero = chunk.positionY + game.cameraY;
+	var adjXZero = chunk.positionX + game.cameraX - game.map.tileSize/2;
+	var adjYZero = chunk.positionY + game.cameraY - game.map.tileSize/2;
 	context.save();
 	context.translate(adjXPlayer , adjYPlayer);
 	context.rotate(game.angle);

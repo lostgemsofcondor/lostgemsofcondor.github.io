@@ -10,7 +10,7 @@ class Game {
 		this.cameraY = 0;
 		this.cameraCenterX = 0;
 		this.cameraCenterY = 0;
-		this.angle = 0;
+		this.angle = Math.PI/4;
 		this.rotateSpeed = rotateSpeed/180 * Math.PI;
 		this.gameTick = 0;
 		this.blockIO = false;

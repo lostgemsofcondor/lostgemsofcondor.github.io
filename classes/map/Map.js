@@ -1,36 +1,83 @@
+
 class Map {
 	constructor(){
+		game.map = this;
 		this.tileSize = 48;
 		this.collisionMap = [];
 		this.currentMapFunction = this.arenaMap;
 
-		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96);
-		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96);
+		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
+		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize);
+		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize);
+		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize);
+		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize);
+		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize);
 
 		this.temp = 0;
 
-		this.chunkSize = 64;
+		this.chunkSize = 32;
 		this.chunks = [];
-		//this.tempFoo();
 
 		this.lastChunkX = null;
 		this.lastChunkY = null;
+
+		//add the 9 chunks
+		for(var i = -1; i <= 1; i++){
+			for(var j = -1; j <= 1; j++){
+				this.chunks.push(new MapChunk(i, j, this.tileSize, this.chunkSize));
+			}
+		}
 	}
 
-	tempFoo(){
-		this.chunks.push(new MapChunk(0, 0, this.tileSize, this.chunkSize));
-		this.chunks.push(new MapChunk(1, 1, this.tileSize, this.chunkSize));
-	}
 
 	adjustChunks(){ //run on each frame
 		var chunkX = this.currentChunkX();
 		var chunkY = this.currentChunkY();
+		this.chunks.forEach(c => {
+			if(c.clear){
+				c.draw();
+			}
+		})
 		if(this.lastChunkX == chunkX && this.lastChunkY == chunkY){
 			return;
 		}
-		this.chunks.push(new MapChunk(chunkX, chunkY, this.tileSize, this.chunkSize));
+		
+		this.chunks.forEach(c => {
+			if(Math.abs(c.x - chunkX) >= 2 || Math.abs(c.y - chunkY) >= 2){
+				c.unbound = true;
+			}
+		})
+		
+		for(var i = -1; i <= 1; i++){
+			for(var j = -1; j <= 1; j++){
+				if(!this.isLoaded(chunkX + i, chunkY + j)){
+					this.replaceChunk(chunkX + i, chunkY + j)
+				}
+			}
+		}
 		this.lastChunkX = chunkX;
 		this.lastChunkY = chunkY;
+	}
+
+	isLoaded(x, y){
+		for(var i = 0; i < this.chunks.length; i++){
+			if(this.chunks[i].x == x && this.chunks[i].y == y){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	replaceChunk(x, y){
+		for(var i = 0; i < this.chunks.length; i++){
+			if(this.chunks[i].unbound){
+				this.chunks[i].x = x;
+				this.chunks[i].y = y;
+				this.chunks[i].unbound = false;
+				this.chunks[i].draw();
+				return;
+			}
+		}
 	}
 
 	currentChunkX(){

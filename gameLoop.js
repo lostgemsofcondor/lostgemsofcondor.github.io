@@ -58,7 +58,7 @@ function XNOR(a, b){
 
 function handleRotate(){
 	if(key.resetRotation){
-		game.angle = 0;
+		game.angle = Math.PI/4;
 		drawTimeMax = 0; //for debug
 		game.adjustAllSpriteDirections();
 		return;
