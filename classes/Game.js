@@ -4,7 +4,7 @@ class Game {
 		this.keyMap = {};
 		this.mouse = new Mouse();
 		
-		var playerSpeed = 100;
+		var playerSpeed = 20;
 		this.player = new Player().setImage("player").setSpeed(playerSpeed).setDimensions(48, 48);
 		this.width;
 		this.height;

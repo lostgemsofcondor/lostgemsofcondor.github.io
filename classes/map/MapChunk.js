@@ -27,8 +27,9 @@ class MapChunk {
 				// var noise = p.perlinRec(i + this.x * this.chunkSize, j + this.y * this.chunkSize, [400, 12], [.95, .05]) * .96 + Math.random()*.04;
 				var pallet = p.perlinRec(i + this.x * this.chunkSize, j + this.y * this.chunkSize, [500, 12], [.97, .03])
 				var noise
-				if(p.perlinRec(i + this.x * this.chunkSize, j + this.y * this.chunkSize, [300, 12], [.95, .05]) < .75){
-					noise = p.perlinRec(i + this.x * this.chunkSize, j + this.y * this.chunkSize, [300, 12], [.95, .05]) * .96 + Math.random()*.04;
+				var altitude = p.perlinRec(i + this.x * this.chunkSize, j + this.y * this.chunkSize, [300, 12], [.95, .05]);
+				if(altitude > .35  && altitude < .75){
+					noise = altitude * .96 + (Math.random()*.04);
 				} else {
 					noise = p.perlinRec(i + this.x * this.chunkSize, j + this.y * this.chunkSize, [300, 12], [.97, .03])
 				}

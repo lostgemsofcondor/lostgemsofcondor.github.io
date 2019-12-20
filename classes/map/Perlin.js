@@ -1,5 +1,5 @@
 class Perlin {
-	constructor(seed = 10){
+	constructor(seed = 11){
         // this.canvas = addCanvas();
         // this.context = this.canvas.getContext("2d");
         // this.canvas.width = 3000;

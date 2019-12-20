@@ -23,41 +23,55 @@ class Map {
 
 		this.temp = 0;
 
-		this.chunkSize = 32;
+		this.chunkSize = 30;
 		this.chunks = [];
 
 		this.lastChunkX = null;
 		this.lastChunkY = null;
 
+		this.chunkDelay = 20;
+		this.lastChunkTick = null;
+
+		this.resolution = 1;
 		//add the 9 chunks
-		for(var i = -1; i <= 1; i++){
-			for(var j = -1; j <= 1; j++){
-				this.chunks.push(new MapChunk(i, j, this.tileSize, this.chunkSize));
+		for(var i = -this.resolution; i <= this.resolution; i++){
+			for(var j = -this.resolution; j <= this.resolution; j++){
+				game.map.chunks.push(new MapChunk(i, j, game.map.tileSize, game.map.chunkSize));
 			}
 		}
 	}
 
-
-	adjustChunks(){ //run on each frame
-		var chunkX = this.currentChunkX();
-		var chunkY = this.currentChunkY();
+	drawAllChunks(){
 		this.chunks.forEach(c => {
 			if(c.clear){
 				c.draw();
 			}
 		})
+	}
+
+	adjustChunks(){ //run on each frame
+		this.drawAllChunks();
+		
+		var chunkX = this.currentChunkX();
+		var chunkY = this.currentChunkY();
+		
 		if(this.lastChunkX == chunkX && this.lastChunkY == chunkY){
+			this.lastChunkTick = game.gameTick;
 			return;
 		}
+		if(game.gameTick - this.lastChunkTick < this.chunkDelay){
+			return;
+		}
+		this.lastChunkTick = game.gameTick;
 		
 		this.chunks.forEach(c => {
-			if(Math.abs(c.x - chunkX) >= 2 || Math.abs(c.y - chunkY) >= 2){
+			if(Math.abs(c.x - chunkX) >= this.resolution*2 || Math.abs(c.y - chunkY) >= this.resolution*2){
 				c.unbound = true;
 			}
 		})
 		
-		for(var i = -1; i <= 1; i++){
-			for(var j = -1; j <= 1; j++){
+		for(var i = -this.resolution; i <= this.resolution; i++){
+			for(var j = -this.resolution; j <= this.resolution; j++){
 				if(!this.isLoaded(chunkX + i, chunkY + j)){
 					this.replaceChunk(chunkX + i, chunkY + j)
 				}

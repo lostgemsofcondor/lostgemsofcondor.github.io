@@ -123,6 +123,7 @@ function addDebugText(){
 	debugInfo.add("Game tick " + game.gameTick, 4);
 	debugInfo.add("Chunk X " + game.map.currentChunkX(), 4);
 	debugInfo.add("Chunk Y " + game.map.currentChunkY(), 4);
+	debugInfo.add("Last Chunk Tick " + game.map.lastChunkTick, 4);
 }
 
 function getKeys(){
