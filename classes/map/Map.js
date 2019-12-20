@@ -13,6 +13,14 @@ class Map {
 		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize);
 		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize);
 
+		
+		this.pwater = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
+		this.psand = new Tile("./sprites/background/pallete2/sandBasic.png", 96, 96, this.tileSize);
+		this.pgrass = new Tile("./sprites/background/pallete2/grassBasic.png", 96, 96, this.tileSize);
+		this.pforest = new Tile("./sprites/background/pallete2/forestBasic.png", 96, 96, this.tileSize);
+		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize);
+		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize);
+
 		this.temp = 0;
 
 		this.chunkSize = 32;

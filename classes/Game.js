@@ -3,6 +3,8 @@ class Game {
 		game = this;
 		this.keyMap = {};
 		this.mouse = new Mouse();
+		
+		var playerSpeed = 100;
 		this.player = new Player().setImage("player").setSpeed(playerSpeed).setDimensions(48, 48);
 		this.width;
 		this.height;
