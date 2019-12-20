@@ -81,10 +81,9 @@ function drawDebugThings(){
 
 class DebugInfo {
 	constructor(level = 0){
-		this.font = "14px Verdana,sans-serif";
+		this.font = game.zoom/1080*14 +"px Verdana,sans-serif";
 		this.leftMargin = 10;
-		this.topMargin = 200;
-		this.gap = 15;
+		this.gap = game.zoom/1080*15;
 		this.lines = 0;
 		this.level = level;
 		context.font = this.font;
@@ -92,7 +91,7 @@ class DebugInfo {
 	
 	add(str, level=0){
 		if(level <= this.level){
-			context.fillText(str, this.leftMargin, this.topMargin + this.gap * this.lines);
+			context.fillText(str, this.leftMargin, this.gap * (this.lines + 1));
 			this.lines++;
 		}
 	}
@@ -103,8 +102,8 @@ function addDebugText(){
 	context.fillStyle = "#000000";
 	var debugInfo = new DebugInfo(debugLevel);
 	debugInfo.add("fps: " + fps.toFixed(0), 1);
-	debugInfo.add("Width: " + canvas.width, 4);
-	debugInfo.add("Height: " + canvas.height, 4);
+	debugInfo.add("Width: " + canvas.width, 5);
+	debugInfo.add("Height: " + canvas.height, 5);
 	debugInfo.add("Draw Time " + drawTime, 4);
 	debugInfo.add("Frame Time " + frameTime, 3);
 	debugInfo.add("Frame Time Max " + drawTimeMax, 2);
@@ -120,7 +119,7 @@ function addDebugText(){
 	debugInfo.add("Game Angle " + game.angle, 4);
 	debugInfo.add("Game cameraX " + game.cameraX, 4);
 	debugInfo.add("Game cameraY " + game.cameraY, 4);
-	debugInfo.add("Game tick " + game.gameTick, 4);
+	debugInfo.add("Game tick " + game.gameTick, 3);
 	debugInfo.add("Chunk X " + game.map.currentChunkX(), 4);
 	debugInfo.add("Chunk Y " + game.map.currentChunkY(), 4);
 	debugInfo.add("Last Chunk Tick " + game.map.lastChunkTick, 4);

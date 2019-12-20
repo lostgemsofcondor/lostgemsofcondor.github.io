@@ -11,6 +11,9 @@ var keyRotateCounterClockwise = "69";
 var keyResetRotation = "82";
 var startDebug = "192";
 
+var zoomOut = "189";
+var zoomIn = "187";
+
 /// end constants
 
 function mainGameLoop(){
@@ -20,6 +23,7 @@ function mainGameLoop(){
 	
 	readKeys();
 	handleRotate();
+	handelZoom();
 	handleMove();
 	
 	shootArrow();
@@ -32,6 +36,16 @@ function mainGameLoop(){
 	game.adjustCameraToPlayer();
 	game.map.adjustChunks();
 	//game.entityList.sort();
+}
+
+function handelZoom(){
+	if(key.zoomIn && game.zoom > 500){
+		game.zoom -= 50;
+		adjustCanvasSize();
+	} else if(key.zoomOut && game.zoom < 5000){
+		game.zoom += 50;
+		adjustCanvasSize();
+	}
 }
 
 function handleDebug(){
@@ -59,6 +73,8 @@ function XNOR(a, b){
 function handleRotate(){
 	if(key.resetRotation){
 		game.angle = Math.PI/4;
+		game.zoom = 1080;
+		adjustCanvasSize();
 		drawTimeMax = 0; //for debug
 		game.adjustAllSpriteDirections();
 		return;
@@ -116,4 +132,6 @@ function readKeys(){
 	key.rotateCounterClockwise = keys.includes(keyRotateCounterClockwise);
 	key.resetRotation = keys.includes(keyResetRotation);
 	key.startDebug = keys.includes(startDebug);
+	key.zoomOut = keys.includes(zoomOut);
+	key.zoomIn = keys.includes(zoomIn);
 }

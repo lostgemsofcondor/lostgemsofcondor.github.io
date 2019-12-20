@@ -1,5 +1,5 @@
 var canvas = document.getElementById("mainCanvas");
-var convasDiv = document.getElementById("mainCanvasDiv")
+var canvasDiv = document.getElementById("mainCanvasDiv")
 var context = canvas.getContext("2d");
 
 var mapCanvas = addCanvas();
@@ -25,6 +25,7 @@ var debugLevel = 5;
 var adjustment = 1/32;
 
 var rotateSpeed = 2;
+
 
 /// end constants
 
@@ -170,14 +171,17 @@ function copyMap(chunk){
 	context.restore();
 }
 
+function adjustCanvasSize(){
+	canvas.width = game.width = game.zoom/canvasDiv.offsetHeight * canvasDiv.offsetWidth;
+	canvas.height = game.height = game.zoom;
+
+}
+
 function resize(){
-	canvas.width = game.width = convasDiv.offsetWidth;
-	canvas.height = game.height = convasDiv.offsetHeight;
-	
+	adjustCanvasSize();
 	//blueprint.draw();
 	draw();
 }
-	
 
 function addSprite(sprite){
 	if(sprite.rotates){
@@ -200,7 +204,6 @@ function addToContext(img, x, y, width = null, height = null){
 }
 
 /*
-
 function loadSprite(url) {
 	if(resourceCache[url]) {
 		return resourceCache[url];
@@ -285,8 +288,8 @@ onkeydown = onkeyup = function(e){
 }
 
 function handelMouseDown(){
-	var canvasX = event.clientX;
-	var canvasY = event.clientY;
+	var canvasX = event.clientX / canvasDiv.offsetWidth * canvas.width;
+	var canvasY = event.clientY / canvasDiv.offsetHeight * canvas.height;
 	//0 left, 1 middle, 2 right
 	if(event.button == 0){
 		game.mouse.clickDownLeft(canvasX, canvasY);
@@ -307,8 +310,8 @@ function handelMouseUp(){
 }
 
 function handelMouseMove(){
-	var canvasX = event.clientX;
-	var canvasY = event.clientY;
+	var canvasX = event.clientX / canvasDiv.offsetWidth * canvas.width;
+	var canvasY = event.clientY / canvasDiv.offsetHeight * canvas.height;
 	
 	game.mouse.move(canvasX, canvasY);
 }
