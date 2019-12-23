@@ -17,9 +17,6 @@ class Player extends Entity{
 			var arrow = new Bullet(this.positionX, this.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4).setSpeed(10).setDimensions(48, 48).setRotates(false);
 			arrow.AI = new BulletAI(arrow, angle, 100);
 
-			var myWorker = new Worker('classes/map/MapWorker.js');
-			myWorker.postMessage(5);
-			console.log('Message posted to worker');
 		}
 	}
 }

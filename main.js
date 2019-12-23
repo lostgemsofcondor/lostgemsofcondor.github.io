@@ -29,7 +29,7 @@ var rotateSpeed = 2;
 
 /// end constants
 
-var p = new Perlin();
+//var p = new Perlin();
 var game = new Game();
 //game.keyMap = {};
 window.onload = startUp;
@@ -227,7 +227,7 @@ function drawMap(){
 	
 	mapCanvas.width = 5000;
 	mapCanvas.height = 5000;
-	game.map.currentMap();
+	//game.map.currentMap();
 	//drawGrass();
 }
 

@@ -4,7 +4,7 @@ class Map {
 		game.map = this;
 		this.tileSize = 48;
 		this.collisionMap = [];
-		this.currentMapFunction = this.arenaMap;
+		//this.currentMapFunction = this.arenaMap;
 
 		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
 		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize);
@@ -20,8 +20,6 @@ class Map {
 		this.pforest = new Tile("./sprites/background/pallete2/forestBasic.png", 96, 96, this.tileSize);
 		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize);
 		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize);
-
-		this.temp = 0;
 
 		this.chunkSize = 30;
 		this.chunks = [];
@@ -120,7 +118,7 @@ class Map {
 		}
 		return true;
 	}
-
+	/*
 	currentMap(){
 		this.collisionMap = [];
 		this.currentMapFunction();
@@ -156,7 +154,7 @@ class Map {
 			}
 			this.collisionMap.push(line);
 		}
-		//this.temp += 48
+		
 		console.log((performance.now() - start));
 	}
 
@@ -199,4 +197,5 @@ class Map {
 			}
 		}
 	}
+	*/
 }
