@@ -42,7 +42,7 @@ class MapChunk {
 					if(pallet > .5){
 						if(noise < .4){
 							game.map.sand.draw(this.context, i * this.tileSize, j * this.tileSize);
-						}else if(noise < .6){
+						}else if(noise < .55){
 							game.map.grass.draw(this.context, i * this.tileSize, j * this.tileSize);
 						}else if(noise < .7){
 							game.map.forest.draw(this.context, i * this.tileSize, j * this.tileSize);
@@ -54,7 +54,7 @@ class MapChunk {
 					} else {
 						if(noise < .4){
 							game.map.psand.draw(this.context, i * this.tileSize, j * this.tileSize);
-						}else if(noise < .6){
+						}else if(noise < .55){
 							game.map.pgrass.draw(this.context, i * this.tileSize, j * this.tileSize);
 						}else if(noise < .7){
 							game.map.pforest.draw(this.context, i * this.tileSize, j * this.tileSize);
