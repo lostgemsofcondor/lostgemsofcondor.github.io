@@ -51,7 +51,7 @@ class Sprite extends Point {
 		if(this.angle === null){
 			return this.images[this.direction];
 		} else {
-			return this.image
+			return this.image;
 		}
 	}
 

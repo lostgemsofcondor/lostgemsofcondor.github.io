@@ -43,6 +43,9 @@ function startUp(){
 	window.addEventListener("mousemove", handelMouseMove);
 	//window.addEventListener("keypress", keypress, false);
 	window.addEventListener("resize", resize);
+	// canvas.oncontextmenu = function (e) {
+	// 	e.preventDefault();
+	// };
 	
 	main();
 }
@@ -119,9 +122,17 @@ function draw(){
 	})
 	//copyMap(game.map.chunks[0].canvas);
 	drawObjects();
+	drawHud();
 
 	drawDebugThings();
 	addDebugText();
+}
+
+function drawHud(){
+	game.hud.draw();
+
+	addToContext(game.hud.canvas, 0, 0, game.hud.canvas.width, game.hud.canvas.height);
+
 }
 
 function drawObjects(){
@@ -174,11 +185,11 @@ function copyMap(chunk){
 function adjustCanvasSize(){
 	canvas.width = game.width = game.zoom/canvasDiv.offsetHeight * canvasDiv.offsetWidth;
 	canvas.height = game.height = game.zoom;
-
 }
 
 function resize(){
 	adjustCanvasSize();
+	game.hud.resize();
 	//blueprint.draw();
 	draw();
 }

@@ -3,6 +3,7 @@ class Game {
 		game = this;
 		this.keyMap = {};
 		this.mouse = new Mouse();
+		this.hud = new Hud();
 		
 		var playerSpeed = 15;
 		this.player = new Player().setImage("player").setSpeed(playerSpeed).setDimensions(48, 48);
@@ -85,7 +86,8 @@ class Game {
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
 			for(var j = 0; j < 50*m; j += m){
-				var vector = new Entity("empty", 1, i, j, 0, 0, false);
+				// var vector = new Entity("empty", 1, i, j, 0, 0, false);
+				var vector = new Entity(i, j).setImage("empty").setDimensions(0, 0).setMoving(false);
 				vector.AI = new CircleAI(0, 100, false); // AI to implement
 				this.add(vector);
 			}

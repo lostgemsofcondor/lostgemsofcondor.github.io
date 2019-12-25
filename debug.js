@@ -81,9 +81,9 @@ function drawDebugThings(){
 
 class DebugInfo {
 	constructor(level = 0){
-		this.font = game.zoom/1080*14 +"px Verdana,sans-serif";
+		this.font = game.zoom/1080*20 +"px Verdana,sans-serif";
 		this.leftMargin = 10;
-		this.gap = game.zoom/1080*15;
+		this.gap = game.zoom/1080*20;
 		this.lines = 0;
 		this.level = level;
 		context.font = this.font;

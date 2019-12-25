@@ -42,9 +42,11 @@ function handelZoom(){
 	if(key.zoomIn && game.zoom > 500){
 		game.zoom -= 50;
 		adjustCanvasSize();
+		game.hud.resize();
 	} else if(key.zoomOut && game.zoom < 5000){
 		game.zoom += 50;
 		adjustCanvasSize();
+		game.hud.resize();
 	}
 }
 
@@ -70,6 +72,7 @@ function handleRotate(){
 		game.angle = Math.PI/4;
 		game.zoom = 1080;
 		adjustCanvasSize();
+		game.hud.resize();
 		drawTimeMax = 0; //for debug
 		game.adjustAllSpriteDirections();
 		return;
