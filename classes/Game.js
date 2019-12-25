@@ -138,8 +138,8 @@ class Game {
 	}
 	
 	adjustCamera(){
-		this.cameraX = this.width / 2 - this.cameraCenterX;
-		this.cameraY = this.height / 2 - this.cameraCenterY;
+		this.cameraX = (this.width - game.hud.width) / 2 - this.cameraCenterX ;
+		this.cameraY = this.height*.7 - this.cameraCenterY;
 		
 	}
 
