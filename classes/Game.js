@@ -4,6 +4,7 @@ class Game {
 		this.keyMap = {};
 		this.mouse = new Mouse();
 		this.hud = new Hud();
+		this.config = new Config();
 		
 		var playerSpeed = 15;
 		this.player = new Player().setImage("player").setSpeed(playerSpeed).setDimensions(48, 48);
@@ -15,7 +16,7 @@ class Game {
 		this.cameraCenterX = 0;
 		this.cameraCenterY = 0;
 		this.angle = Math.PI/4;
-		this.rotateSpeed = rotateSpeed/180 * Math.PI;
+		this.rotateSpeed = this.config.rotateSpeed/180 * Math.PI;
 		this.gameTick = 0;
 		this.blockIO = false;
 		this.paused = false;
@@ -176,6 +177,8 @@ class Game {
 		var bullets = this.getBullets();
 
 		for(var j = 0; j < bullets.length; j++){
+
+			//bullet and enemy collision
 			for(var i = 0; i < enemies.length; i++){
 				if(bullets[j] && enemies[i] && bullets[j].friendly && bullets[j].collides(enemies[i])){
 					enemies[i].struck(bullets[j]);
@@ -184,7 +187,14 @@ class Game {
 					j++
 				}
 			}
-			
+			//bullet and player collision
+			if(bullets[j] && !bullets[j].friendly && bullets[j].collides(game.player)){
+				game.player.struck(bullets[j]);
+				this.delete(bullets[j]);
+				delete bullets[j];
+				j++
+			}
+
 		}
 		
 		

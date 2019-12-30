@@ -15,19 +15,8 @@ var drawTimeMax = 0;
 var fpsMax = 60;
 var fps = 0;
 var adjust = 0;
-
-
-/// constants
-
 var debug = false;
 var debugDrawing = false;
-var debugLevel = 5;
-var adjustment = 1/32;
-
-var rotateSpeed = 2;
-
-
-/// end constants
 
 //var p = new Perlin();
 var game = new Game();
@@ -81,15 +70,15 @@ async function main(){
 			count = 0;
 			
 			if(fps - 1 > fpsMax && fast){
-				adjust += adjustment;
+				adjust += game.config.adjustment;
 				if(fps - .4 > fpsMax){
-					adjust += adjustment;
+					adjust += game.config.adjustment;
 				}
 			}
 			if(fps + .5 < fpsMax && fast){
-				adjust -= adjustment;
+				adjust -= game.config.adjustment;
 				if(fps + .2 < fpsMax){
-					adjust -= adjustment;
+					adjust -= game.config.adjustment;
 				}
 			}
 		}
@@ -145,10 +134,16 @@ function drawObjects(){
 			drawHealth(e);
 		}
 	});
-	context.fillStyle = "#222222";
-	context.font = "bold 22px Stencil Std";
+	// context.fillStyle = "#222222";
+	var size = 48;
+	context.font = "bold " + size + "px Stencil Std";
+	context.textAlign = "center";
 	for(var i in game.text){
 		var t = game.text[i];
+		// var text = context.measureText('foo');
+		// context.fillStyle = game.config.gray;
+		// context.fillRect(t.adjustXCord() - text.width/2, t.adjustYCord() - size, text.width, size);
+		context.fillStyle = t.color;
 		context.fillText(t.str, t.adjustXCord(), t.adjustYCord());
 	}
 }
@@ -158,10 +153,10 @@ function drawHealth(e){
 	var y = e.sprite.adjustYCord() + 3;
 	var width = e.sprite.width;
 	var height = 6;
-	context.fillStyle = "#00FF00";
+	context.fillStyle = game.config.healthGreen;
 	context.fillRect(x, y, width, height);
 	
-	context.fillStyle = "#FF0000";
+	context.fillStyle = game.config.healthRed;
 	context.fillRect(x + width * e.health/e.maxHealth, y, width - width * e.health/e.maxHealth, height);
 	
 }

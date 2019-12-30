@@ -45,7 +45,7 @@ class DrawDebugThings {
 	}
 
 	direction(entity){
-		if(entity.moving || debugLevel >= 4){
+		if(entity.moving || game.config.debugLevel >= 4){
 			this.drawLine(entity.positionX, entity.positionY, entity.angle + game.angle, 40);
 		}
 	}
@@ -54,7 +54,7 @@ class DrawDebugThings {
 function drawDebugThings(){
 	if(!debugDrawing) return;
 	context.fillStyle = "#000000";
-	var drawDebugThings = new DrawDebugThings(debugLevel);
+	var drawDebugThings = new DrawDebugThings(game.config.debugLevel);
     drawDebugThings.drawPixel(0, 0);
     drawDebugThings.drawCircle(0, 0, 30);
     //drawDebugThings.drawPixel(game.player.positionX, game.player.positionY);
@@ -100,7 +100,7 @@ class DebugInfo {
 function addDebugText(){
 	if(!debug) return;
 	context.fillStyle = "#000000";
-	var debugInfo = new DebugInfo(debugLevel);
+	var debugInfo = new DebugInfo(game.config.debugLevel);
 	debugInfo.add("fps: " + fps.toFixed(0), 1);
 	debugInfo.add("Width: " + canvas.width, 5);
 	debugInfo.add("Height: " + canvas.height, 5);
