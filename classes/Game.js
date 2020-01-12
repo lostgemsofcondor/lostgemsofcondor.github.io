@@ -3,7 +3,6 @@ class Game {
 		game = this;
 		this.keyMap = {};
 		this.mouse = new Mouse();
-		this.hud = new Hud();
 		this.config = new Config();
 		
 		var playerSpeed = 15;
@@ -29,6 +28,9 @@ class Game {
 		this.map = new Map();
 		this.entityList.add(0); // Add player
 		
+		this.hud = new Hud();
+		this.save = new Save();
+
         this.solids = null;
         this.solidsTickUpdated = -1;
 		

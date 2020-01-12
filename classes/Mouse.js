@@ -6,7 +6,17 @@ class Mouse {
 		this.rightClickDown = false;
 		// this.rightClickDownStart = false;
 		this.rightClickTick = 0;
-		this.point = new Point(0, 0);
+		this._point = new Point(0, 0);
+		this.x = 0;
+		this.y = 0;
+		
+		this.onHud = false;
+	}
+
+	
+	get point(){
+		this._point.setCords(this.x, this.y);
+		return this._point;
 	}
 
 	get leftClickDownStart(){
@@ -18,18 +28,19 @@ class Mouse {
 	}
 	
 	clickDownLeft(x, y){
-		this.point.setCords(x, y);
+		this.move(x, y);
+		this.onHud = game.hud.clickOnHud(x, y);
 		this.leftClickTick = game.gameTick + game.blockIO + 1;
 		this.leftClickDown = true;
 	}
 	
 	clickUpLeft(){
 		this.leftClickDown = false;
-		
 	}
 	
 	clickDownRight(x, y){
-		this.point.setCords(x, y);
+		this.move(x, y);
+		this.onHud = game.hud.clickOnHud(x, y);
 		this.rightClickTick = game.gameTick + game.blockIO + 1;
 		this.rightClickDown = true;
 		
@@ -40,6 +51,7 @@ class Mouse {
 	}
 	
 	move(x, y){
-		this.point.setCords(x, y);
+		this.x = x;
+		this.y = y;
 	}
 }

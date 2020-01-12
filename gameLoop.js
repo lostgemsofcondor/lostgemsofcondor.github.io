@@ -25,8 +25,8 @@ function mainGameLoop(){
 	handleRotate();
 	handelZoom();
 	handleMove();
-	
-	handleShooting();
+
+	handleClicks();
 	handleDebug();
 	
 	game.updateAI();
@@ -35,7 +35,24 @@ function mainGameLoop(){
 	
 	game.adjustCameraToPlayer();
 	game.map.adjustChunks();
+
+	setCookies();
 	//game.entityList.sort();
+}
+
+function setCookies(){
+	document.cookie = JSON.stringify(game.save);
+}
+
+function handleClicks(){
+	if(game.mouse.leftClickDown){
+		if(game.mouse.onHud){
+			game.hud.handleClick(game.mouse.x, game.mouse.y);
+		} else {
+			handleShooting();
+		}
+	}
+
 }
 
 function handelZoom(){
@@ -58,9 +75,7 @@ function handleDebug(){
 }
 
 function handleShooting(){
-	if(game.mouse.leftClickDown){
-		game.player.handelShoot(game.mouse.point.positionX, game.mouse.point.positionY, game.mouse.leftClickDownStart);
-	}
+	game.player.handelShoot(game.mouse.point.positionX, game.mouse.point.positionY, game.mouse.leftClickDownStart);
 }
 
 function XNOR(a, b){

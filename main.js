@@ -35,6 +35,14 @@ function startUp(){
 	// canvas.oncontextmenu = function (e) {
 	// 	e.preventDefault();
 	// };
+
+	try{
+		game.save = JSON.parse(document.cookie);
+	} catch {
+		console.log("error with save conversion");
+	}
+		
+		console.log(document.cookie);
 	
 	main();
 }

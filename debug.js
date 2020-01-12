@@ -100,29 +100,31 @@ class DebugInfo {
 function addDebugText(){
 	if(!debug) return;
 	context.fillStyle = "#000000";
+	context.textAlign = "left";
 	var debugInfo = new DebugInfo(game.config.debugLevel);
 	debugInfo.add("fps: " + fps.toFixed(0), 1);
 	debugInfo.add("Width: " + canvas.width, 5);
 	debugInfo.add("Height: " + canvas.height, 5);
-	debugInfo.add("Draw Time " + drawTime, 4);
-	debugInfo.add("Frame Time " + frameTime, 3);
-	debugInfo.add("Frame Time Max " + drawTimeMax, 2);
-	debugInfo.add("performance.now() " + performance.now(), 4);
-	debugInfo.add("Frame Time " + frameTime, 4);
-	debugInfo.add("adjust " + adjust, 4);
-	debugInfo.add("Keys Pressed " + getKeys(), 3);
-	debugInfo.add("Mouse clicked " + getMouse(), 3);
-	debugInfo.add("Player Position X " + game.player.positionX.toFixed(2), 2);
-	debugInfo.add("Player Position Y " + game.player.positionY.toFixed(2), 2);
-	debugInfo.add("Player Angle " + game.player.angle, 4);
-	debugInfo.add("Player Angle Absolute " + game.player.angleAbsolute, 4);
-	debugInfo.add("Game Angle " + game.angle, 4);
-	debugInfo.add("Game cameraX " + game.cameraX, 4);
-	debugInfo.add("Game cameraY " + game.cameraY, 4);
-	debugInfo.add("Game tick " + game.gameTick, 3);
-	debugInfo.add("Chunk X " + game.map.currentChunkX(), 4);
-	debugInfo.add("Chunk Y " + game.map.currentChunkY(), 4);
-	debugInfo.add("Last Chunk Tick " + game.map.lastChunkTick, 4);
+	debugInfo.add("Draw Time: " + drawTime, 4);
+	debugInfo.add("Frame Time: " + frameTime, 3);
+	debugInfo.add("Frame Time Max: " + drawTimeMax, 2);
+	debugInfo.add("performance.now: " + performance.now(), 4);
+	debugInfo.add("Frame Time: " + frameTime, 4);
+	debugInfo.add("adjust: " + adjust, 4);
+	debugInfo.add("Keys Pressed: " + getKeys(), 3);
+	debugInfo.add("Mouse clicked: " + getMouse(), 3);
+	debugInfo.add("Mouse clicked on hud: " + game.mouse.onHud, 3);
+	debugInfo.add("Player Position X: " + game.player.positionX.toFixed(2), 2);
+	debugInfo.add("Player Position Y: " + game.player.positionY.toFixed(2), 2);
+	debugInfo.add("Player Angle: " + game.player.angle, 4);
+	debugInfo.add("Player Angle Absolute: " + game.player.angleAbsolute, 4);
+	debugInfo.add("Game Angle: " + game.angle, 4);
+	debugInfo.add("Game cameraX: " + game.cameraX, 4);
+	debugInfo.add("Game cameraY: " + game.cameraY, 4);
+	debugInfo.add("Game tick: " + game.gameTick, 3);
+	debugInfo.add("Chunk X: " + game.map.currentChunkX(), 4);
+	debugInfo.add("Chunk Y: " + game.map.currentChunkY(), 4);
+	debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
 }
 
 function getKeys(){

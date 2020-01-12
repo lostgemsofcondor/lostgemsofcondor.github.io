@@ -20,6 +20,7 @@ class Hud {
     }
 
     draw(){
+        //this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addHealthBar();
     }
@@ -45,5 +46,13 @@ class Hud {
         } else {
             this.context.drawImage(img, x, y);
         }
+    }
+
+    clickOnHud(x, y){
+        return x >= this.offset;
+    }
+
+    handleClick(x, y){
+        //this.addToContext(game.map.grass.img, x, y, game.map.grass.width, game.map.grass.height);
     }
 }
