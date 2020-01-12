@@ -33,7 +33,7 @@ class Player extends Entity{
 	}
 	
 	die(){
-		console.log("you died");
+		//console.log("you died");
 		//game.delete(this);
 	}
 }

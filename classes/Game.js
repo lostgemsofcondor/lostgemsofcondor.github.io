@@ -30,6 +30,7 @@ class Game {
 		
 		this.hud = new Hud();
 		this.save = new Save();
+		this.itemSprites = new ItemSprites();
 
         this.solids = null;
         this.solidsTickUpdated = -1;

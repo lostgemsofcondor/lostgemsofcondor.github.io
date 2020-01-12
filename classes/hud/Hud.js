@@ -53,6 +53,15 @@ class Hud {
     }
 
     handleClick(x, y){
+        if(game.mouse.leftClickDownStart){
+            this.handleClickStart(x, y);
+        } else {
+            console.log("continue click");
+        }
         //this.addToContext(game.map.grass.img, x, y, game.map.grass.width, game.map.grass.height);
+    }
+
+    handleClickStart(x, y){
+        new Item(x, y, "arrow");
     }
 }

@@ -36,13 +36,14 @@ function startUp(){
 	// 	e.preventDefault();
 	// };
 
+
+	// do this in Save.js
 	try{
 		game.save = JSON.parse(document.cookie);
 	} catch {
 		console.log("error with save conversion");
-	}
-		
-		console.log(document.cookie);
+	}	
+	console.log(document.cookie);
 	
 	main();
 }
