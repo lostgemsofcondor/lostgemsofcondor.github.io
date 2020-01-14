@@ -11,16 +11,16 @@ class ItemEntity {
 	get x(){
 		return this.data.x;
     }
-	set x(x) {
-		this.data.x = x;
-    }
+	// set x(x) {
+    //     this.data.x = x;
+    // }
     
     get y(){
         return this.data.y;
     }
-    set y(y) {
-        this.data.y = y;
-    }
+    // set y(y) {
+    //     this.data.y = y;
+    // }
     
     get amount(){
         return this.data.amount;
@@ -55,5 +55,15 @@ class ItemEntity {
         this.amount = amount;
 
         game.inventory.add(this);
+    }
+
+    move(x, y){
+        if(game.inventory.valid(x, y)){
+            var oldX = this.x;
+            var oldY = this.y;
+            this.data.x = x;
+            this.data.y = y;
+            game.inventory.update(this, oldX, oldY);
+        }
     }
 }

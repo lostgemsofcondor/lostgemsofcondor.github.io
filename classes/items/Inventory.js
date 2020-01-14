@@ -20,20 +20,31 @@ class Inventory {
         }
     }
 
+    update(item, oldX, oldY){
+        //var item = game.save.inventory[key]
+        if(oldX != null && oldY != null){
+            this.inv[oldY][oldX] = null;
+        }
+        this.inv[item.y][item.x] = item.Id;
+    }
+
     get(x, y){
-        if(this.inv[y][x] != null){
+        if(this.valid(x, y) && this.inv[y][x] != null){
             return game.save.inventory[this.inv[y][x]];
         }
         return null;
+    }
+
+    valid(x, y){
+        return x >= 0 && x < this.width && y >= 0 && y < this.height;
     }
 
     add(item){
         for(var j = 0; j < this.height; j++){
             for(var i = 0; i < this.width; i++){
                 if(this.inv[j][i] == null){
-                    item.x = i;
-                    item.y = j;
                     this.inv[j][i] = item.Id;
+                    item.move(i, j);
                     return true;
                 }
             }

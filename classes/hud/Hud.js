@@ -13,6 +13,8 @@ class Hud {
 
         this.inventoryX = 9;
         this.inventoryY = 510;
+        this.itemSize = 48;
+        this.slotSize = 63;
 
         this.temp = 0;
         this.temp2 = 0;
@@ -72,15 +74,38 @@ class Hud {
     }
 
     inventorySlotX(x){
-        return this.offset + this.inventoryX + x * 63;
+        return this.offset + this.inventoryX + x * this.slotSize;
     }
     
     inventorySlotY(y){
-        return this.inventoryY + y * 63;
+        return this.inventoryY + y * this.slotSize;
     }
 
     handleClickStart(x, y){
-        new ItemEntity("arrow");
+        var x = this.getSlotX(x);
+        var y = this.getSlotY(y);
+        if(x != null && y != null && game.inventory.get(x, y) == null){
+            var item = new ItemEntity("arrow");
+            item.move(x, y);
+        }
+    }
+
+    getSlotX(x){
+        x = x - this.inventorySlotX(0);
+        if(x % this.slotSize < this.itemSize){
+            return Math.floor(x / 63)
+        } else {
+            return null;
+        }
+    }
+
+    getSlotY(y){
+        y = y - this.inventorySlotY(0);
+        if(y % this.slotSize < this.itemSize){
+            return Math.floor(y / 63)
+        } else {
+            return null;
+        }
     }
 
     drawItems(){

@@ -30,11 +30,13 @@ function startUp(){
 	window.addEventListener("mousedown", handelMouseDown);
 	window.addEventListener("mouseup", handelMouseUp);
 	window.addEventListener("mousemove", handelMouseMove);
-	//window.addEventListener("keypress", keypress, false);
 	window.addEventListener("resize", resize);
+
+	/* disable right click */
 	// canvas.oncontextmenu = function (e) {
 	// 	e.preventDefault();
 	// };
+	/* disable right click */
 
 
 	
