@@ -28,7 +28,7 @@ class Game {
 		this.map = new Map();
 		this.entityList.add(0); // Add player
 		
-		this.save = new Save();
+		this.loadSave();
 		this.hud = new Hud();
 		this.itemSprites = new ItemSprites();
 		this.inventory = new Inventory(4, 5);
@@ -87,6 +87,19 @@ class Game {
 		
 	}
 	
+	loadSave(){
+		
+        // do this in Save.js
+        try{
+            //this.save = JSON.parse('{"inventory":[{"itemSpriteKey":"arrow","location":"inventory","amount":1,"x":0,"y":0}],"itemIdNext":1}');
+            this.save = JSON.parse(document.cookie);
+        } catch {
+			console.log("error with save conversion");
+			this.save = new Save();
+        }	
+        console.log(document.cookie);
+	}
+
 	vectorField(){
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
