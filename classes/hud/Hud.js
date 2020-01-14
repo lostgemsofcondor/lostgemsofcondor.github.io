@@ -8,6 +8,15 @@ class Hud {
         this.hudImg.src = "./sprites/hud/hud.png";
         this.width = 255;
         this.height = 1080;
+
+        //this.items = [];
+
+        this.inventoryX = 9;
+        this.inventoryY = 510;
+
+        this.temp = 0;
+        this.temp2 = 0;
+
     }
 
     get offset(){
@@ -23,6 +32,7 @@ class Hud {
         //this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addHealthBar();
+        this.drawItems()
     }
 
     addHealthBar(){
@@ -61,7 +71,28 @@ class Hud {
         //this.addToContext(game.map.grass.img, x, y, game.map.grass.width, game.map.grass.height);
     }
 
-    handleClickStart(x, y){
-        new Item(x, y, "arrow");
+    inventorySlotX(x){
+        return this.offset + this.inventoryX + x * 63;
     }
+    
+    inventorySlotY(y){
+        return this.inventoryY + y * 63;
+    }
+
+    handleClickStart(x, y){
+        new ItemEntity("arrow");
+    }
+
+    drawItems(){
+        for(var j = 0; j < game.inventory.height; j++){
+            for(var i = 0; i < game.inventory.width; i++){
+                if(game.inventory.get(i, j)){
+                    var img = game.itemSprites[game.inventory.get(i, j).itemSpriteKey];
+                    this.context.drawImage(img, this.inventorySlotX(game.inventory.get(i, j).x), this.inventorySlotY(game.inventory.get(i, j).y));
+                    
+                }
+            }
+        }
+	}
+    
 }
