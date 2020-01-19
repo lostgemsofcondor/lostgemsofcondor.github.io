@@ -74,7 +74,7 @@ class Hud {
     }
 
     handleClick(x, y){
-        if(game.mouse.leftClickDownStart){
+        if(game.mouse.left.start){
             this.handleClickStart(x, y);
         } else {
             console.log("continue click");

@@ -1,11 +1,8 @@
 class Mouse {
 	constructor(){
-		this.leftClickDown = false;
-		// this.leftClickDownStart = false;
-		this.leftClickTick = 0;
-		this.rightClickDown = false;
-		// this.rightClickDownStart = false;
-		this.rightClickTick = 0;
+		this.left = new Button(true);
+		this.right = new Button(true);
+		
 		this._point = new Point(0, 0);
 		this.x = 0;
 		this.y = 0;
@@ -18,36 +15,26 @@ class Mouse {
 		this._point.setCords(this.x, this.y);
 		return this._point;
 	}
-
-	get leftClickDownStart(){
-		return this.leftClickDown ? this.leftClickTick == game.gameTick : false;
-	}
 	
-	get rightClickDownStart(){
-		return this.rightClickDown ? this.rightClickTick == game.gameTick : false;
-	}
-	
-	clickDownLeft(x, y){
+	clickLeft(x, y){
 		this.move(x, y);
 		this.onHud = game.hud.clickOnHud(x, y);
-		this.leftClickTick = game.gameTick + game.blockIO + 1;
-		this.leftClickDown = true;
+		this.left.press();
 	}
 	
-	clickUpLeft(){
-		this.leftClickDown = false;
+	clickLeftRelease(){
+		this.left.release();
 	}
 	
-	clickDownRight(x, y){
+	clickRight(x, y){
 		this.move(x, y);
 		this.onHud = game.hud.clickOnHud(x, y);
-		this.rightClickTick = game.gameTick + game.blockIO + 1;
-		this.rightClickDown = true;
+		this.right.press();
 		
 	}
 	
-	clickUpRight(){
-		this.rightClickDown = false;
+	clickRightRelease(){
+		this.right.release();
 	}
 	
 	move(x, y){

@@ -15,7 +15,7 @@ var drawTimeMax = 0;
 var fpsMax = 60;
 var fps = 0;
 var adjust = 0;
-var debug = false;
+var debug = new Debug();
 var debugDrawing = false;
 
 //var p = new Perlin();
@@ -97,7 +97,6 @@ function sleep(ms){
 function gameLoop(){
 	mainGameLoop();
 	redraw();
-	game.blockIO = false;
 }
 
 function redraw(){
@@ -117,12 +116,12 @@ function draw(){
 	drawObjects();
 	drawHud();
 
-
-	debugOld();
+	debug.draw();
+	//debugOld();
 }
 
 function debugOld(){
-	
+
 	drawDebugThings();
 	addDebugText();
 }
@@ -308,20 +307,20 @@ function handelMouseDown(){
 	var canvasY = event.clientY / canvasDiv.offsetHeight * canvas.height;
 	//0 left, 1 middle, 2 right
 	if(event.button == 0){
-		game.mouse.clickDownLeft(canvasX, canvasY);
+		game.mouse.clickLeft(canvasX, canvasY);
 	}
 	if(event.button == 2){
-		game.mouse.clickDownRight(canvasX, canvasY);
+		game.mouse.clickRight(canvasX, canvasY);
 	}
 }
 
 function handelMouseUp(){
 	//0 left, 1 middle, 2 right
 	if(event.button == 0){
-		game.mouse.clickUpLeft();
+		game.mouse.clickLeftRelease();
 	}
 	if(event.button == 2){
-		game.mouse.clickUpRight();
+		game.mouse.clickRightRelease();
 	}
 }
 

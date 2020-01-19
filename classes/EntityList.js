@@ -34,10 +34,10 @@ class ObjectLink {
 
     //only use for sorting
     getVertical(){
-        if(this.tickUpdated >= game.gameTick){
+        if(this.tickUpdated >= game.mainTick){
             return this.vertical;
         }
-        this.tickUpdated = game.gameTick;
+        this.tickUpdated = game.mainTick;
         this.vertical = game.get(this.key).sprite.adjustYCord();
         return this.vertical;
     }

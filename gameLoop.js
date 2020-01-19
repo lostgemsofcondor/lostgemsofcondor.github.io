@@ -17,8 +17,7 @@ var zoomIn = "187";
 /// end constants
 
 function mainGameLoop(){
-	game.blockIO = true; // gets set to false after redraw
-	game.gameTick++;
+	game.incrementTick();
 	game.bulletCollisionDetection();
 	
 	readKeys();
@@ -45,7 +44,7 @@ function setCookies(){
 }
 
 function handleClicks(){
-	if(game.mouse.leftClickDown){
+	if(game.mouse.left.down){
 		if(game.mouse.onHud){
 			game.hud.handleClick(game.mouse.x, game.mouse.y);
 		} else {
@@ -69,13 +68,12 @@ function handelZoom(){
 
 function handleDebug(){
 	if(key.startDebug){
-		debug = true;
-		debugDrawing = true;
+		debug.setAllDebug(true);
 	}
 }
 
 function handleShooting(){
-	game.player.handelShoot(game.mouse.point.positionX, game.mouse.point.positionY, game.mouse.leftClickDownStart);
+	game.player.handelShoot(game.mouse.point.positionX, game.mouse.point.positionY);
 }
 
 function XNOR(a, b){

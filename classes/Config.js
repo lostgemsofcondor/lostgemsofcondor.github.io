@@ -1,4 +1,4 @@
-class Config{
+class Config {
     constructor(){
         this.debugLevel = 5;
         this.adjustment = 1/32;

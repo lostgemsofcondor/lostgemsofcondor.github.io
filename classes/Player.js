@@ -1,4 +1,4 @@
-class Player extends Entity{
+class Player extends Entity {
 	constructor(){
 		// super("player", speed, 0, 0, 48, 48);
 		super(0, 0);
@@ -15,13 +15,12 @@ class Player extends Entity{
 		// this.positionY = 0;
 	}
 
-	handelShoot(x, y, leftClickDownStart){
-		if(leftClickDownStart || game.gameTick >= this.lastShot + this.dexterity){
-			this.lastShot = game.gameTick;
+	handelShoot(x, y){
+		if((debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
+			this.lastShot = debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
 			var arrow = new Bullet(this.positionX, this.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4).setSpeed(10).setDimensions(48, 48).setRotates(false).setBaseDamage(1);
 			arrow.AI = new BulletAI(arrow, angle, 100);
-
 		}
 	}
 
@@ -45,12 +44,16 @@ class Player extends Entity{
 	handleStats(){
 		if(this.lastRegen + this.getRegenTime() < game.gameTick){
 			this.lastRegen = game.gameTick;
-			this.health += 1;
+			this.heal(1);
 		}
 	}
 
 	getRegenTime(){
 		return this.baseRege;
+	}
+
+	heal(h){
+		this.health = Math.min(h + this.health, this.maxHealth);
 	}
 	
 }

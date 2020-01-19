@@ -115,7 +115,7 @@ class Entity {
 	}
 
 	move(){
-		if((!this.moving || game.paused)){
+		if((!this.moving)){
 			return;
 		}
 		var newX = this.positionX + Math.cos(this.angle)*this.speed;

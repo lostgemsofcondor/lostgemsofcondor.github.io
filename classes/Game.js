@@ -17,7 +17,7 @@ class Game {
 		this.angle = Math.PI/4;
 		this.rotateSpeed = this.config.rotateSpeed/180 * Math.PI;
 		this.gameTick = 0;
-		this.blockIO = false;
+		this.mainTick = 0;
 		this.paused = false;
 		
 		this.entities = []; //does not include player
@@ -85,6 +85,13 @@ class Game {
 		// AI.AI = new CircleAI(0, 200);
 		// this.add(AI);
 		
+	}
+
+	incrementTick(){
+		if(!this.paused){
+			this.gameTick++;
+		}
+		this.mainTick++;
 	}
 	
 	loadSave(){
@@ -171,6 +178,8 @@ class Game {
 				var e = this.get(o.key);
 				e.update();
 			});
+		} else if(debug.overRideMove){
+			game.player.update();
 		}
 	}
 
@@ -280,5 +289,6 @@ class Game {
 			}
 		}
 	}
+
 
 }
