@@ -29,8 +29,8 @@ function mainGameLoop(){
 	handleClicks();
 	handleDebug();
 	
-	game.updateAI();
-	game.moveAllObjects();
+	//game.updateAI();
+	game.updateAllObjects();
 	game.updateText();
 	
 	game.adjustCameraToPlayer();
@@ -127,7 +127,7 @@ function handleMove(){
 		// game.player.positionY += Math.sin(game.player.angle)*game.player.speed;
 		// game.player.positionX += Math.cos(game.player.angle)*game.player.speed;
 		game.player.moving = true;
-		game.player.move();
+		// game.player.move();
 	} else {
 		game.player.moving = false;
 	}

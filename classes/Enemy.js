@@ -3,7 +3,7 @@ class Enemy extends Entity{
 		super(x, y);
 
 		game.add(this);
-		this.maxHealth = 100;
+		this.maxHealth = 4;
 		this.health = this.maxHealth;
 		this.drawHealth = false;
 		// this.key = 0; // for game class
@@ -13,7 +13,7 @@ class Enemy extends Entity{
 	
 	struck(bullet){
 		this.drawHealth = true;
-		var damage = 25;
+		var damage = bullet.getDamage();
 		var t = new Text(this.x, this.y, "-" + damage).setColor(game.config.healthRed).setOffset(this.height);
 		this.health -= damage; 
 		if(this.health <= 0){

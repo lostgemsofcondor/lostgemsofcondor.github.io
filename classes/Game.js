@@ -20,8 +20,8 @@ class Game {
 		this.blockIO = false;
 		this.paused = false;
 		
-		this.objects = []; //does not include player
-		this.objectIDNext = 1;
+		this.entities = []; //does not include player
+		this.entitieIDNext = 1;
 		this.entityList = new EntityList();
 		this.text = [];
 		this.textIDNext = 0;
@@ -113,23 +113,23 @@ class Game {
 	}
 
 	add(object){
-		object.key = this.objectIDNext; // Player reserves the 0th space
-		this.objectIDNext++;
-		this.objects[object.key] = object;
+		object.key = this.entitieIDNext; // Player reserves the 0th space
+		this.entitieIDNext++;
+		this.entities[object.key] = object;
 		
 		this.entityList.add(object.key);
 	}
 
 	delete(object){
 		this.entityList.delete(object.key)
-		delete this.objects[object.key];
+		delete this.entities[object.key];
 	}
 	
 	get(key){
 		if(key == 0){
 			return this.player;
 		} else {
-			return this.objects[key];
+			return this.entities[key];
 		}
 	}
 	
@@ -144,8 +144,8 @@ class Game {
 	
 	adjustAllSpriteDirections(){
 		this.player.adjustSpriteDirection();
-		for(var i in game.objects){
-			this.objects[i].adjustSpriteDirection();
+		for(var i in this.entities){
+			this.entities[i].adjustSpriteDirection();
 		}
 	}
 	
@@ -156,38 +156,44 @@ class Game {
 	}
 	
 	adjustCamera(){
-		this.cameraX = (this.width - game.hud.width) / 2 - this.cameraCenterX ;
+		this.cameraX = (this.width - this.hud.width) / 2 - this.cameraCenterX ;
 		this.cameraY = this.height*.7 - this.cameraCenterY;
 		
 	}
 
-	moveAllObjects(){
-		
-		for(var i in game.objects){
-			this.objects[i].move();
+	updateAllObjects(){
+		// for(var i in this.entities){
+		// 	this.entities[i].update();
+		// }
+		//update player too
+		if(!this.paused){
+			this.entityList.list.forEach(o => {
+				var e = this.get(o.key);
+				e.update();
+			});
 		}
 	}
 
-	updateAI(){
+	// updateAI(){
 		
-		for(var i in game.objects){
-			var e = this.objects[i];
-			if(e.AI){
-				e.AI.calculate(e);
-			}
-		}
-	}
+	// 	for(var i in this.entities){
+	// 		var e = this.entities[i];
+	// 		if(e.AI){
+	// 			e.AI.calculate(e);
+	// 		}
+	// 	}
+	// }
 
 	bulletCollisionDetection(){
 		// var vert = -99999;
-		// game.entityList.list.forEach(o => {
+		// this.entityList.list.forEach(o => {
 			// if(vert > o.vertical){
 				// console.log("failed");
 			// }
 			// vert = o.vertical;
 		// });
 		
-		// game.entityList.list and enemies is sorted here
+		// this.entityList.list and enemies is sorted here
 		// can do binary search
 
 		var enemies = this.getEnemies();
@@ -205,8 +211,8 @@ class Game {
 				}
 			}
 			//bullet and player collision
-			if(bullets[j] && !bullets[j].friendly && bullets[j].collides(game.player)){
-				game.player.struck(bullets[j]);
+			if(bullets[j] && !bullets[j].friendly && bullets[j].collides(this.player)){
+				this.player.struck(bullets[j]);
 				this.delete(bullets[j]);
 				delete bullets[j];
 				j++
@@ -228,8 +234,8 @@ class Game {
 
 	getEnemies(){
 		var enemies = [];
-		for(var i in game.objects){
-			var e = game.objects[i];
+		for(var i in this.entities){
+			var e = this.entities[i];
 			if(e instanceof Enemy){
 				enemies.push(e);
 			}
@@ -239,8 +245,8 @@ class Game {
 	
 	getBullets(){
 		var bullets = [];
-		for(var i in game.objects){
-			var e = game.objects[i];
+		for(var i in this.entities){
+			var e = this.entities[i];
 			if(e instanceof Bullet){
 				bullets.push(e);
 			}
@@ -249,25 +255,25 @@ class Game {
 	}
 		
     getSolids(){
-        if(this.tickUpdated >= game.gameTick){
+        if(this.tickUpdated >= this.gameTick){
 			return this.solids;
 		}
 		
 		this.solids = [];
-		for(var i in game.objects){
-			var e = game.objects[i];
+		for(var i in this.entities){
+			var e = this.entities[i];
 			if(e.solid){
 				this.solids.push(e);
 			}
 		}
-		this.tickUpdated = game.gameTick;
+		this.tickUpdated = this.gameTick;
         return this.solids;
     }
 
 	updateText(){
-		for(var i in game.text){
-			var t = game.text[i];
-			if(game.gameTick >= t.deathTick){
+		for(var i in this.text){
+			var t = this.text[i];
+			if(this.gameTick >= t.deathTick){
 				this.deleteText(t);
 			} else {
 				t.update();

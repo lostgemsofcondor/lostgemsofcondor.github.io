@@ -30,6 +30,15 @@ class Hud {
         this.canvas.height = game.height;
     }
 
+    redraw(){
+        this.clearCanvas();
+        this.draw();
+    }
+
+    clearCanvas(){
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
     draw(){
         //this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);

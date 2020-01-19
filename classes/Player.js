@@ -6,8 +6,11 @@ class Player extends Entity{
 		this.key = 0; // for game class
 		this.dexterity = 15;
 		this.lastShot = -this.dexterity;
-		this.maxHealth = 100;
+		this.maxHealth = 10;
 		this.health = this.maxHealth;
+
+		this.baseRege = 300;
+		this.lastRegen = -1;
 		// this.positionX = 0;
 		// this.positionY = 0;
 	}
@@ -16,7 +19,7 @@ class Player extends Entity{
 		if(leftClickDownStart || game.gameTick >= this.lastShot + this.dexterity){
 			this.lastShot = game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
-			var arrow = new Bullet(this.positionX, this.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4).setSpeed(10).setDimensions(48, 48).setRotates(false);
+			var arrow = new Bullet(this.positionX, this.positionY).setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4).setSpeed(10).setDimensions(48, 48).setRotates(false).setBaseDamage(1);
 			arrow.AI = new BulletAI(arrow, angle, 100);
 
 		}
@@ -24,16 +27,30 @@ class Player extends Entity{
 
 	struck(bullet){
 		this.drawHealth = true;
-		var damage = 5;
+		var damage = bullet.getDamage();
 		var t = new Text(this.x, this.y, "-" + damage).setColor(game.config.healthRed).setOffset(this.height);
 		this.health -= damage; 
 		if(this.health <= 0){
-			this.die()
+			this.die();
 		}
 	}
-	
+
 	die(){
 		//console.log("you died");
 		//game.delete(this);
+		game.paused = true;
 	}
+
+	// might need to go in entity.js
+	handleStats(){
+		if(this.lastRegen + this.getRegenTime() < game.gameTick){
+			this.lastRegen = game.gameTick;
+			this.health += 1;
+		}
+	}
+
+	getRegenTime(){
+		return this.baseRege;
+	}
+	
 }

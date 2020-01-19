@@ -117,12 +117,18 @@ function draw(){
 	drawObjects();
 	drawHud();
 
+
+	debugOld();
+}
+
+function debugOld(){
+	
 	drawDebugThings();
 	addDebugText();
 }
 
 function drawHud(){
-	game.hud.draw();
+	game.hud.redraw();
 
 	addToContext(game.hud.canvas, 0, 0, game.hud.canvas.width, game.hud.canvas.height);
 

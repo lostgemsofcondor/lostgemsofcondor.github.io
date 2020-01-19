@@ -65,15 +65,15 @@ function drawDebugThings(){
 	drawDebugThings.markSprite(game.player.sprite);
 	drawDebugThings.direction(game.player);
 	// try {
-	// 	drawDebugThings.markSprite(game.objects[0].sprite);
-	// 	drawDebugThings.direction(game.objects[0]);
-	// 	drawDebugThings.mark(game.objects[0]);
+	// 	drawDebugThings.markSprite(game.entities[0].sprite);
+	// 	drawDebugThings.direction(game.entities[0]);
+	// 	drawDebugThings.mark(game.entities[0]);
 	// } catch {}
 
-	Object.keys(game.objects).forEach(i => {
-		//drawDebugThings.markSprite(game.objects[i].sprite);
-		drawDebugThings.direction(game.objects[i]);
-		drawDebugThings.mark(game.objects[i]);
+	Object.keys(game.entities).forEach(i => {
+		//drawDebugThings.markSprite(game.entities[i].sprite);
+		drawDebugThings.direction(game.entities[i]);
+		drawDebugThings.mark(game.entities[i]);
 	});
 
 	drawDebugThings.drawCircle(game.mouse.point.x, game.mouse.point.y, 10);

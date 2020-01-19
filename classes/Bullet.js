@@ -22,4 +22,13 @@ class Bullet extends Entity{
 		return this;
 	}
 
+	setBaseDamage(setBaseDamage){
+		this.setBaseDamage = setBaseDamage;
+		return this;
+	}
+
+	getDamage(){
+		return this.setBaseDamage; 
+	}
+
 }

@@ -98,8 +98,24 @@ class Entity {
 		}
 	}
 
+	update(){
+		this.move();
+		this.handleStats();
+		this.updateAI();
+	}
+	updateAI(){
+		if(this.AI){
+			this.AI.calculate(this);
+		}
+	}
+
+	handleStats(){
+		//implemented in Player.js and Enemy.js
+		return;
+	}
+
 	move(){
-		if((!this.moving || game.paused) && this.key != 0){
+		if((!this.moving || game.paused)){
 			return;
 		}
 		var newX = this.positionX + Math.cos(this.angle)*this.speed;
