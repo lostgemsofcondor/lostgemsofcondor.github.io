@@ -27,7 +27,7 @@ class Player extends Entity {
 	struck(bullet){
 		this.drawHealth = true;
 		var damage = bullet.getDamage();
-		var t = new Text(this.x, this.y, "-" + damage).setColor(game.config.healthRed).setOffset(this.height);
+		this.risingText("-" + damage, game.config.healthRed);
 		this.health -= damage; 
 		if(this.health <= 0){
 			this.die();
@@ -53,7 +53,12 @@ class Player extends Entity {
 	}
 
 	heal(h){
-		this.health = Math.min(h + this.health, this.maxHealth);
+		// might use Math.floor
+		var healed = Math.min(h + this.health, this.maxHealth) - this.health;
+		if(healed > 0){
+			this.risingText("+" + healed, game.config.healthGreen);
+			this.health += healed;
+		}
 	}
 	
 }

@@ -14,7 +14,7 @@ class Enemy extends Entity {
 	struck(bullet){
 		this.drawHealth = true;
 		var damage = bullet.getDamage();
-		var t = new Text(this.x, this.y, "-" + damage).setColor(game.config.healthRed).setOffset(this.height);
+		this.risingText("-" + damage, game.config.healthRed);
 		this.health -= damage; 
 		if(this.health <= 0){
 			this.die()

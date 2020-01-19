@@ -187,4 +187,8 @@ class Entity {
 		
 		return d <= (this.width + e.width) / 2;
 	}
+
+	risingText(text, color = game.config.gray){
+		new Text(this.x, this.y, text).setColor(color).setOffset(this.height);
+	}
 }
