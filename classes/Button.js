@@ -10,7 +10,7 @@ class Button {
     }
 
     press(){
-		this.tick = this.getCurrentTick();
+		this.tick = this.getCurrentTick() + 1;
 		this.down = true;
     }
 

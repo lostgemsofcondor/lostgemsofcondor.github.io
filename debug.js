@@ -90,10 +90,10 @@ class Debug {
 
 	getMouse(){
 		this.str = "";
-		this.str += game.mouse.left. Down ? "left " : "";
-		this.str += game.mouse.left. Start ? "pressed " : "";
-		this.str += game.mouse.left. Down ? "right " : "";
-		this.str += game.mouse.left. Start ? "pressed " : "";
+		this.str += game.mouse.left.down ? "left " : "";
+		this.str += game.mouse.left.start ? "pressed " : "";
+		this.str += game.mouse.left.down ? "right " : "";
+		this.str += game.mouse.left.start ? "pressed " : "";
 		return this.str;
 	}
 }

@@ -22,6 +22,7 @@ class Enemy extends Entity {
 	}
 	
 	die(){
+		game.player.risingText("10xp");
 		game.delete(this);
 	}
 }
