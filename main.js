@@ -11,6 +11,7 @@ var drawTime = 0;
 var frameTime = 0;
 var drawTimeMax = 0;
 
+var game = new Game();
 
 var fpsMax = 60;
 var fps = 0;
@@ -19,7 +20,6 @@ var debug = new Debug();
 var debugDrawing = false;
 
 //var p = new Perlin();
-var game = new Game();
 //game.keyMap = {};
 window.onload = startUp;
 
@@ -174,8 +174,8 @@ function copyMap(chunk){
 	// var p = new Point(0, 0);
 	var adjXPlayer = game.cameraCenterX + game.cameraX;
 	var adjYPlayer = game.cameraCenterY + game.cameraY;
-	var adjXZero = chunk.positionX + game.cameraX - game.map.tileSize/2;
-	var adjYZero = chunk.positionY + game.cameraY - game.map.tileSize/2;
+	var adjXZero = chunk.positionX + game.cameraX - chunk.offsetX;
+	var adjYZero = chunk.positionY + game.cameraY - chunk.offsetY;
 	context.save();
 	context.translate(adjXPlayer , adjYPlayer);
 	context.rotate(game.angle);
@@ -335,31 +335,3 @@ function addCanvas(){
 	var canvas = document.createElement("canvas");
 	return canvas;
 }
-/*
-var num = 0;
-class t {
-	constructor(){
-		this.x = Math.random();
-	}
-
-	get i(){
-		var x = [];
-		for(var i = 0; i < 100; i++){
-			x.push(Math.random());
-		}
-		x.sort();
-		num++;
-		return this.x;
-	}
-}
-
-function test(){
-	var x = [];
-	for(var i = 0; i < 100; i++){
-		x.push(new t());
-	}
-	x.sort((a,b) => (a.i - b.i));
-	console.log(num);
-}
-
-*/

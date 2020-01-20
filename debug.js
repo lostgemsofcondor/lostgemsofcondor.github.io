@@ -5,6 +5,8 @@ class Debug {
 		this.setAllDebug(false);
 		this.keys = "";
 		this.str = "";
+		this.drawDebugThings = new DrawDebugThings();
+		this.debugInfo = new DebugInfo();
 	}
 
 	setAllDebug(bool){
@@ -13,66 +15,67 @@ class Debug {
 	}
 
 	draw(){
-		this.drawDebugThings();
-		this.addDebugText();
+		this.drawThings();
+		this.addText();
 	}
 	
-	drawDebugThings(){
+	drawThings(){
 		if(!this.debugging) return;
 		context.fillStyle = "#000000";
-		var drawDebugThings = new DrawDebugThings(game.config.debugLevel);
-		drawDebugThings.drawPixel(0, 0);
-		drawDebugThings.drawCircle(0, 0, 30);
-		//drawDebugThings.drawPixel(game.player.positionX, game.player.positionY);
-		//drawDebugThings.drawCircle(game.player.positionX, game.player.positionY, 30);
-		//drawDebugThings.drawPixel(200, 200);
-		//drawDebugThings.drawCircle(200, 200, 30);
-		drawDebugThings.mark(game.player);
-		drawDebugThings.markSprite(game.player.sprite);
-		drawDebugThings.direction(game.player);
+		this.drawDebugThings.drawPixel(0, 0);
+		this.drawDebugThings.drawCircle(0, 0, 30);
+		//this.drawDebugThings.drawPixel(game.player.positionX, game.player.positionY);
+		//this.drawDebugThings.drawCircle(game.player.positionX, game.player.positionY, 30);
+		//this.drawDebugThings.drawPixel(200, 200);
+		//this.drawDebugThings.drawCircle(200, 200, 30);
+		this.drawDebugThings.mark(game.player);
+		this.drawDebugThings.markSprite(game.player.sprite);
+		this.drawDebugThings.direction(game.player);
 		// try {
-		// 	drawDebugThings.markSprite(game.entities[0].sprite);
-		// 	drawDebugThings.direction(game.entities[0]);
-		// 	drawDebugThings.mark(game.entities[0]);
+		// 	this.drawDebugThings.markSprite(game.entities[0].sprite);
+		// 	this.drawDebugThings.direction(game.entities[0]);
+		// 	this.drawDebugThings.mark(game.entities[0]);
 		// } catch {}
 
 		Object.keys(game.entities).forEach(i => {
-			//drawDebugThings.markSprite(game.entities[i].sprite);
-			drawDebugThings.direction(game.entities[i]);
-			drawDebugThings.mark(game.entities[i]);
+			//this.drawDebugThings.markSprite(game.entities[i].sprite);
+			this.drawDebugThings.direction(game.entities[i]);
+			this.drawDebugThings.mark(game.entities[i]);
 		});
 
-		drawDebugThings.drawCircle(game.mouse.point.x, game.mouse.point.y, 10);
+		this.drawDebugThings.drawCircle(game.mouse.point.x, game.mouse.point.y, 10);
 	}
 
-	addDebugText(){
+	addText(){
 		if(!this.debugging) return;
 		context.fillStyle = "#000000";
 		context.textAlign = "left";
-		var debugInfo = new DebugInfo(game.config.debugLevel);
-		debugInfo.add("fps: " + fps.toFixed(0), 1);
-		debugInfo.add("Width: " + canvas.width, 5);
-		debugInfo.add("Height: " + canvas.height, 5);
-		debugInfo.add("Draw Time: " + drawTime, 4);
-		debugInfo.add("Frame Time: " + frameTime, 3);
-		debugInfo.add("Frame Time Max: " + drawTimeMax, 2);
-		debugInfo.add("performance.now: " + performance.now(), 4);
-		debugInfo.add("Frame Time: " + frameTime, 4);
-		debugInfo.add("adjust: " + adjust, 4);
-		debugInfo.add("Keys Pressed: " + this.getKeys(), 3);
-		debugInfo.add("Mouse clicked: " + this.getMouse(), 3);
-		debugInfo.add("Mouse clicked on hud: " + game.mouse.onHud, 3);
-		debugInfo.add("Player Position X: " + game.player.positionX.toFixed(2), 2);
-		debugInfo.add("Player Position Y: " + game.player.positionY.toFixed(2), 2);
-		debugInfo.add("Player Angle: " + game.player.angle, 4);
-		debugInfo.add("Player Angle Absolute: " + game.player.angleAbsolute, 4);
-		debugInfo.add("Game Angle: " + game.angle, 4);
-		debugInfo.add("Game cameraX: " + game.cameraX, 4);
-		debugInfo.add("Game cameraY: " + game.cameraY, 4);
-		debugInfo.add("Game tick: " + game.gameTick, 3);
-		debugInfo.add("Chunk X: " + game.map.currentChunkX(), 4);
-		debugInfo.add("Chunk Y: " + game.map.currentChunkY(), 4);
-		debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
+		this.debugInfo.reset();
+		this.debugInfo.add("fps: " + fps.toFixed(0), 1);
+		this.debugInfo.add("Width: " + canvas.width, 5);
+		this.debugInfo.add("Height: " + canvas.height, 5);
+		this.debugInfo.add("Draw Time: " + drawTime, 4);
+		this.debugInfo.add("Frame Time: " + frameTime, 3);
+		this.debugInfo.add("Frame Time Max: " + drawTimeMax, 2);
+		this.debugInfo.add("performance.now: " + performance.now(), 4);
+		this.debugInfo.add("Frame Time: " + frameTime, 4);
+		this.debugInfo.add("adjust: " + adjust, 4);
+		this.debugInfo.add("Keys Pressed: " + this.getKeys(), 3);
+		this.debugInfo.add("Mouse clicked: " + this.getMouse(), 3);
+		this.debugInfo.add("Mouse clicked on hud: " + game.mouse.onHud, 3);
+		this.debugInfo.add("Player Position X: " + game.player.positionX.toFixed(2), 2);
+		this.debugInfo.add("Player Position Y: " + game.player.positionY.toFixed(2), 2);
+		this.debugInfo.add("Player Angle: " + game.player.angle, 4);
+		this.debugInfo.add("Player Angle Absolute: " + game.player.angleAbsolute, 4);
+		this.debugInfo.add("Game Angle: " + game.angle, 4);
+		this.debugInfo.add("Game cameraX: " + game.cameraX, 4);
+		this.debugInfo.add("Game cameraY: " + game.cameraY, 4);
+		this.debugInfo.add("Game tick: " + game.gameTick, 3);
+		this.debugInfo.add("Chunk X: " + game.map.currentChunkX(), 4);
+		this.debugInfo.add("Chunk Y: " + game.map.currentChunkY(), 4);
+		this.debugInfo.add("Chunk under mouse X: " + game.map.getChunkX(game.mouse.point.x), 4);
+		this.debugInfo.add("Chunk under mouse Y: " + game.map.getChunkY(game.mouse.point.y), 4);
+		this.debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
 	}
 
 	getKeys(){
@@ -96,9 +99,7 @@ class Debug {
 }
 
 class DrawDebugThings {
-	constructor(level){
-		this.level = level;
-
+	constructor(){
 	}
 
 	drawPixel(x, y){
@@ -150,12 +151,15 @@ class DrawDebugThings {
 
 
 class DebugInfo {
-	constructor(level = 0){
+	constructor(){
+	}
+
+	reset(){
 		this.font = game.zoom/1080*20 +"px Verdana,sans-serif";
 		this.leftMargin = 10;
 		this.gap = game.zoom/1080*20;
 		this.lines = 0;
-		this.level = level;
+		this.level = game.config.debugLevel;
 		context.font = this.font;
 	}
 	

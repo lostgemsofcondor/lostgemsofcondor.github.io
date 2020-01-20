@@ -9,6 +9,6 @@ class Tile {
 
     draw(mapContext, i, j){
         
-        mapContext.drawImage(this.img, i - (this.width - this.tileSize*1.5)/2, j - (this.height - this.tileSize*1.5)/2, this.width, this.height);
+        mapContext.drawImage(this.img, i, j, this.width, this.height);
     }
 }

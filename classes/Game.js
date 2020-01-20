@@ -34,7 +34,9 @@ class Game {
 		this.inventory = new Inventory(4, 5);
 
         this.solids = null;
-        this.solidsTickUpdated = -1;
+		this.solidsTickUpdated = -1;
+		
+		// ********************* Start Temp Enemy creation ****************
 		
 		// new Enemy("player", 1, 350, -35, 48, 48, true);
 		var m = 35;
@@ -75,15 +77,8 @@ class Game {
 		// this.add(axe);
 
 		
-		// var name = new Enemy("player", 5, 100, 100, 48, 48, true);
-		// name.AI = new BuilderAI(name, 5*60, 60,
-				             // new CircleAI(0, 100),
-							 // new AI(name));
 
 		//this.vectorField();
-		// var AI = new Entity("player", 1, 350, -35, 48, 48, true);
-		// AI.AI = new CircleAI(0, 200);
-		// this.add(AI);
 		
 	}
 
