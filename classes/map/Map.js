@@ -6,22 +6,22 @@ class Map {
 		this.collisionMap = [];
 		//this.currentMapFunction = this.arenaMap;
 
-		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
-		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize);
-		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize);
-		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize);
-		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize);
-		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize);
+		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1");
+		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize, "#BF9E72");
+		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize, "#43A047");
+		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize, "#29753E");
+		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize, "#333333");
+		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize, "#E5E5E5");
 
 		
-		this.pwater = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
-		this.psand = new Tile("./sprites/background/pallete2/sandBasic.png", 96, 96, this.tileSize);
-		this.pgrass = new Tile("./sprites/background/pallete2/grassBasic.png", 96, 96, this.tileSize);
-		this.pforest = new Tile("./sprites/background/pallete2/forestBasic.png", 96, 96, this.tileSize);
-		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize);
-		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize);
+		this.pwater = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1");
+		this.psand = new Tile("./sprites/background/pallete2/sandBasic.png", 96, 96, this.tileSize, "#E5BB85");
+		this.pgrass = new Tile("./sprites/background/pallete2/grassBasic.png", 96, 96, this.tileSize, "#43A047");
+		this.pforest = new Tile("./sprites/background/pallete2/forestBasic.png", 96, 96, this.tileSize, "#58668E");
+		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize, "#333333");
+		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize, "#7F7F7F");
 
-		this.chunkSize = 30;
+		this.chunkSize = 32;
 		this.chunks = [];
 
 		this.lastChunkX = null;

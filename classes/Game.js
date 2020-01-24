@@ -29,6 +29,7 @@ class Game {
 		this.entityList.add(0); // Add player
 		
 		this.loadSave();
+		this.miniMap = new MiniMap();
 		this.hud = new Hud();
 		this.itemSprites = new ItemSprites();
 		this.inventory = new Inventory(4, 5);

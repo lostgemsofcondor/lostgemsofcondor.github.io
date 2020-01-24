@@ -17,7 +17,7 @@ onmessage = function(e) {
             obj.noise
             var altitude = p.perlinRec(i + args.x * args.chunkSize, j + args.y * args.chunkSize, [300, 12], [.95, .05]);
             if(altitude > .35  && altitude < .75){
-                obj.noise = altitude * .96 + (Math.random()*.04);
+                obj.noise = altitude * .96 + (p.randomHash(i, j)*.04);
             } else {
                 obj.noise = p.perlinRec(i + args.x * args.chunkSize, j + args.y * args.chunkSize, [300, 12], [.97, .03])
             }
@@ -62,7 +62,7 @@ class Perlin {
         var dy = y - iy;
     
         // Compute the dot-product
-        return (dx*this.hash(iy, ix)[0] + dy*this.hash(iy, ix)[1]);
+        return (dx*this.vectorHash(iy, ix)[0] + dy*this.vectorHash(iy, ix)[1]);
     }
 
     fade(x){
@@ -116,7 +116,13 @@ class Perlin {
             v0 += ((v1<<4) + this.bigPrime) ^ (v1 + sum) ^ ((v1>>5) + this.bigPrime2);
             v1 += ((v0<<4) + this.bigPrime) ^ (v0 + sum) ^ ((v0>>5) + this.bigPrime2);
         }
-        switch (Math.abs(v0) % 4){
+
+        return (x + y) % 2 ? v0 : v1;
+    }
+
+    vectorHash(x, y){
+
+        switch (Math.abs(this.hash(x, y)) % 4){
             case 0:
                 return [1, 1]
             case 1:
@@ -126,6 +132,11 @@ class Perlin {
             case 3:
                 return [-1, -1]
         }
+    }
+
+    randomHash(x, y){
+        var bigNum = (1 << 20);
+        return (Math.abs(this.hash(x, y)) % bigNum) / bigNum;
     }
     
     drawPixel(x, y, color){

@@ -114,6 +114,7 @@ function draw(){
 	})
 	//copyMap(game.map.chunks[0].canvas);
 	drawObjects();
+	drawMiniMap();
 	drawHud();
 
 	debug.draw();
@@ -124,6 +125,11 @@ function debugOld(){
 
 	drawDebugThings();
 	addDebugText();
+}
+
+function drawMiniMap(){
+	game.miniMap.redraw();
+	addToContext(game.miniMap.canvas, game.miniMap.offsetX, game.miniMap.offsetY, game.miniMap.canvas.width, game.miniMap.canvas.height);
 }
 
 function drawHud(){
