@@ -1,5 +1,6 @@
 
 class Map {
+	
 	constructor(){
 		game.map = this;
 		this.tileSize = 48;
@@ -34,7 +35,7 @@ class Map {
 		//add the 9 chunks
 		for(var i = -this.resolution; i <= this.resolution; i++){
 			for(var j = -this.resolution; j <= this.resolution; j++){
-				game.map.chunks.push(new MapChunk(i, j, game.map.tileSize, game.map.chunkSize));
+				this.chunks.push(new MapChunk(i, j, this.tileSize, this.chunkSize));
 			}
 		}
 	}

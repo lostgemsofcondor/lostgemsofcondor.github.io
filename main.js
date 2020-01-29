@@ -178,14 +178,14 @@ function drawHealth(e){
 
 function copyMap(chunk){
 	// var p = new Point(0, 0);
-	var adjXPlayer = game.cameraCenterX + game.cameraX;
-	var adjYPlayer = game.cameraCenterY + game.cameraY;
+	var adjXCamera = game.cameraCenterX + game.cameraX;
+	var adjYCamera = game.cameraCenterY + game.cameraY;
 	var adjXZero = chunk.positionX + game.cameraX - chunk.offsetX;
 	var adjYZero = chunk.positionY + game.cameraY - chunk.offsetY;
 	context.save();
-	context.translate(adjXPlayer , adjYPlayer);
+	context.translate(adjXCamera , adjYCamera);
 	context.rotate(game.angle);
-	context.translate(-adjXPlayer, -adjYPlayer);
+	context.translate(-adjXCamera, -adjYCamera);
 	addToContext(chunk.canvas, adjXZero, adjYZero);
 	//context.drawImage(mapCanvas, 0, 0);
 	//context.translate(-positionX, -positionY);
@@ -340,4 +340,8 @@ function handelMouseMove(){
 function addCanvas(){
 	var canvas = document.createElement("canvas");
 	return canvas;
+}
+
+function correctMod(a, b){
+	return ((a % b) + b) % b;
 }

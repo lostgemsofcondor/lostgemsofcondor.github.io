@@ -93,7 +93,7 @@ class MapChunk {
 				}
 				//self.collisionMap.push(collisionLine);
 			}
-			game.miniMap.addChunk(imgData, self.x, self.y, self.chunkSize);
+			game.miniMap.addChunkImage(imgData, self.x, self.y, self.chunkSize);
 		}
 		
 		this.clear = false;

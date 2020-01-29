@@ -1,107 +1,38 @@
-class MapChunk {
-	constructor(x, y, tileSize, chunkSize){
+class MiniMapChunk {
+	constructor(x, y, miniChunkSize){
 		this.x = x;
 		this.y = y;
-		this.tileSize = tileSize;
-		this.chunkSize = chunkSize;
+		this.miniChunkSize = miniChunkSize;
 
 		this.collisionMap = [];
 		
-		this.clear = true;
+		//this.clear = true;
 		this.canvas = addCanvas();
 		this.context = this.canvas.getContext("2d");
-
-		this.offsetX = this.tileSize / 2;
-		this.offsetY = this.tileSize / 2;
 		
-		this.canvas.width = this.tileSize * this.chunkSize + this.offsetX * 2;
-		this.canvas.height = this.tileSize * this.chunkSize + this.offsetY * 2;
-
-		// this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize);
-		// this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
+		this.canvas.width = this.miniChunkSize;
+		this.canvas.height = this.miniChunkSize;
+		this.reload();
 		
-		this.mapWorker = new Worker('classes/map/MapWorker.js');
+		this.unbound = false;
 	}
 
-	load(){
-		var self = this;
-		var message = {
-			chunkSize: this.chunkSize,
-			x: this.x,
-			y: this.y,
-		}
-		this.mapWorker.postMessage(message);
-		this.mapWorker.onmessage = function(e) {
-			self.collisionMap = [];
-			var imgData = game.miniMap.context.createImageData(self.chunkSize, self.chunkSize);
-			
-			for(var j = 0; j < self.chunkSize; j += 1){
-				self.collisionMap.push([]);
-			}
-			for(var j = 0; j < self.chunkSize; j += 1){
-				for(var i = 0; i < self.chunkSize; i += 1){
-					var noCollision = true;
-					var pallet = e.data.map[i][j].pallet;
-					var noise = e.data.map[i][j].noise;
-					var tile; 
-					if(noise < .3){
-						noCollision = false;
-						tile = game.map.water;
-						// mapContext.drawImage(water, i, j, width, height);
-					} else {
-						if(pallet > .5){
-							if(noise < .4){
-								tile = game.map.sand;
-							}else if(noise < .55){
-								tile = game.map.grass;
-							}else if(noise < .7){
-								tile = game.map.forest;
-							}else if(noise < .8){
-								tile = game.map.moutain;
-							}else{
-								tile = game.map.snow;
-							}
-						} else {
-							if(noise < .4){
-								tile = game.map.psand;
-							}else if(noise < .55){
-								tile = game.map.grass;
-							}else if(noise < .7){
-								tile = game.map.pforest;
-							}else if(noise < .8){
-								tile = game.map.pmoutain;
-							}else{
-								tile = game.map.psnow;
-							}
-						}
-					}
-
-					tile.draw(self.context, i * self.tileSize, j * self.tileSize);
-					
-					var pos = ((j) * self.chunkSize + i)*4;
-					// imgData.data[pos] = j;
-					// imgData.data[pos+1] = j;
-					// imgData.data[pos+2] = j;
-					// imgData.data[pos+3] = 255;
-					imgData.data[pos] = tile.r;
-					imgData.data[pos+1] = tile.g;
-					imgData.data[pos+2] = tile.b;
-					imgData.data[pos+3] = 255;
-
-					self.collisionMap[i][j] = noCollision;
-					//collisionLine.push(noCollision);
-				}
-				//self.collisionMap.push(collisionLine);
-			}
-			game.miniMap.addChunk(imgData, self.x, self.y, self.chunkSize);
-		}
-		
-		this.clear = false;
-	}
 	get positionX(){
-		return this.x * this.tileSize * this.chunkSize;
+		return this.x * this.miniChunkSize;
 	}
+
 	get positionY(){
-		return this.y * this.tileSize * this.chunkSize;
+		return this.y * this.miniChunkSize;
 	}
+
+	reload(){
+		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		//this.context.strokeRect(0, 0, this.canvas.width, this.canvas.height);
+		
+	}
+
+	putImageData(imgData, x, y){ // x and y in terms of pixels
+		this.context.putImageData(imgData, x, y);
+	}
+
 }
