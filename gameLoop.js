@@ -35,6 +35,8 @@ function mainGameLoop(){
 	game.adjustCameraToPlayer();
 	game.map.adjustChunks();
 
+	game.spawns();
+
 	setCookies();
 	//game.entityList.sort();
 }

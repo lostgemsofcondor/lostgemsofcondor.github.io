@@ -5,7 +5,7 @@ class MapChunk {
 		this.tileSize = tileSize;
 		this.chunkSize = chunkSize;
 
-		this.collisionMap = [];
+		this.tileMap = [];
 		
 		this.clear = true;
 		this.canvas = addCanvas();
@@ -32,20 +32,20 @@ class MapChunk {
 		}
 		this.mapWorker.postMessage(message);
 		this.mapWorker.onmessage = function(e) {
-			self.collisionMap = [];
+			self.tileMap = [];
 			var imgData = game.miniMap.context.createImageData(self.chunkSize, self.chunkSize);
 			
 			for(var j = 0; j < self.chunkSize; j += 1){
-				self.collisionMap.push([]);
+				self.tileMap.push([]);
 			}
 			for(var j = 0; j < self.chunkSize; j += 1){
 				for(var i = 0; i < self.chunkSize; i += 1){
-					var noCollision = true;
+					//var noCollision = true;
 					var pallet = e.data.map[i][j].pallet;
 					var noise = e.data.map[i][j].noise;
 					var tile; 
 					if(noise < .3){
-						noCollision = false;
+						//noCollision = false;
 						tile = game.map.water;
 						// mapContext.drawImage(water, i, j, width, height);
 					} else {
@@ -88,7 +88,7 @@ class MapChunk {
 					imgData.data[pos+2] = tile.b;
 					imgData.data[pos+3] = 255;
 
-					self.collisionMap[i][j] = noCollision;
+					self.tileMap[i][j] = tile;
 					//collisionLine.push(noCollision);
 				}
 				//self.collisionMap.push(collisionLine);

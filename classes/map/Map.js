@@ -7,20 +7,20 @@ class Map {
 		this.collisionMap = [];
 		//this.currentMapFunction = this.arenaMap;
 
-		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1");
-		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize, "#BF9E72");
-		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize, "#43A047");
-		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize, "#29753E");
-		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize, "#333333");
-		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize, "#E5E5E5");
+		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1", null, false);
+		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize, "#BF9E72", game.spawnService.sand, true);
+		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize, "#43A047", null, true);
+		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize, "#29753E", null, true);
+		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize, "#333333", game.spawnService.mountain, true);
+		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize, "#E5E5E5", game.spawnService.mountain, true);
 
 		
-		this.pwater = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1");
-		this.psand = new Tile("./sprites/background/pallete2/sandBasic.png", 96, 96, this.tileSize, "#E5BB85");
-		this.pgrass = new Tile("./sprites/background/pallete2/grassBasic.png", 96, 96, this.tileSize, "#43A047");
-		this.pforest = new Tile("./sprites/background/pallete2/forestBasic.png", 96, 96, this.tileSize, "#58668E");
-		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize, "#333333");
-		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize, "#7F7F7F");
+		this.pwater = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1", null, false);
+		this.psand = new Tile("./sprites/background/pallete2/sandBasic.png", 96, 96, this.tileSize, "#E5BB85", game.spawnService.sand, true);
+		this.pgrass = new Tile("./sprites/background/pallete2/grassBasic.png", 96, 96, this.tileSize, "#43A047", null, true);
+		this.pforest = new Tile("./sprites/background/pallete2/forestBasic.png", 96, 96, this.tileSize, "#58668E", null, true);
+		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize, "#333333", game.spawnService.mountain, true);
+		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize, "#7F7F7F", game.spawnService.mountain, true);
 
 		this.chunkSize = 32;
 		this.chunks = [];
@@ -117,21 +117,30 @@ class Map {
 		return Math.floor(y / (this.chunkSize * this.tileSize));
 	}
 
-	noCollsion(x, y){
+	getTile(x, y){
 		var chunkX = this.getChunkX(x);
 		var chunkY = this.getChunkY(y);
 		for(var i = 0; i < this.chunks.length; i++){
 			if(this.chunks[i].x == chunkX && this.chunks[i].y == chunkY){
 				var mapX = Math.floor(x / this.tileSize) - chunkX*this.chunkSize;
-				var line = this.chunks[i].collisionMap[mapX];
+				var line = this.chunks[i].tileMap[mapX];
 				if(line){
 					var mapY = Math.floor(y / this.tileSize) - chunkY*this.chunkSize;
-					return line[mapY] == null ? true : line[mapY];
+					return line[mapY] == null ? null : line[mapY];
 				} else {
-					return false;
+					return null;
 				}
 			}
 		}
-		return false;
+		return null;
+	}
+
+	noCollsion(x, y){
+		var tile = this.getTile(x, y);
+		if(tile){
+			return tile.noCollision;
+		} else {
+			return false;
+		}
 	}
 }

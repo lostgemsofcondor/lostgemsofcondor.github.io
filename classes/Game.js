@@ -4,6 +4,7 @@ class Game {
 		this.keyMap = {};
 		this.mouse = new Mouse();
 		this.config = new Config();
+		this.spawnService = new SpawnService();
 		
 		var playerSpeed = 15;
 		this.player = new Player().setImage("player").setSpeed(playerSpeed).setDimensions(48, 48);
@@ -23,10 +24,12 @@ class Game {
 		this.entities = []; //does not include player
 		this.entitieIDNext = 1;
 		this.entityList = new EntityList();
+		
 		this.text = [];
 		this.textIDNext = 0;
 		this.map = new Map();
 		this.entityList.add(0); // Add player
+
 		
 		this.loadSave();
 		this.miniMap = new MiniMap();
@@ -38,12 +41,12 @@ class Game {
 		this.solidsTickUpdated = -1;
 		
 		// ********************* Start Temp Enemy creation ****************
-		
+		/*
 		// new Enemy("player", 1, 350, -35, 48, 48, true);
 		var m = 35;
 		for(var i = 0; i < 10*m; i += m){
 			for(var j = 0; j < 10*m; j += m){
-				var e = new Enemy(i, j).setImage("player").setDimensions(48, 48).setMoving(true).setSpeed(1);
+				var e = new Enemy(i, j).setImage("enemy/crab").setDimensions(48, 48).setMoving(true).setSpeed(1);
 				e.AI = new CombineAI(
 				            new ShootAI(),
 				            new BuilderAI(3000, 6000,
@@ -77,7 +80,7 @@ class Game {
 		// axe.AI = new WeaponAI();
 		// this.add(axe);
 
-		
+		*/
 
 		//this.vectorField();
 		
@@ -286,5 +289,18 @@ class Game {
 		}
 	}
 
-
+	spawns(){
+		if(!this.paused){
+			var r = 1200;
+			var amount = 10;
+			for(var theta = 0; theta <= Math.PI*2; theta += Math.PI*2/amount){
+				var x = this.player.positionX + r*Math.cos(theta);
+				var y = this.player.positionY + r*Math.sin(theta);
+				var tile = this.map.getTile(x, y);
+				if(tile && tile.spawn){
+					tile.spawn(x, y);
+				}
+			}
+		}
+	}
 }

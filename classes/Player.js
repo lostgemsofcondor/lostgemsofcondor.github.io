@@ -6,7 +6,7 @@ class Player extends Entity {
 		this.key = 0; // for game class
 		this.dexterity = 15;
 		this.lastShot = -this.dexterity;
-		this.maxHealth = 10;
+		this.maxHealth = 1000;
 		this.health = this.maxHealth;
 
 		this.baseRege = 300;

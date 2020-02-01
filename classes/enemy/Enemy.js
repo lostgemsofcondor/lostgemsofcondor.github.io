@@ -10,6 +10,12 @@ class Enemy extends Entity {
 		// this.positionX = 0;
 		// this.positionY = 0;
 	}
+
+	setMaxHealth(maxHealth){
+		this.maxHealth = maxHealth;
+		this.health = this.maxHealth;
+		return this;
+	}
 	
 	struck(bullet){
 		this.drawHealth = true;
