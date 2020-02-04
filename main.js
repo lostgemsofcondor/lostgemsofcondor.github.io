@@ -164,9 +164,9 @@ function drawObjects(){
 }
 
 function drawHealth(e){
-	var x = e.sprite.adjustXCord() - e.sprite.width / 2;
+	var width = (e.sprite.width + 48)/2;
+	var x = e.sprite.adjustXCord() - width / 2;
 	var y = e.sprite.adjustYCord() + 3;
-	var width = e.sprite.width;
 	var height = 6;
 	context.fillStyle = game.config.healthGreen;
 	context.fillRect(x, y, width, height);

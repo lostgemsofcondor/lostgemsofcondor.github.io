@@ -58,6 +58,7 @@ class Game {
 			}
 		}
 		
+		*/
 		var m = 100;
 		for(var i = 500; i < 500 + 5*m; i += m){
 			for(var j = 800; j < 800 + 5*m; j += m){
@@ -80,7 +81,7 @@ class Game {
 		// axe.AI = new WeaponAI();
 		// this.add(axe);
 
-		*/
+		
 
 		//this.vectorField();
 		
