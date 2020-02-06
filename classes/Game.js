@@ -63,7 +63,7 @@ class Game {
 		for(var i = 500; i < 500 + 5*m; i += m){
 			for(var j = 800; j < 800 + 5*m; j += m){
 				//var tree = new Enemy("./sprites/trees/tree.png", 0, i, j, 60, 60, false, 0, true);
-				var tree = new Enemy(i, j).setImage("./sprites/trees/tree.png", 0).setDimensions(60, 60).setSolid(true);
+				var tree = new Enemy(i, j).setImage("./sprites/trees/palm.png", 0).setDimensions(96, 96).setSolid(true);
 			}
 		}
 		
