@@ -1,6 +1,6 @@
 class BulletAI {
-	constructor(entity, angle, life){
-		entity.angle = angle;
+	constructor(entity, life){
+		//entity.angle = angle;
         this.timeOfDeath = game.gameTick + life;
 	}
 	

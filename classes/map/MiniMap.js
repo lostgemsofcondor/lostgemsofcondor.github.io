@@ -1,6 +1,6 @@
 class MiniMap {
-	
 	constructor(){
+		game.miniMap = this;
 		this.canvas = addCanvas();
 		this.context = this.canvas.getContext("2d");
 		this.size = 200;
@@ -19,7 +19,7 @@ class MiniMap {
 		
 		this.icons = [];
 
-		this.icons.push(new Icon(game.player.key, "./sprites/miniMap/playerIcon.png"));
+		new Icon(game.player.key, "./sprites/miniMap/playerIcon.png");
         
 		this.resolution = 1;
 		for(var i = -this.resolution; i <= this.resolution; i++){
@@ -27,7 +27,9 @@ class MiniMap {
 				this.chunks.push(new MiniMapChunk(i, j, this.miniChunkSize));
 			}
 		}
-  	}
+	}
+	  
+
 
 	redraw(){
 			this.context.fillStyle = game.config.gray;
@@ -57,6 +59,14 @@ class MiniMap {
 		this.context.drawImage(chunk.canvas, adjXZero, adjYZero);
 		
 		this.context.restore();
+	}
+
+	addIcon(icon){
+		this.icons[icon.key] = icon;
+	}
+
+	deleteIcon(key){
+		delete this.icons[key];
 	}
 
 	drawIcons(){

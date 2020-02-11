@@ -4,6 +4,8 @@ class Bullet extends Entity{
 		this.moving = true;
 		this.noCollsion = true;
 		this.friendly = true;
+		this.piercing = false;
+		this.hit = [];
 
 		game.add(this);
 		// this.key = 0; // for game class
@@ -14,6 +16,11 @@ class Bullet extends Entity{
 	
 	setFriendly(friendly){
 		this.friendly = friendly;
+		return this;
+	}
+
+	setPiercing(piercing){
+		this.piercing = piercing;
 		return this;
 	}
 

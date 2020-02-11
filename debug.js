@@ -159,13 +159,14 @@ class DebugInfo {
 		this.leftMargin = 10;
 		this.gap = game.zoom/1080*20;
 		this.lines = 0;
+		this.offset = game.miniMap.offsetY + game.miniMap.size
 		this.level = game.config.debugLevel;
 		context.font = this.font;
 	}
 	
 	add(str, level=0){
 		if(level <= this.level){
-			context.fillText(str, this.leftMargin, this.gap * (this.lines + 1));
+			context.fillText(str, this.leftMargin, this.gap * (this.lines + 1) + this.offset);
 			this.lines++;
 		}
 	}

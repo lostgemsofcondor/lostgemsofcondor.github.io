@@ -19,6 +19,8 @@ class Icon {
         this.image.src = icon;
         this.width = width;
         this.height = height;
+
+        game.miniMap.addIcon(this);
     }
     
 	adjustXCordSprite(){
