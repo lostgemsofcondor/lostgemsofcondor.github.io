@@ -6,6 +6,9 @@ class Mouse {
 		this._point = new Point(0, 0);
 		this.x = 0;
 		this.y = 0;
+
+		this.heldItem = -1;
+		this.holdingItem = false;
 		
 		this.onHud = false;
 	}
@@ -24,6 +27,7 @@ class Mouse {
 	
 	clickLeftRelease(){
 		this.left.release();
+		game.hud.clickLeftRelease
 	}
 	
 	clickRight(x, y){

@@ -5,5 +5,5 @@ class Save {
         
     }
 
-    // this class does not have functions do to cookies
+    // this class does not have functions due to cookies
 }

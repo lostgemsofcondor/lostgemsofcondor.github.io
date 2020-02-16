@@ -1,12 +1,17 @@
 class Button {
     constructor(main){
 		this.down = false;
-        this.tick = 0;
+		this.tick = 0;
+		this.downTick = 0;
         this.main = main;
     }
 
     get start(){
         return this.down ? this.tick == this.getCurrentTick() : false;
+	}
+	
+    get end(){
+        return !this.down ? this.downTick == this.getCurrentTick() : false;
     }
 
     press(){
@@ -15,6 +20,7 @@ class Button {
     }
 
     release(){
+		this.downTick = this.getCurrentTick() + 1;
 		this.down = false;
     }
 

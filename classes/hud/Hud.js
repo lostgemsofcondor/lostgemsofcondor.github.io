@@ -76,6 +76,9 @@ class Hud {
     handleClick(x, y){
         if(game.mouse.left.start){
             this.handleClickStart(x, y);
+        } else if(game.mouse.left.end){
+            this.handleClickEnd(x, y);
+
         } else {
             console.log("continue click");
         }
@@ -93,10 +96,29 @@ class Hud {
     handleClickStart(x, y){
         var x = this.getSlotX(x);
         var y = this.getSlotY(y);
-        if(x != null && y != null && game.inventory.get(x, y) == null){
-            var item = new ItemEntity("arrow");
-            item.move(x, y);
+        if(x != null && y != null && game.inventory.get(x, y)){
+            var item = game.inventory.get(x, y);
+            if(item != null){
+                this.clickItem(item);
+            }
         }
+    }
+
+    handleClickEnd(x, y){
+        var x = this.getSlotX(x);
+        var y = this.getSlotY(y);
+        if(x != null && y != null && game.inventory.get(x, y) == null){
+            var item = game.inventory.getWithKey(game.mouse.heldItem);
+            item.move(x, y);
+            //move selected item
+        }
+        game.mouse.holdingItem = false;
+        game.mouse.heldItem = -1;
+    }
+
+    clickItem(item){
+        game.mouse.holdingItem = true;
+        game.mouse.heldItem = item.itemKey;
     }
 
     getSlotX(x){
@@ -120,10 +142,14 @@ class Hud {
     drawItems(){
         for(var j = 0; j < game.inventory.height; j++){
             for(var i = 0; i < game.inventory.width; i++){
-                if(game.inventory.get(i, j)){
-                    var img = game.itemSprites[game.inventory.get(i, j).itemSpriteKey];
-                    this.context.drawImage(img, this.inventorySlotX(game.inventory.get(i, j).x), this.inventorySlotY(game.inventory.get(i, j).y));
-                    
+                var item = game.inventory.get(i, j);
+                if(item != null){
+                    var img = game.itemSprites[item.itemSpriteKey];
+                    if(game.mouse.heldItem == item.itemKey){
+                        this.context.drawImage(img, game.mouse.x, game.mouse.y);
+                    } else {
+                        this.context.drawImage(img, this.inventorySlotX(item.x), this.inventorySlotY(item.y));
+                    }
                 }
             }
         }

@@ -53,7 +53,11 @@ function handleClicks(){
 			handleShooting();
 		}
 	}
-
+	if(game.mouse.left.end){
+		if(game.mouse.onHud){
+			game.hud.handleClick(game.mouse.x, game.mouse.y);
+		}
+	}
 }
 
 function handelZoom(){

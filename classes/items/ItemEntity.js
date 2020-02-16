@@ -1,11 +1,12 @@
 class ItemEntity {
 
     get data(){
-        return game.save.inventory[this.Id];
+        return game.save.inventory[this.itemKey];
     }
 
     set data(data){
-        game.save.inventory[this.Id] = data;
+        game.save.inventory[this.itemKey] = data;
+        game.save.inventory[this.itemKey].itemKey = this.itemKey;
     }
 
 	get x(){
@@ -42,11 +43,23 @@ class ItemEntity {
 	set itemSpriteKey(itemSpriteKey) {
 		this.data.itemSpriteKey = itemSpriteKey;
     }
+
+    // get itemKey(){
+    //     return this.data.itemKey;
+    // }
     
-	constructor(itemSpriteKey, amount = 1){
-        this.Id = game.save.itemIdNext;
-        game.save.itemIdNext++;
+	temp(itemKey){
+        if(itemKey == null){
+            this.itemKey = game.save.itemIdNext;
+            game.save.itemIdNext++;
+        } else {
+            this.itemKey = itemKey;
+        }
+    }
+
+    constructor(itemSpriteKey, amount = 1){
         this.data = {};
+        //this.data._Id = this._Id;
 
 		// this.x = game.inventory.nextX();
         // this.y = game.inventory.nextY();
@@ -55,6 +68,7 @@ class ItemEntity {
         this.amount = amount;
 
         game.inventory.add(this);
+
     }
 
     move(x, y){

@@ -16,6 +16,7 @@ class Inventory {
         for(var i in game.save.inventory){
             if(game.save.inventory[i].location = this.location){
                 this.inv[game.save.inventory[i].y][game.save.inventory[i].x] = i;
+                //game.items[i] = 
             }
         }
     }
@@ -25,7 +26,7 @@ class Inventory {
         if(oldX != null && oldY != null){
             this.inv[oldY][oldX] = null;
         }
-        this.inv[item.y][item.x] = item.Id;
+        this.inv[item.y][item.x] = item.itemKey;
     }
 
     get(x, y){
@@ -33,6 +34,10 @@ class Inventory {
             return game.save.inventory[this.inv[y][x]];
         }
         return null;
+    }
+
+    getWithKey(key){
+        return game.save.inventory[key];
     }
 
     valid(x, y){
@@ -43,7 +48,7 @@ class Inventory {
         for(var j = 0; j < this.height; j++){
             for(var i = 0; i < this.width; i++){
                 if(this.inv[j][i] == null){
-                    this.inv[j][i] = item.Id;
+                    this.inv[j][i] = item.itemKey;
                     item.move(i, j);
                     return true;
                 }
