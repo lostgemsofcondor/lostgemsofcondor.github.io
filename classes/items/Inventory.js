@@ -14,7 +14,7 @@ class Inventory {
         }
 
         for(var i in game.save.inventory){
-            if(game.save.inventory[i].location = this.location){
+            if(game.save.inventory[i].location == this.location){
                 this.inv[game.save.inventory[i].y][game.save.inventory[i].x] = i;
                 //game.items[i] = 
             }
@@ -31,13 +31,13 @@ class Inventory {
 
     get(x, y){
         if(this.valid(x, y) && this.inv[y][x] != null){
-            return game.save.inventory[this.inv[y][x]];
+            return new ItemEntity(this.inv[y][x]);
         }
         return null;
     }
 
     getWithKey(key){
-        return game.save.inventory[key];
+        return new ItemEntity(key);
     }
 
     valid(x, y){
@@ -54,5 +54,6 @@ class Inventory {
                 }
             }
         }
+        return false;
     }
 }

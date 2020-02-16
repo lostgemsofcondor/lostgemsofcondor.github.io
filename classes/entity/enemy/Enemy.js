@@ -25,5 +25,12 @@ class Enemy extends Mortal {
 		}
 		game.player.risingText("10xp");
 		game.delete(this);
+		
+		var item = new ItemEntity().newEntity("amethyst", "inventory");
+		var item = new ItemEntity().newEntity("emerald", "inventory");
+		var item = new ItemEntity().newEntity("ruby", "inventory");
+		var item = new ItemEntity().newEntity("topaz", "inventory");
+		var item = new ItemEntity().newEntity("diamond", "inventory");
+		var item = new ItemEntity().newEntity("sapphire", "inventory");
 	}
 }

@@ -47,12 +47,6 @@ class Game {
 		this.solidsTickUpdated = -1;
 		
 		// ********************* Start Temp Enemy creation ****************
-		var item = new ItemEntity("amethyst");
-		var item = new ItemEntity("emerald");
-		var item = new ItemEntity("ruby");
-		var item = new ItemEntity("topaz");
-		var item = new ItemEntity("diamond");
-		var item = new ItemEntity("sapphire");
 		/*
 		// new Enemy("player", 1, 350, -35, 48, 48, true);
 		

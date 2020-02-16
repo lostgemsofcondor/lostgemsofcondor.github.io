@@ -107,7 +107,7 @@ class Hud {
     handleClickEnd(x, y){
         var x = this.getSlotX(x);
         var y = this.getSlotY(y);
-        if(x != null && y != null && game.inventory.get(x, y) == null){
+        if(game.mouse.holdingItem && x != null && y != null && game.inventory.get(x, y) == null){
             var item = game.inventory.getWithKey(game.mouse.heldItem);
             item.move(x, y);
             //move selected item
@@ -140,18 +140,23 @@ class Hud {
     }
 
     drawItems(){
+        var heldItem = null
         for(var j = 0; j < game.inventory.height; j++){
             for(var i = 0; i < game.inventory.width; i++){
                 var item = game.inventory.get(i, j);
                 if(item != null){
-                    var img = game.itemSprites[item.itemSpriteKey];
                     if(game.mouse.heldItem == item.itemKey){
-                        this.context.drawImage(img, game.mouse.x, game.mouse.y);
+                        heldItem = item;
                     } else {
+                        var img = game.itemSprites[item.itemSpriteKey];
                         this.context.drawImage(img, this.inventorySlotX(item.x), this.inventorySlotY(item.y));
                     }
                 }
             }
+        }
+        if(heldItem != null){
+            var img = game.itemSprites[heldItem.itemSpriteKey];
+            this.context.drawImage(img, game.mouse.x, game.mouse.y);
         }
 	}
     

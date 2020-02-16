@@ -48,7 +48,7 @@ class ItemEntity {
     //     return this.data.itemKey;
     // }
     
-	temp(itemKey){
+	constructor(itemKey){
         if(itemKey == null){
             this.itemKey = game.save.itemIdNext;
             game.save.itemIdNext++;
@@ -57,18 +57,17 @@ class ItemEntity {
         }
     }
 
-    constructor(itemSpriteKey, amount = 1){
+    newEntity(itemSpriteKey, location, amount = 1){
         this.data = {};
-        //this.data._Id = this._Id;
-
-		// this.x = game.inventory.nextX();
-        // this.y = game.inventory.nextY();
+        
         this.itemSpriteKey = itemSpriteKey;
-        this.location = "inventory";
         this.amount = amount;
-
-        game.inventory.add(this);
-
+        
+        if(game.inventory.add(this)){
+            this.location = location;
+            return true;
+        }
+        return false;
     }
 
     move(x, y){
