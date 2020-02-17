@@ -1,6 +1,7 @@
 class Mortal extends Entity {
     constructor(x, y){
-        super(x, y);
+		super(x, y);
+		this.dead = false;
     }
 
 	setMaxHealth(maxHealth){
@@ -14,8 +15,9 @@ class Mortal extends Entity {
 		var damage = bullet.getDamage();
 		this.risingText("-" + damage, game.config.healthRed);
 		this.health -= damage; 
-		if(this.health <= 0){
-			this.die()
+		if(this.health <= 0 && !this.dead){
+			this.dead = true;
+			this.die();
 		}
 	}
     

@@ -116,14 +116,14 @@ class Hud {
     }
 
     handleClickEnd(x, y){
-        var x = this.getSlotX(x);
-        var y = this.getSlotY(y);
-        if(game.mouse.holdingItem && x != null && y != null && game.inventory.get(x, y) == null){
+        var slotX = this.getSlotX(x);
+        var slotY = this.getSlotY(y);
+        if(game.mouse.holdingItem && slotX != null && slotY != null && game.inventory.get(slotX, slotY) == null){
             var item = game.inventory.getWithKey(game.mouse.heldItem);
-            item.move(x, y);
+            item.move(slotX, slotY);
             //move selected item
-        }
-        if(!game.mouse.clickOnHud && game.mouse.holdingItem){
+        } 
+        if(!this.clickOnHud(x, y) && game.mouse.holdingItem){
             var item = game.inventory.getWithKey(game.mouse.heldItem);
             item.droppedByPlayer = true;
             game.player.drop(item);
