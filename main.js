@@ -143,8 +143,12 @@ function drawObjects(){
 	game.entityList.sort();
 	//sorting gets handled after all movement 
 	game.entityList.list.forEach(o => {
-		var e = game.get(o.key);
-		addSprite(e.sprite);
+		try{
+			var e = game.get(o.key);
+			addSprite(e.sprite);
+		} catch(err){
+			console.log("could not draw sprite for " + e.constructor.name + ": " + o.key + "\n" + err.message)
+		}
 		if(e.drawHealth){
 			drawHealth(e);
 		}

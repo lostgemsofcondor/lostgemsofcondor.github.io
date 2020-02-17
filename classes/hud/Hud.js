@@ -112,6 +112,12 @@ class Hud {
             item.move(x, y);
             //move selected item
         }
+        if(!game.mouse.clickOnHud && game.mouse.holdingItem){
+            var item = game.inventory.getWithKey(game.mouse.heldItem);
+            item.droppedByPlayer = true;
+            game.player.drop(item);
+            
+        }
         game.mouse.holdingItem = false;
         game.mouse.heldItem = -1;
     }

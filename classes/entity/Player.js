@@ -21,7 +21,17 @@ class Player extends Mortal {
 		if((debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
 			this.lastShot = debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
-			this.shoot(angle);
+			if(key.spaceBar){
+				var arrow = game.inventory.getWithItemSpriteKey("arrow");
+				if(arrow != null){
+					arrow.delete();
+				}
+				this.shoot = game.bulletService.newTripleArrow();
+				this.shoot(angle);
+			} else {
+				this.shoot = game.bulletService.newSwipeMedium();
+				this.shoot(angle);
+			}
 		}
 	}
 

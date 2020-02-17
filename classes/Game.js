@@ -12,7 +12,7 @@ class Game {
 			.setImage("player")
 			.setSpeed(playerSpeed)
 			.setDimensions(48, 48)
-			.setMaxHealth(1000);
+			.setMaxHealth(20);
 		this.width;
 		this.height;
 		this.zoom = 1080;
@@ -105,7 +105,6 @@ class Game {
 		
         // do this in Save.js
         try{
-            //this.save = JSON.parse('{"inventory":[{"itemSpriteKey":"arrow","location":"inventory","amount":1,"x":0,"y":0}],"itemIdNext":1}');
             this.save = JSON.parse(document.cookie);
         } catch {
 			console.log("error with save conversion");
@@ -118,7 +117,6 @@ class Game {
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
 			for(var j = 0; j < 50*m; j += m){
-				// var vector = new Entity("empty", 1, i, j, 0, 0, false);
 				var vector = new Entity(i, j)
 					.setImage("empty")
 					.setDimensions(0, 0)
@@ -179,9 +177,6 @@ class Game {
 	}
 
 	updateAllObjects(){
-		// for(var i in this.entities){
-		// 	this.entities[i].update();
-		// }
 		//update player too
 		if(!this.paused){
 			this.entityList.list.forEach(o => {
@@ -197,25 +192,17 @@ class Game {
 		}
 	}
 
-	// updateAI(){
-		
-	// 	for(var i in this.entities){
-	// 		var e = this.entities[i];
-	// 		if(e.AI){
-	// 			e.AI.calculate(e);
-	// 		}
-	// 	}
-	// }
+	pickUpItems(){
+		var droppedItems = this.getDroppedItems();
+		for(var i = 0; i < droppedItems.length; i++){
+			if(droppedItems[i].collides(this.player)){
+				droppedItems[i].getPicked();
+			}
+		}
+
+	}
 
 	bulletCollisionDetection(){
-		// var vert = -99999;
-		// this.entityList.list.forEach(o => {
-			// if(vert > o.vertical){
-				// console.log("failed");
-			// }
-			// vert = o.vertical;
-		// });
-		
 		// this.entityList.list and enemies is sorted here
 		// can do binary search
 
@@ -254,19 +241,7 @@ class Game {
 					j++
 				}
 			}
-
 		}
-		
-		
-		// enemies.forEach(e => {
-			// bullets.forEach(b => {
-				// if(b.collides(e)){
-					// this.delete(b);
-					// this.delete(e);
-				// }
-			// });
-		// });
-
 	}
 
 	getEnemies(){
@@ -289,6 +264,17 @@ class Game {
 			}
 		}
 		return bullets;
+	}
+	
+	getDroppedItems(){
+		var droppedItem = [];
+		for(var i in this.entities){
+			var e = this.entities[i];
+			if(e instanceof DroppedItem){
+				droppedItem.push(e);
+			}
+		}
+		return droppedItem;
 	}
 		
     getSolids(){

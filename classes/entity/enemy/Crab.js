@@ -13,4 +13,10 @@ class Crab extends Enemy {
                 new AI()));
         this.shoot = game.bulletService.newSwipeMedium(false);
     }
+
+    die(){
+		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow");
+
+        super.die();
+    }
 }

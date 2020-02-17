@@ -40,6 +40,18 @@ class Inventory {
         return new ItemEntity(key);
     }
 
+    getWithItemSpriteKey(itemSpriteKey){
+        for(var y = 0; y < this.height; y++){
+            for(var x = 0; x < this.width; x++){
+                var item = new ItemEntity(this.inv[y][x]);
+                if(item.data && item.itemSpriteKey == itemSpriteKey){
+                    return item;
+                }
+            }
+        }
+        
+    }
+
     valid(x, y){
         return x >= 0 && x < this.width && y >= 0 && y < this.height;
     }
@@ -55,5 +67,9 @@ class Inventory {
             }
         }
         return false;
+    }
+
+    delete(item){
+        delete this.inv[item.y][item.x];
     }
 }

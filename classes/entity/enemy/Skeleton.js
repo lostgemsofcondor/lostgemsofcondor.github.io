@@ -14,4 +14,13 @@ class Skeleton extends Enemy {
                 new AI()));
         this.shoot = game.bulletService.newTripleArrow(false);
     }
+
+    
+    die(){
+		var drops = ["amethyst", "emerald", "ruby", "topaz", "diamond", "sapphire"]
+		var drop = drops[Math.floor(Math.random() * drops.length)]
+		new DroppedItem(this.x, this.y).setItemSpriteKey(drop)
+
+        super.die();
+    }
 }

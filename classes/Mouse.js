@@ -12,6 +12,7 @@ class Mouse {
 		
 		this.onHud = false;
 	}
+	
 
 	
 	get point(){

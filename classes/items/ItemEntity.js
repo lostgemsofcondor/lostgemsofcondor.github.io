@@ -79,4 +79,17 @@ class ItemEntity {
             game.inventory.update(this, oldX, oldY);
         }
     }
+
+    drop(x, y){
+        new DroppedItem(x, y).setItemSpriteKey(this.itemSpriteKey).setDroppedByPlayer(this.droppedByPlayer);
+        this.delete();
+    }
+
+    delete(){
+        console.log("Item delete");
+        game.inventory.delete(this)
+        delete game.save.inventory[this.itemKey];
+        //game.save.inventory.splice(this.itemKey, 1);
+    }
+
 }

@@ -1,6 +1,6 @@
 class Save {
 	constructor(){
-        this.inventory = [];
+        this.inventory = {};
         this.itemIdNext = 0;
         
     }

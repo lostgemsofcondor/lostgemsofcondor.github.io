@@ -18,9 +18,10 @@ var zoomIn = "187";
 
 function mainGameLoop(){
 	game.incrementTick();
-	game.bulletCollisionDetection();
-	
 	readKeys();
+	game.bulletCollisionDetection();
+	game.pickUpItems();
+	
 	handleRotate();
 	handelZoom();
 	handleMove();
@@ -151,4 +152,5 @@ function readKeys(){
 	key.startDebug = keys.includes(startDebug);
 	key.zoomOut = keys.includes(zoomOut);
 	key.zoomIn = keys.includes(zoomIn);
+	key.spaceBar = keys.includes("32"); //never going to change
 }

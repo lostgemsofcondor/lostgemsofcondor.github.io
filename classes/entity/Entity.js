@@ -30,6 +30,8 @@ class Entity {
 		this.moving = false;
 		this.solid = false;
 		this.friendly = false;
+		this.age = 0;
+
 		this.setRotates(true);
 		
 		this.key; //defined in adding to game
@@ -102,6 +104,7 @@ class Entity {
 	update(){
 		this.move();
 		this.handleStats();
+		this.age++;
 	}
 	updateAI(){
 		if(this.AI){
@@ -192,5 +195,9 @@ class Entity {
 		new Text(this.x, this.y, text)
 			.setColor(color)
 			.setOffset(this.height);
+	}
+
+	drop(item){
+		item.drop(this.x, this.y);
 	}
 }
