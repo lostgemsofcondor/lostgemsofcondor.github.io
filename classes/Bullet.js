@@ -6,6 +6,8 @@ class Bullet extends Entity{
 		this.friendly = true;
 		this.piercing = false;
 		this.hit = [];
+		this.itemSpriteKey = null;
+		this.baseDamage = 1;
 
 		game.add(this);
 		// this.key = 0; // for game class
@@ -29,13 +31,26 @@ class Bullet extends Entity{
 		return this;
 	}
 
-	setBaseDamage(setBaseDamage){
-		this.setBaseDamage = setBaseDamage;
+	setBaseDamage(baseDamage){
+		this.baseDamage = baseDamage;
+		return this;
+	}
+
+	setItemSpriteKey(itemSpriteKey){
+		this.itemSpriteKey = itemSpriteKey;
 		return this;
 	}
 
 	getDamage(){
-		return this.setBaseDamage; 
+		return this.baseDamage; 
 	}
+
+    die(){
+		if(this.itemSpriteKey){
+			new DroppedItem(this.x, this.y).setItemSpriteKey(this.itemSpriteKey);
+		}
+
+        super.die();
+    }
 
 }

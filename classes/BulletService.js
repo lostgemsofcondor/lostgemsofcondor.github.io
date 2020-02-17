@@ -27,7 +27,8 @@ class BulletService{
 				.setRotates(false)
 				.setBaseDamage(1)
 				.setAngle(angle)
-				.setFriendly(this.friendly);
+				.setFriendly(this.friendly)
+				.setItemSpriteKey("arrow");
 			arrow.AI = new BulletAI(arrow, 100);
 		}
 	}
@@ -43,7 +44,8 @@ class BulletService{
 				.setFriendly(false)
 				.setBaseDamage(1)
 				.setAngle(angle)
-				.setFriendly(this.friendly);
+				.setFriendly(this.friendly)
+				.setItemSpriteKey("arrow");
 			arrow.AI = new BulletAI(arrow, 100);
 			var arrow2 = new Bullet(this.positionX, this.positionY)
 				.setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4 + Math.PI/16)

@@ -200,4 +200,8 @@ class Entity {
 	drop(item){
 		item.drop(this.x, this.y);
 	}
+
+	die(){
+		
+	}
 }

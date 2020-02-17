@@ -221,6 +221,7 @@ class Game {
 						}
 					} else {
 						enemies[i].struck(bullets[j]);
+						bullets[j].die();
 						this.delete(bullets[j]);
 						delete bullets[j];
 						j++
@@ -236,6 +237,7 @@ class Game {
 					}
 				} else {
 					this.player.struck(bullets[j]);
+					bullets[j].die();
 					this.delete(bullets[j]);
 					delete bullets[j];
 					j++
