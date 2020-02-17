@@ -159,9 +159,6 @@ function drawObjects(){
 	context.textAlign = "center";
 	for(var i in game.text){
 		var t = game.text[i];
-		// var text = context.measureText('foo');
-		// context.fillStyle = game.config.gray;
-		// context.fillRect(t.adjustXCord() - text.width/2, t.adjustYCord() - size, text.width, size);
 		context.fillStyle = t.color;
 		context.fillText(t.str, t.adjustXCord(), t.adjustYCord());
 	}
@@ -191,8 +188,6 @@ function copyMap(chunk){
 	context.rotate(game.angle);
 	context.translate(-adjXCamera, -adjYCamera);
 	addToContext(chunk.canvas, adjXZero, adjYZero);
-	//context.drawImage(mapCanvas, 0, 0);
-	//context.translate(-positionX, -positionY);
 	context.restore();
 }
 
@@ -204,7 +199,6 @@ function adjustCanvasSize(){
 function resize(){
 	adjustCanvasSize();
 	game.hud.resize();
-	//blueprint.draw();
 	draw();
 }
 
@@ -228,63 +222,10 @@ function addToContext(img, x, y, width = null, height = null){
 	}
 }
 
-/*
-function loadSprite(url) {
-	if(resourceCache[url]) {
-		return resourceCache[url];
-	}
-	else {
-		var img = new Image();
-		img.onload = function() {
-			resourceCache[url] = img;
-
-			if(isReady()) {
-				readyCallbacks.forEach(function(func) { func(); });
-			}
-		};
-		resourceCache[url] = false;
-		img.src = url;
-	}
-}
-*/
-
 function drawMap(){
-	
 	mapCanvas.width = 5000;
 	mapCanvas.height = 5000;
-	//game.map.currentMap();
-	//drawGrass();
 }
-
-///temp
-// var img = new Image();
-// img.src = "./sprites/background/grassBasicDebug.png";
-// var water = new Image();
-// water.src = "./sprites/background/waterBasic.png";
-// function drawGrass(){
-	// var x = 0;
-	// var y = 0;
-	// var width = 96;
-	// var height = 96;
-	// var sum =0;
-	// var sum2 =0;
-	// for(var i = x; i <= x + width*30; i += width/2){
-		// sum2++;
-		// for(var j = y; j <= y + height*30; j += height/2){
-			// // rotateAndPaintImage(img, 10, i, j, width, height);
-			// if((i >= 96*4 && i <= 96*6 && j >= 96*3 && j <= 96*5) || (j >= 96*12 && j <= 96*14)){
-				// mapContext.drawImage(water, i, j, width, height);
-
-			// } else {
-
-				// mapContext.drawImage(img, i, j, width, height);
-			// }
-			// sum++;
-			
-		// }
-	// }
-// }
-
 
 var count = 0;
 var seconds = 0;

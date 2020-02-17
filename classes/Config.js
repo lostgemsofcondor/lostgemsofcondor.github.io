@@ -7,9 +7,12 @@ class Config {
 
 
         /// colors
+        this.white = "#EEEEEE";
         this.gray = "#222222";
+
         this.healthGreen = "#00CC00";
         this.healthRed = "#DD0000";
+
 
         /// end colors
     }

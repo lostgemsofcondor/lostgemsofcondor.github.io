@@ -43,7 +43,18 @@ class Hud {
         //this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addHealthBar();
-        this.drawItems()
+        this.addText();
+        this.drawItems();
+    }
+
+    addText(){
+        var x = this.offset + 4;
+        var y = 835;
+        this.context.font = "bold 14px Stencil Std";
+        this.context.textAlign = "left";
+
+		this.context.fillStyle = game.config.white;
+		this.context.fillText("Hold the space bar to fire arrows", x, y);
     }
 
     addHealthBar(){
