@@ -31,6 +31,7 @@ class Entity {
 		this.solid = false;
 		this.friendly = false;
 		this.age = 0;
+		this.hasIcon = false;
 
 		this.setRotates(true);
 		
@@ -106,6 +107,7 @@ class Entity {
 		this.handleStats();
 		this.age++;
 	}
+
 	updateAI(){
 		if(this.AI){
 			this.AI.calculate(this);
@@ -202,6 +204,13 @@ class Entity {
 	}
 
 	die(){
-		
+
+	}
+
+	delete(){
+		if(this.hasIcon){
+			game.miniMap.deleteIcon(this.key);
+		}
+		game.delete(this);
 	}
 }

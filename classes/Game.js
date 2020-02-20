@@ -67,23 +67,31 @@ class Game {
 		// var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
 
 		var AI1 = new Enemy(100, 100)
-			.setImage("player")
+			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)
 			.setSpeed(5);
 		var AI2 = new Enemy(100, 100)
-			.setImage("player")
+			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)
 			.setSpeed(5);
 		var AI3 = new Enemy(100, 100)
-			.setImage("player")
+			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)
 			.setSpeed(5);
 		AI1.AI = new CircleAI(AI2.key, 200);
 		AI2.AI = new CircleAI(AI3.key, 200);
 		AI3.AI = new CircleAI(AI1.key, 200);
+		
+		var tester = new Enemy(100, 100)
+			.setImage("enemy/crab")
+			.setDimensions(48, 48)
+			.setMoving(true)
+			.setSpeed(5);
+		tester.AI = new CombineAI(new CircleAI(AI3.key, 200),
+							      new ThrowsAI(AI3.key, 15));
 		// var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0, false);
 		// axe.AI = new WeaponAI();
 		// this.add(axe);

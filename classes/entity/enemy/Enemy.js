@@ -20,11 +20,8 @@ class Enemy extends Mortal {
 
 	
 	die(){
-		if(this.hasIcon){
-			game.miniMap.deleteIcon(this.key);
-		}
 		game.player.risingText("10xp");
-		game.delete(this);
+		this.delete();
 		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow");
 
 		// var item = new ItemEntity().newEntity("amethyst", "inventory");

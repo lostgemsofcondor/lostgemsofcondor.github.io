@@ -2,7 +2,13 @@ class Mortal extends Entity {
     constructor(x, y){
 		super(x, y);
 		this.dead = false;
-    }
+		this.despawnDistance = 4000;
+	}
+	
+	setDespawnDistance(despawnDistance){
+		this.despawnDistance = despawnDistance;
+		return this;
+	}
 
 	setMaxHealth(maxHealth){
 		this.maxHealth = maxHealth;
@@ -28,8 +34,16 @@ class Mortal extends Entity {
 			this.risingText("+" + healed, game.config.healthGreen);
 			this.health += healed;
 		}
-    }
-    
-    die(){
-    }
+	}
+	
+	update(){
+		this.checkToDespawn();
+		super.update();
+	}
+	
+	checkToDespawn(){
+		if(Math.sqrt(Math.pow(this.positionX - game.player.positionX, 2) + Math.pow(this.positionY - game.player.positionY, 2)) >= this.despawnDistance){
+			this.delete();
+		}
+	}
 }

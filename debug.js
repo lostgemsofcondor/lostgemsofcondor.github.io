@@ -76,7 +76,7 @@ class Debug {
 		this.debugInfo.add("Chunk under mouse X: " + game.map.getChunkX(game.mouse.point.x), 4);
 		this.debugInfo.add("Chunk under mouse Y: " + game.map.getChunkY(game.mouse.point.y), 4);
 		this.debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
-		this.debugInfo.add("JSON.stringify(game.save): "+ JSON.stringify(game.save), 5);
+		this.debugInfo.add("JSON.stringify(game.save): "+ JSON.stringify(game.save), 6);
 	}
 
 	getKeys(){
