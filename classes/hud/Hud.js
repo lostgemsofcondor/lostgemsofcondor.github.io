@@ -43,6 +43,7 @@ class Hud {
         //this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addHealthBar();
+        this.addStaminaBar();
         this.addText();
         this.drawItems();
     }
@@ -50,7 +51,7 @@ class Hud {
     addText(){
         var x = this.offset + 4;
         var y = 835;
-        this.context.font = "bold 14px Stencil Std";
+        this.context.font = "14px pixel_font";
         this.context.textAlign = "left";
 
 		this.context.fillStyle = game.config.white;
@@ -59,7 +60,7 @@ class Hud {
 
     addHealthBar(){
         var x = this.offset + 4;
-        var y = 60;
+        var y = 30;
         var width = 247;
         var height = 30;
         var health = game.player.health;
@@ -70,6 +71,21 @@ class Hud {
         
         this.context.fillStyle = game.config.healthRed;
         this.context.fillRect(x + width * health/maxHealth, y, width - width * health/maxHealth, height);
+    }
+
+    addStaminaBar(){
+        var x = this.offset + 4;
+        var y = 70;
+        var width = 247;
+        var height = 30;
+        var stamina = game.player.stamina;
+        var maxStamina = game.player.maxStamina;
+
+        this.context.fillStyle = game.config.staminaOrange;
+        this.context.fillRect(x, y, width, height);
+        
+        this.context.fillStyle = game.config.gray;
+        this.context.fillRect(x + width * stamina/maxStamina, y, width - width * stamina/maxStamina, height);
     }
 
     addToContext(img, x, y, width = null, height = null){

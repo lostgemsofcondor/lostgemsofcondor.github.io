@@ -155,7 +155,7 @@ function drawObjects(){
 	});
 	// context.fillStyle = "#222222";
 	var size = 48;
-	context.font = "bold " + size + "px Stencil Std";
+	context.font = "bold " + size + "px pixel_font";
 	context.textAlign = "center";
 	for(var i in game.text){
 		var t = game.text[i];
@@ -237,7 +237,7 @@ function counter(){
 		
 	}
 	context.fillStyle = "#000000";
-	context.font = "60px Verdana,sans-serif";
+	context.font = "60px pixel_font";
 	context.fillText(fps.toFixed(0), 300, 50);
 	// context.fillText(seconds, 300, 50);
 }

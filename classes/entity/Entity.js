@@ -104,7 +104,6 @@ class Entity {
 
 	update(){
 		this.move();
-		this.handleStats();
 		this.age++;
 	}
 
@@ -112,11 +111,6 @@ class Entity {
 		if(this.AI){
 			this.AI.calculate(this);
 		}
-	}
-
-	handleStats(){
-		//implemented in Player.js and Enemy.js
-		return;
 	}
 
 	move(){

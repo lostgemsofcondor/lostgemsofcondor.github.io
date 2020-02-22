@@ -77,6 +77,7 @@ class Debug {
 		this.debugInfo.add("Chunk under mouse Y: " + game.map.getChunkY(game.mouse.point.y), 4);
 		this.debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
 		this.debugInfo.add("JSON.stringify(game.save): "+ JSON.stringify(game.save), 6);
+		this.debugInfo.add("Running: "+ game.player.running, 4);
 	}
 
 	getKeys(){
@@ -156,9 +157,9 @@ class DebugInfo {
 	}
 
 	reset(){
-		this.font = game.zoom/1080*20 +"px Verdana,sans-serif";
+		this.font = game.zoom/1080*21 +"px pixel_font";
 		this.leftMargin = 10;
-		this.gap = game.zoom/1080*20;
+		this.gap = game.zoom/1080*21;
 		this.lines = 0;
 		this.offset = game.miniMap.offsetY + game.miniMap.size
 		this.level = game.config.debugLevel;

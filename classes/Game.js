@@ -7,7 +7,7 @@ class Game {
 		this.spawnService = new SpawnService();
 		this.bulletService = new BulletService();
 		
-		var playerSpeed = 15;
+		var playerSpeed = 7;
 		this.player = new Player(0, 0)
 			.setImage("player")
 			.setSpeed(playerSpeed)

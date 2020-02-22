@@ -10,6 +10,7 @@ var keyRotateClockwise = "81";
 var keyRotateCounterClockwise = "69";
 var keyResetRotation = "82";
 var startDebug = "192";
+var run = "16";
 
 var zoomOut = "189";
 var zoomIn = "187";
@@ -126,6 +127,10 @@ function handleMove(){
 	var angles = [null, 0, 180, null, 90, 45, 135, null, 270, 315, 225, null, null, null, null, null]; // udlr as binary
 	var angle = angles[key.right + key.left*2 + key.down*4 + key.up*8];
 	if(angle != null){
+		if(!game.player.runLock){
+			game.player.running = key.run;
+		}
+
 		var angleInRad = angle*Math.PI/180;
 		game.player.angle = angleInRad - game.angle;
 		//game.player.angle = angleInRad - game.angle;
@@ -152,5 +157,6 @@ function readKeys(){
 	key.startDebug = keys.includes(startDebug);
 	key.zoomOut = keys.includes(zoomOut);
 	key.zoomIn = keys.includes(zoomIn);
+	key.run = keys.includes(run);
 	key.spaceBar = keys.includes("32"); //never going to change
 }
