@@ -55,7 +55,9 @@ class Hud {
         this.context.textAlign = "left";
 
 		this.context.fillStyle = game.config.white;
-		this.context.fillText("Hold the space bar to fire arrows", x, y);
+        this.context.fillText("Hold the shift to run", x, y);
+        this.context.fillText("Hold the space bar to", x, y+14);
+        this.context.fillText("fire arrows", x, y+28);
     }
 
     addHealthBar(){
@@ -71,6 +73,13 @@ class Hud {
         
         this.context.fillStyle = game.config.healthRed;
         this.context.fillRect(x + width * health/maxHealth, y, width - width * health/maxHealth, height);
+
+        this.context.font = "20px pixel_font";
+        this.context.textAlign = "center";
+        this.context.textBaseline = "middle";
+		this.context.fillStyle = game.config.gray;
+        this.context.fillText(health + "/" + maxHealth, x + width/2, y + height/2);
+
     }
 
     addStaminaBar(){
@@ -84,8 +93,14 @@ class Hud {
         this.context.fillStyle = game.config.staminaOrange;
         this.context.fillRect(x, y, width, height);
         
-        this.context.fillStyle = game.config.gray;
+        this.context.fillStyle = game.config.lightGray;
         this.context.fillRect(x + width * stamina/maxStamina, y, width - width * stamina/maxStamina, height);
+
+        this.context.font = "20px pixel_font";
+        this.context.textAlign = "center";
+        this.context.textBaseline = "middle";
+		this.context.fillStyle = game.config.gray;
+        this.context.fillText(stamina + "/" + maxStamina, x + width/2, y + height/2);
     }
 
     addToContext(img, x, y, width = null, height = null){

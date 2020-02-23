@@ -47,11 +47,11 @@ class Debug {
 	}
 
 	addText(){
-		if(!this.debugging) return;
 		context.fillStyle = "#000000";
 		context.textAlign = "left";
 		this.debugInfo.reset();
 		this.debugInfo.add("fps: " + fps.toFixed(0), 1);
+		if(!this.debugging) return;
 		this.debugInfo.add("Width: " + canvas.width, 5);
 		this.debugInfo.add("Height: " + canvas.height, 5);
 		this.debugInfo.add("Draw Time: " + drawTime, 4);
