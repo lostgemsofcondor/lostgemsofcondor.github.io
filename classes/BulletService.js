@@ -12,7 +12,8 @@ class BulletService{
 				.setRotates(false)
 				.setBaseDamage(1)
 				.setPiercing(true)
-				.setFriendly(this.friendly);
+				.setFriendly(this.friendly)
+				.setStaminaCost(2); // This Should come from some kind of weapon class
 			swipe.AI = new CombineAI(new TetherAI(this.key, 96, 96, angle), new BulletAI(swipe, 10)); 
 		}
 	}

@@ -42,28 +42,15 @@ class Player extends Mortal {
 					this.shoot(angle);
 				}
 			} else {
-				if(this.stamina >= 2){
+				if(this.reduceStamina(2, false)){
 					this.shoot = game.bulletService.newSwipeMedium();
 					this.shoot(angle);
-					this.stamina -= 2;
 				}
 			}
 		}
 	}
 
-	// struck(bullet){
-	// 	this.drawHealth = true;
-	// 	var damage = bullet.getDamage();
-	// 	this.risingText("-" + damage, game.config.healthRed);
-	// 	this.health -= damage; 
-	// 	if(this.health <= 0){
-	// 		this.die();
-	// 	}
-	// }
-
 	die(){
-		//console.log("you died");
-		//game.delete(this);
 		game.paused = true;
 	}
 
@@ -74,7 +61,17 @@ class Player extends Mortal {
 	}
 
 	reduceStamina(s, gainEXP){
-		
+		if(this.stamina >= s){
+			this.stamina -= s;
+			if(gainEXP){
+
+				game.experienceService.spendStamina(s);
+			}
+
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	updateSpeed(){
@@ -82,9 +79,8 @@ class Player extends Mortal {
 			return;
 		}
 		if(this.running && this.startedRunningAt + 40 <= game.gameTick){
-			if(this.stamina >= 1){
+			if(this.reduceStamina(1, true)){
 				this.startedRunningAt = game.gameTick;
-				this.stamina -= 1;
 			} else {
 				this.running = false;
 			}
@@ -113,7 +109,7 @@ class Player extends Mortal {
 			this.heal(1);
 		}
 
-		if(this.lastStaminaRegen + this.getStaminaRegeTime() < game.gameTick){
+		if(this.lastStaminaRegen + this.getStaminaRegenTime() < game.gameTick){
 			this.lastStaminaRegen = game.gameTick;
 			this.recoverStamina(1);
 		}
@@ -123,9 +119,7 @@ class Player extends Mortal {
 		return this.baseRegen;
 	}
 
-	getStaminaRegeTime(){
+	getStaminaRegenTime(){
 		return this.baseStaminaRegen;
-	}
-
-	
+	}	
 }

@@ -19,6 +19,8 @@ class Hud {
         this.temp = 0;
         this.temp2 = 0;
 
+        this.skillUpdated = -1;
+
     }
 
     get offset(){
@@ -44,6 +46,7 @@ class Hud {
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addHealthBar();
         this.addStaminaBar();
+        this.addSkillBar();
         this.addText();
         this.drawItems();
     }
@@ -58,6 +61,11 @@ class Hud {
         this.context.fillText("Hold the shift to run", x, y);
         this.context.fillText("Hold the space bar to", x, y+14);
         this.context.fillText("fire arrows", x, y+28);
+
+        this.context.fillText("Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);
+        this.context.fillText("Endurance EXP: " + game.experienceService.endurance, x, y+14*5);
+        this.context.fillText("Endurance EXP to", x, y+14*6);
+        this.context.fillText("Next Level: " + game.experienceService.nextLevelEXP(game.experienceService.enduranceLevel), x, y+14*7);
     }
 
     addHealthBar(){
@@ -103,6 +111,39 @@ class Hud {
         this.context.fillText(stamina + "/" + maxStamina, x + width/2, y + height/2);
     }
 
+    addSkillBar(){
+        if(this.skillUpdated < game.gameTick){
+            return;
+        }
+        var x = this.offset - 300;
+        var y = 30;
+        var width = 247;
+        var height = 30;
+
+        
+
+        var current = game.experienceService[this.skill];
+        var last = this.skillLast;
+        var max = this.skillNext;
+        
+
+        this.context.fillStyle = game.config.expGold;
+        this.context.fillRect(x, y, width, height);
+        
+        this.context.fillStyle = game.config.lightGray;
+        this.context.fillRect(x + width * (current - last)/(max - last), y, width - width * (current - last)/(max - last), height);
+
+        this.context.font = "20px pixel_font";
+        this.context.fillStyle = game.config.gray;
+        
+        this.context.textAlign = "left";
+        this.context.textBaseline = "top";
+        this.context.fillText(this.skillText, x, y - 20);
+        this.context.textAlign = "center";
+        this.context.textBaseline = "middle";
+        this.context.fillText(current + "/" + max, x + width/2, y + height/2);
+    }
+
     addToContext(img, x, y, width = null, height = null){
         if(width && height){
             this.context.drawImage(img, x, y, width, height)
@@ -122,7 +163,7 @@ class Hud {
             this.handleClickEnd(x, y);
 
         } else {
-            console.log("continue click");
+            
         }
         //this.addToContext(game.map.grass.img, x, y, game.map.grass.width, game.map.grass.height);
     }
@@ -206,6 +247,13 @@ class Hud {
             var img = game.itemSprites[heldItem.itemSpriteKey];
             this.context.drawImage(img, game.mouse.x, game.mouse.y);
         }
-	}
+    }
     
+    setSkill(skill, skillLast, skillNext){
+        this.skill = skill;
+        this.skillLast = skillLast;
+        this.skillNext = skillNext;
+        this.skillUpdated = game.gameTick + 600;
+        this.skillText = "Endurance Progress"
+    }
 }

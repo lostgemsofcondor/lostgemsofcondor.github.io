@@ -78,6 +78,9 @@ class Debug {
 		this.debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
 		this.debugInfo.add("JSON.stringify(game.save): "+ JSON.stringify(game.save), 6);
 		this.debugInfo.add("Running: "+ game.player.running, 4);
+		this.debugInfo.add("Endurance EXP: "+ game.experienceService.endurance, 4);
+		this.debugInfo.add("Endurance Level: "+ game.experienceService.enduranceLevel, 4);
+		this.debugInfo.add("game.player.baseStaminaRegen: "+ game.player.baseStaminaRegen, 5);
 	}
 
 	getKeys(){

@@ -20,7 +20,8 @@ class Enemy extends Mortal {
 
 	
 	die(){
-		game.player.risingText("10xp");
+		//game.player.risingText("10xp");
+		//game.experienceService.endurance += 10;
 		this.delete();
 		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow");
 

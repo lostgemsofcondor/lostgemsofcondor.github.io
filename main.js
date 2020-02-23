@@ -227,22 +227,6 @@ function drawMap(){
 	mapCanvas.height = 5000;
 }
 
-var count = 0;
-var seconds = 0;
-function counter(){
-	count++;
-	if(count >= 60){
-		count = 0; 
-		seconds++;
-		
-	}
-	context.fillStyle = "#000000";
-	context.font = "60px pixel_font";
-	context.fillText(fps.toFixed(0), 300, 50);
-	// context.fillText(seconds, 300, 50);
-}
-///end temp
-
 onkeydown = onkeyup = function(e){
     e = e || event; // to deal with IE
 	if(e.type == 'keydown'){
@@ -250,7 +234,6 @@ onkeydown = onkeyup = function(e){
 	} else {
 		delete game.keyMap[e.keyCode];
 	}
-	// console.log(game.map)
 }
 
 function handelMouseDown(){

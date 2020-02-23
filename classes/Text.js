@@ -30,10 +30,10 @@ class Text extends Point {
 	}
 
 	setOffset(y){
-		
 		var angle = 3 * Math.PI / 2 - game.angle;
 		this.x = this.x + Math.cos(angle)*y;
 		this.y = this.y + Math.sin(angle)*y;
+		return this;
 	}
 
 	update(){

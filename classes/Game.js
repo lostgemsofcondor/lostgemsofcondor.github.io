@@ -43,6 +43,8 @@ class Game {
 		this.itemSprites = new ItemSprites();
 		this.inventory = new Inventory(4, 5);
 
+		this.experienceService = new ExperienceService();
+
         this.solids = null;
 		this.solidsTickUpdated = -1;
 		
@@ -213,10 +215,12 @@ class Game {
 				if(bullets[j] && enemies[i] && bullets[j].friendly && bullets[j].collides(enemies[i])){
 					if(bullets[j].piercing){
 						if(!bullets[j].hit.includes(enemies[i].key)){
+							bullets[j].handleHit();
 							bullets[j].hit.push(enemies[i].key);
 							enemies[i].struck(bullets[j]);
 						}
 					} else {
+						bullets[j].handleHit();
 						enemies[i].struck(bullets[j]);
 						bullets[j].die();
 						this.delete(bullets[j]);
@@ -229,10 +233,12 @@ class Game {
 			if(bullets[j] && !bullets[j].friendly && bullets[j].collides(this.player)){
 				if(bullets[j].piercing){
 					if(!bullets[j].hit.includes(this.player.key)){
+						bullets[j].handleHit();
 						bullets[j].hit.push(this.player.key);
 						this.player.struck(bullets[j]);
 					}
 				} else {
+					bullets[j].handleHit();
 					this.player.struck(bullets[j]);
 					bullets[j].die();
 					this.delete(bullets[j]);

@@ -50,14 +50,17 @@ class ItemEntity {
     
 	constructor(itemKey){
         if(itemKey == null){
-            this.itemKey = game.save.itemIdNext;
-            game.save.itemIdNext++;
+            this.itemKey = null;
         } else {
             this.itemKey = itemKey;
         }
     }
 
     newEntity(itemSpriteKey, location, amount = 1){
+        
+        this.itemKey = game.save.itemIdNext;
+        game.save.itemIdNext++;
+
         this.data = {};
         
         this.itemSpriteKey = itemSpriteKey;
@@ -86,7 +89,6 @@ class ItemEntity {
     }
 
     delete(){
-        console.log("Item delete");
         game.inventory.delete(this)
         delete game.save.inventory[this.itemKey];
         //game.save.inventory.splice(this.itemKey, 1);
