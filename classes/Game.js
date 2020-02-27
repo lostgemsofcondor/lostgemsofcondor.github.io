@@ -106,7 +106,7 @@ class Game {
         // do this in Save.js
         try{
             this.save = JSON.parse(document.cookie);
-        } catch {
+        } catch(e) {
 			console.log("error with save conversion");
 			this.save = new Save();
         }	

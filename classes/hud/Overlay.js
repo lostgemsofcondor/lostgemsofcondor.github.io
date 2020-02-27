@@ -48,6 +48,29 @@ class Overlay {
         }
 
         return Math.min((tick - this.sunset)*this.nightLevel/this.sunsetLength, this.nightLevel);
+    }
 
+    pad(num, size) {
+        var s = num+"";
+        while (s.length < size) s = "0" + s;
+        return s;
+    }
+
+    getTimeString(){
+        var tick = (game.gameTick + 16200) % this.dayLength;
+        var minute = Math.floor(tick/60) % 60;
+
+        var hour = Math.floor(tick/(60*60)) % (60*60);
+        var m = "am";
+        if(hour >= 12){
+            m = "pm";
+            if(hour > 12){
+                hour -= 12;
+            }
+        } else if(hour == 0){
+            hour = 12;
+        }
+
+        return hour + ":" + this.pad(minute, 2) + " " + m;
     }
 }
