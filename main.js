@@ -114,12 +114,14 @@ function draw(){
 	})
 	//copyMap(game.map.chunks[0].canvas);
 	drawObjects();
+	drawOverlay();
 	drawMiniMap();
 	drawHud();
 
 	debug.draw();
 	//debugOld();
 }
+
 
 function debugOld(){
 
@@ -134,9 +136,12 @@ function drawMiniMap(){
 
 function drawHud(){
 	game.hud.redraw();
-
 	addToContext(game.hud.canvas, 0, 0, game.hud.canvas.width, game.hud.canvas.height);
+}
 
+function drawOverlay(){
+	game.overlay.redraw();
+	addToContext(game.overlay.canvas, 0, 0, game.overlay.canvas.width, game.overlay.canvas.height);
 }
 
 function drawObjects(){
@@ -199,6 +204,7 @@ function adjustCanvasSize(){
 function resize(){
 	adjustCanvasSize();
 	game.hud.resize();
+	game.overlay.resize();
 	draw();
 }
 

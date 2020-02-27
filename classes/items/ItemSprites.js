@@ -3,6 +3,10 @@ class ItemSprites {
         this.arrow = new Image();
         this.arrow.src = "./sprites/bullets/arrows/arrowGreen.png";
 
+        
+        this.palmLog = new Image();
+        this.palmLog.src = "./sprites/trees/palmLog.png";
+
         this.amethyst = new Image();
         this.amethyst.src = "./sprites/gems/amethyst.png";
         this.emerald = new Image();

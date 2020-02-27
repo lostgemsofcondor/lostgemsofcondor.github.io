@@ -39,6 +39,7 @@ class Game {
 		this.loadSave();
 		this.miniMap = new MiniMap();
 		this.hud = new Hud();
+		this.overlay = new Overlay();
 		this.items = []
 		this.itemSprites = new ItemSprites();
 		this.inventory = new Inventory(4, 5);
