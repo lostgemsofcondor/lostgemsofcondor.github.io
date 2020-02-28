@@ -66,11 +66,7 @@ class ItemEntity {
         this.itemSpriteKey = itemSpriteKey;
         this.amount = amount;
         
-        if(game.inventory.add(this)){
-            this.location = location;
-            return true;
-        }
-        return false;
+        return game.inventory.add(this, location);
     }
 
     move(x, y){
@@ -84,14 +80,28 @@ class ItemEntity {
     }
 
     drop(x, y){
-        new DroppedItem(x, y).setItemSpriteKey(this.itemSpriteKey).setDroppedByPlayer(this.droppedByPlayer);
+        new DroppedItem(x, y).setItemSpriteKey(this.itemSpriteKey).setDroppedByPlayer(this.droppedByPlayer).setAmount(this.amount);
         this.delete();
+    }
+
+    discard(i){
+        if(this.amount < i){
+            return false;
+        }
+        this.amount -= i;
+        if(this.amount == 0){
+            this.delete();
+        }
+        return true;
     }
 
     delete(){
         game.inventory.delete(this)
+        this.remove();
+    }
+
+    remove(){
         delete game.save.inventory[this.itemKey];
-        //game.save.inventory.splice(this.itemKey, 1);
     }
 
 }

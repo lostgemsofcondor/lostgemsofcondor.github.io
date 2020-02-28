@@ -5,6 +5,7 @@ class DroppedItem extends Entity {
 		this.moving = false;
         this.noCollsion = true;
         this.droppedByPlayer = false;
+        this.amount = 1;
     }
     
     setItemSpriteKey(itemSpriteKey){
@@ -19,11 +20,18 @@ class DroppedItem extends Entity {
         return this;
     }
 
+    
+    setAmount(amount){
+        this.amount = amount;
+        return this;
+    }
+
     getPicked(){
         if(this.canBePicked()){
-            if(new ItemEntity().newEntity(this.itemSpriteKey, "inventory", this.amount)){
+            this.amount = new ItemEntity().newEntity(this.itemSpriteKey, "inventory", this.amount);
+            if(this.amount <= 0){
                 game.delete(this);
-            }   
+            }
         }
     }
 

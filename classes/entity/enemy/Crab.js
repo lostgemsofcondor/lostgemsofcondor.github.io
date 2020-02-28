@@ -15,7 +15,7 @@ class Crab extends Enemy {
     }
 
     die(){
-		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow");
+		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(2);
 
         super.die();
     }

@@ -229,6 +229,12 @@ class Hud {
     }
 
     drawItems(){
+        this.context.font = "14px pixel_font";
+        this.context.textAlign = "left";
+        this.context.textBaseline = "hanging";
+
+        this.context.fillStyle = game.config.white;
+        
         var heldItem = null
         for(var j = 0; j < game.inventory.height; j++){
             for(var i = 0; i < game.inventory.width; i++){
@@ -238,7 +244,12 @@ class Hud {
                         heldItem = item;
                     } else {
                         var img = game.itemSprites[item.itemSpriteKey];
-                        this.context.drawImage(img, this.inventorySlotX(item.x), this.inventorySlotY(item.y));
+                        var x = this.inventorySlotX(item.x);
+                        var y = this.inventorySlotY(item.y);
+                        this.context.drawImage(img, x, y);
+                        if(item.amount > 1){
+                            this.context.fillText(item.amount, x, y);
+                        }
                     }
                 }
             }

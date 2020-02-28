@@ -37,7 +37,7 @@ class Player extends Mortal {
 			if(key.spaceBar){
 				var arrow = game.inventory.getWithItemSpriteKey("arrow");
 				if(arrow != null){
-					arrow.delete();
+					arrow.discard(1);
 					this.shoot = game.bulletService.newTripleArrow();
 					this.shoot(angle);
 				}
