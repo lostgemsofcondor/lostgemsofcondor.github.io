@@ -58,8 +58,8 @@ class Hud {
         this.context.textAlign = "left";
 
 		this.context.fillStyle = game.config.white;
-        this.context.fillText("Hold the shift to run", x, y);
-        this.context.fillText("Hold the space bar to", x, y+14);
+        this.context.fillText("Press the space to jump", x, y);
+        this.context.fillText("Hold the shift bar to", x, y+14);
         this.context.fillText("fire arrows", x, y+28);
 
         this.context.fillText("Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);

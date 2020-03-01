@@ -20,6 +20,7 @@ class Enemy extends Mortal {
 
 	
 	die(){
+		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
 		this.delete();
 
 	}

@@ -1,25 +1,5 @@
-var game;
-var key = {};
-/// constants
-
-var keyUp = "87";
-var keyDown = "83";
-var keyLeft = "65";
-var keyRight = "68";
-var keyRotateClockwise = "81";
-var keyRotateCounterClockwise = "69";
-var keyResetRotation = "82";
-var startDebug = "192";
-var run = "16";
-
-var zoomOut = "189";
-var zoomIn = "187";
-
-/// end constants
-
 function mainGameLoop(){
 	game.incrementTick();
-	readKeys();
 	game.bulletCollisionDetection();
 	game.pickUpItems();
 	
@@ -33,18 +13,17 @@ function mainGameLoop(){
 	//game.updateAI();
 	game.updateAllObjects();
 	game.updateText();
+	for(var i in game.buttons){
+		game.buttons[i].update()
+	}
 	
 	game.adjustCameraToPlayer();
 	game.map.adjustChunks();
 
 	game.spawns();
 
-	setCookies();
+	game.save.save();
 	//game.entityList.sort();
-}
-
-function setCookies(){
-	document.cookie = JSON.stringify(game.save);
 }
 
 function handleClicks(){
@@ -63,11 +42,11 @@ function handleClicks(){
 }
 
 function handelZoom(){
-	if(key.zoomIn && game.zoom > 500){
+	if(game.keyboard.zoomIn.down && game.zoom > 500){
 		game.zoom -= 50;
 		adjustCanvasSize();
 		game.hud.resize();
-	} else if(key.zoomOut && game.zoom < 5000){
+	} else if(game.keyboard.zoomOut.down && game.zoom < 5000){
 		game.zoom += 50;
 		adjustCanvasSize();
 		game.hud.resize();
@@ -75,7 +54,7 @@ function handelZoom(){
 }
 
 function handleDebug(){
-	if(key.startDebug){
+	if(game.keyboard.debug.down){
 		debug.setAllDebug(true);
 	}
 }
@@ -89,7 +68,7 @@ function XNOR(a, b){
 }
 
 function handleRotate(){
-	if(key.resetRotation){
+	if(game.keyboard.resetRotation.down){
 		game.angle = Math.PI/4;
 		game.zoom = 1080;
 		adjustCanvasSize();
@@ -98,12 +77,12 @@ function handleRotate(){
 		game.adjustAllSpriteDirections();
 		return;
 	}
-	if(XNOR(key.rotateClockwise, key.rotateCounterClockwise)){
-		if(key.rotateClockwise) {
+	if(XNOR(game.keyboard.rotateClockwise.down, game.keyboard.rotateCounterClockwise.down)){
+		if(game.keyboard.rotateClockwise.down) {
 			game.angle += game.rotateSpeed;
 			game.adjustAllSpriteDirections();
 		}
-		if(key.rotateCounterClockwise) {
+		if(game.keyboard.rotateCounterClockwise.down) {
 			game.angle -= game.rotateSpeed;
 			game.adjustAllSpriteDirections();
 		}
@@ -125,10 +104,20 @@ var tempY = 0;
 function handleMove(){
 	
 	var angles = [null, 0, 180, null, 90, 45, 135, null, 270, 315, 225, null, null, null, null, null]; // udlr as binary
-	var angle = angles[key.right + key.left*2 + key.down*4 + key.up*8];
+	var angle = angles[game.keyboard.right.down + game.keyboard.left.down*2 + game.keyboard.down.down*4 + game.keyboard.up.down*8];
 	if(angle != null){
-		if(!game.player.runLock){
-			game.player.running = key.run;
+
+		if(game.player.running || game.keyboard.spaceBar.start){
+			if(game.player.running){
+				if(game.player.lastJump >= game.mainTick){
+					game.player.running = true;
+				} else {
+					game.player.running = false;
+				}
+			} else {
+				game.player.running = true;
+				game.player.lastJump = game.mainTick + game.player.jumpLength;
+			}
 		}
 
 		var angleInRad = angle*Math.PI/180;
@@ -143,20 +132,4 @@ function handleMove(){
 	}
 
 	//game.player.adjustSpriteDirection();	
-}
-
-function readKeys(){
-	var keys = Object.keys(game.keyMap);
-	key.up = keys.includes(keyUp);
-	key.down = keys.includes(keyDown);
-	key.left = keys.includes(keyLeft);
-	key.right = keys.includes(keyRight);
-	key.rotateClockwise = keys.includes(keyRotateClockwise);
-	key.rotateCounterClockwise = keys.includes(keyRotateCounterClockwise);
-	key.resetRotation = keys.includes(keyResetRotation);
-	key.startDebug = keys.includes(startDebug);
-	key.zoomOut = keys.includes(zoomOut);
-	key.zoomIn = keys.includes(zoomIn);
-	key.run = keys.includes(run);
-	key.spaceBar = keys.includes("32"); //never going to change
 }

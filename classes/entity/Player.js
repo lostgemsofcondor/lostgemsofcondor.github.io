@@ -19,9 +19,13 @@ class Player extends Mortal {
 		this.lastStaminaRegen = -1;
 		this.startedRunningAt = -1;
 		this.runLock = false;
+		this.running = false;
+		this.lastJump = -1;
+
+		this.jumpLength = 3;
 		// this.positionX = 0;
 		// this.positionY = 0;
-		this.shoot = game.bulletService.newTripleArrow();
+		this.shoot = game.bulletBuilder.newTripleArrow(1);
 	}
 	//override
 	setSpeed(speed){
@@ -34,16 +38,17 @@ class Player extends Mortal {
 		if((debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
 			this.lastShot = debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
-			if(key.spaceBar){
+			if(game.keyboard.run.down){
 				var arrow = game.inventory.getWithItemSpriteKey("arrow");
 				if(arrow != null){
 					arrow.discard(1);
-					this.shoot = game.bulletService.newTripleArrow();
+					this.shoot = new BulletBuilder()
+						.build();
 					this.shoot(angle);
 				}
 			} else {
 				if(this.reduceStamina(2, false)){
-					this.shoot = game.bulletService.newSwipeMedium();
+					this.shoot = game.bulletBuilder.newSwipeMedium();
 					this.shoot(angle);
 				}
 			}
@@ -58,7 +63,12 @@ class Player extends Mortal {
 		this.handleRegen();
 		this.updateSpeed();
 		super.update();
+
+		game.save.health = this.health;
+		game.save.stamina = this.stamina;
 	}
+
+
 
 	reduceStamina(s, gainEXP){
 		if(this.stamina >= s){
@@ -87,7 +97,7 @@ class Player extends Mortal {
 		}
 
 		if(this.running){
-			this.speed = this.baseSpeed*2;
+			this.speed = this.baseSpeed*7.63289;
 		} else{
 			this.speed = this.baseSpeed;
 		}

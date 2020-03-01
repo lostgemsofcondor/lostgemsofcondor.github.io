@@ -1,11 +1,13 @@
 class Game {
 	constructor(){
 		game = this;
+		this.buttons = [];
 		this.keyMap = {};
-		this.mouse = new Mouse();
 		this.config = new Config();
+		this.keyboard = new Keyboard();
+		this.mouse = new Mouse();
 		this.spawnService = new SpawnService();
-		this.bulletService = new BulletService();
+		this.bulletBuilder = new BulletBuilder();
 		
 		var playerSpeed = 7;
 		this.player = new Player(0, 0)
@@ -34,6 +36,7 @@ class Game {
 		this.textIDNext = 0;
 		this.map = new Map();
 		this.entityList.add(0); // Add player
+
 
 		
 		this.loadSave();
@@ -100,19 +103,20 @@ class Game {
 		}
 		this.mainTick++;
 	}
-	
-	loadSave(){
-		
-        // do this in Save.js
-        try{
-            this.save = JSON.parse(document.cookie);
-        } catch(e) {
-			console.log("error with save conversion");
-			this.save = new Save();
-        }	
-        console.log(document.cookie);
-	}
 
+	loadSave(){
+        var saveOnFile = localStorage.getItem("save");
+        if(saveOnFile != null){
+            this.save = Object.assign(new Save, JSON.parse(saveOnFile));
+        } else {
+			this.save = new Save();
+		}
+
+		this.player.health = this.save.health;
+		this.player.stamina = this.save.stamina;
+
+	}
+	
 	vectorField(){
 		var m = 35;
 		for(var i = 0; i < 50*m; i += m){
@@ -323,5 +327,9 @@ class Game {
 				}
 			}
 		}
+	}
+
+	addButton(button){
+		this.buttons.push(button);
 	}
 }

@@ -11,11 +11,11 @@ class Crab extends Enemy {
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));
-        this.shoot = game.bulletService.newSwipeMedium(false);
+        this.shoot = game.bulletBuilder.newBubble(false);
     }
 
     die(){
-		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(2);
+		new DroppedItem(this.x, this.y).setItemSpriteKey("bubble").setAmount(1);
 
         super.die();
     }
