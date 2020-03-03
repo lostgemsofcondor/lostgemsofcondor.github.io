@@ -9,9 +9,13 @@ class BuilderAI {
 	
 	calculate(entity){
 		if((game.gameTick + this.offset) % (this.life1 + this.life2) <= this.life1){
-			this.AI1.calculate(entity);
+			if(this.AI1){
+				this.AI1.calculate(entity);
+			}
 		} else {
-			this.AI2.calculate(entity);
+			if(this.AI2){
+				this.AI2.calculate(entity);
+			}
 		}
 	}
 }

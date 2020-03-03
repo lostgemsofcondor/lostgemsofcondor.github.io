@@ -7,15 +7,15 @@ class Crab extends Enemy {
             .setSpeed(1)
             .setIcon();
         this.AI = new CombineAI(
-            new ShootAI(),
+            new BuilderAI(30, 1200, new ShootAI(3), null),
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));
-        this.shoot = game.bulletBuilder.newBubble(false);
+        this.shoot = game.bulletBuilder.newBubbler(1);
     }
 
     die(){
-		new DroppedItem(this.x, this.y).setItemSpriteKey("bubble").setAmount(1);
+		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
 
         super.die();
     }

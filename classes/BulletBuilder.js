@@ -24,7 +24,10 @@ class BulletBuilder{
 		self = this;
 		return function(angle){
 			for(var count = 0; count < self.amount; count++){
-				var t = -1 * self.theta/2 + count*self.theta/self.amount;
+				var t = 0;
+				if(self.amount > 1){
+					var t = -1 * self.theta/2 + count*self.theta/(self.amount - 1);
+				}
 				var arrow = new Bullet(this.positionX, this.positionY)
 					.setImage("./sprites/bullets/arrows/arrowGreen.png", angle + t + Math.PI/4)
 					.setSpeed(10)
@@ -64,9 +67,9 @@ class BulletBuilder{
 		return function(angle){
 			//"this" refers to the Entity who calls this shoot function not the BulletBuilder
 			for(var count = 0; count < amount; count++){
-				var t = -1 * theta/2 + count*theta/amount;
+				var t = -1 * theta/2 + count*theta/(amount - 1);
 				var arrow = new Bullet(this.positionX, this.positionY)
-					.setImage("./sprites/bullets/arrows/bubble.png", angle + t + Math.PI/4)
+					.setImage("./sprites/bullets/arrows/bubble.png", Math.random()*Math.PI*2)
 					.setSpeed(10)
 					.setDimensions(48, 48)
 					.setRotates(false)
@@ -76,6 +79,25 @@ class BulletBuilder{
 					.setFriendly(this.friendly);
 				arrow.AI = new BulletAI(arrow, 100);
 			}
+		}
+	}
+
+	newBubbler(damage){
+		var cone = Math.PI/8;
+		var speedDelta = 3;
+
+
+		return function(angle){
+			var arrow = new Bullet(this.positionX, this.positionY)
+				.setImage("./sprites/bullets/arrows/bubble.png", Math.random()*Math.PI*2)
+				.setSpeed(7 + Math.random()*speedDelta)
+				.setDimensions(48, 48)
+				.setRotates(false)
+				.setFriendly(false)
+				.setBaseDamage(damage)
+				.setAngle(angle - cone/2 + Math.random()*cone)
+				.setFriendly(this.friendly);
+			arrow.AI = new BulletAI(arrow, 100);
 		}
 	}
 

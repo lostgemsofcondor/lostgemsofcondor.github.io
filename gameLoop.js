@@ -54,8 +54,12 @@ function handelZoom(){
 }
 
 function handleDebug(){
-	if(game.keyboard.debug.down){
-		debug.setAllDebug(true);
+	if(game.keyboard.debug.start){
+		if(debug.debugging){
+			debug.setAllDebug(false);
+		} else {
+			debug.setAllDebug(true);
+		}
 	}
 }
 

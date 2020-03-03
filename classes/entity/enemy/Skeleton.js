@@ -8,7 +8,7 @@ class Skeleton extends Enemy {
             .setMaxHealth(15)
             .setIcon();
         this.AI = new CombineAI(
-            new ShootAI(),
+            new ShootAI(1200),
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));

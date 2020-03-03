@@ -117,8 +117,8 @@ class Entity {
 		if((!this.moving)){
 			return;
 		}
-		var newX = this.positionX + Math.cos(this.angle)*this.speed;
-		var newY = this.positionY + Math.sin(this.angle)*this.speed;
+		var newX = this.positionX + Math.cos(this.angle)*Math.min(this.speed, 48);
+		var newY = this.positionY + Math.sin(this.angle)*Math.min(this.speed, 48);
 		if(game.map.noCollsion(newX, newY) || this.noCollsion){
 			this.positionX = newX;
 			this.positionY = newY;
