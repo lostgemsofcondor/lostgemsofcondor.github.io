@@ -38,6 +38,7 @@ class ExperienceService {
 			this.enduranceLevel += 1;
 			this.updateStaminaRegen();
 			this.updateEndurance();
+			game.player.stamina = game.player.maxStamina;
 		}
 	}
 
@@ -61,5 +62,6 @@ class ExperienceService {
 
 	updateStaminaRegen(){
 		game.player.baseStaminaRegen = Math.floor(Math.pow(0.9819, this.enduranceLevel)*60);
+		game.player.maxStamina = 19 + this.enduranceLevel;
 	}
 }

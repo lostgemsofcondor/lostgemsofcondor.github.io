@@ -3,6 +3,7 @@ class Mortal extends Entity {
 		super(x, y);
 		this.dead = false;
 		this.despawnDistance = 4000;
+        this.bulletBuilder = new BulletBuilder();
 	}
 	
 	setDespawnDistance(despawnDistance){

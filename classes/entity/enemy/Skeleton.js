@@ -12,7 +12,7 @@ class Skeleton extends Enemy {
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));
-        this.shoot = game.bulletBuilder.newTripleArrow(7);
+        this.shoot = this.bulletBuilder.newTripleArrow(7);
     }
 
     

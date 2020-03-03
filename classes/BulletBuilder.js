@@ -21,12 +21,11 @@ class BulletBuilder{
 	}
 
 	build(){
-		self = this;
 		return function(angle){
-			for(var count = 0; count < self.amount; count++){
+			for(var count = 0; count < this.bulletBuilder.amount; count++){
 				var t = 0;
-				if(self.amount > 1){
-					var t = -1 * self.theta/2 + count*self.theta/(self.amount - 1);
+				if(this.bulletBuilder.amount > 1){
+					var t = -1 * this.bulletBuilder.theta/2 + count*this.bulletBuilder.theta/(this.bulletBuilder.amount - 1);
 				}
 				var arrow = new Bullet(this.positionX, this.positionY)
 					.setImage("./sprites/bullets/arrows/arrowGreen.png", angle + t + Math.PI/4)
@@ -34,10 +33,10 @@ class BulletBuilder{
 					.setDimensions(48, 48)
 					.setRotates(false)
 					.setFriendly(false)
-					.setBaseDamage(self.damage)
+					.setBaseDamage(this.bulletBuilder.damage)
 					.setAngle(angle + t)
 					.setFriendly(this.friendly);
-				if(count == Math.floor(self.amount/2)){
+				if(count == Math.floor(this.bulletBuilder.amount/2)){
 					arrow.setItemSpriteKey("arrow");
 				}
 				arrow.AI = new BulletAI(arrow, 100);
@@ -118,25 +117,9 @@ class BulletBuilder{
 	}
 
 	newTripleArrow(damage, theta = 3*Math.PI/16, amount = 3){
-		return function(angle){
-			//"this" refers to the Entity who calls this shoot function not the BulletBuilder
-			for(var count = 0; count < amount; count++){
-				var t = -1 * theta/2 + count*theta/amount;
-				var arrow = new Bullet(this.positionX, this.positionY)
-					.setImage("./sprites/bullets/arrows/arrowGreen.png", angle + t + Math.PI/4)
-					.setSpeed(10)
-					.setDimensions(48, 48)
-					.setRotates(false)
-					.setFriendly(false)
-					.setBaseDamage(damage)
-					.setAngle(angle + t)
-					.setFriendly(this.friendly);
-				if(count == Math.floor(amount/2)){
-					arrow.setItemSpriteKey("arrow");
-				}
-				arrow.AI = new BulletAI(arrow, 100);
-			}
-		}
-
+		this.damage = damage;
+		this.theta = theta;
+		this.amount = amount;
+		return this.build();
 	}
 }

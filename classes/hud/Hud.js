@@ -58,7 +58,7 @@ class Hud {
         this.context.textAlign = "left";
 
 		this.context.fillStyle = game.config.white;
-        this.context.fillText("Press the space to jump", x, y);
+        this.context.fillText("Press the space to dash", x, y);
         this.context.fillText("Hold the shift bar to", x, y+14);
         this.context.fillText("fire arrows", x, y+28);
 

@@ -13,8 +13,8 @@ class Player extends Mortal {
 		this.baseRegen = 300;
 		this.lastRegen = -1;
 
-		this.stamina = 100;
-		this.maxStamina = 100;
+		this.stamina = 20;
+		this.maxStamina = 20;
 		this.baseStaminaRegen = 60;
 		this.lastStaminaRegen = -1;
 		this.startedRunningAt = -1;
@@ -47,7 +47,7 @@ class Player extends Mortal {
 					this.shoot(angle);
 				}
 			} else {
-				if(this.reduceStamina(2, false)){
+				if(this.reduceStamina(1, false)){
 					this.shoot = game.bulletBuilder.newSwipeMedium();
 					this.shoot(angle);
 				}
@@ -88,7 +88,7 @@ class Player extends Mortal {
 		if(!this.moving){
 			return;
 		}
-		if(this.running && this.startedRunningAt + 40 <= game.gameTick){
+		if(this.running && this.startedRunningAt + 3 <= game.gameTick){
 			if(this.reduceStamina(1, true)){
 				this.startedRunningAt = game.gameTick;
 			} else {
