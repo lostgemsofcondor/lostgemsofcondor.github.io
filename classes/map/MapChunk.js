@@ -32,8 +32,15 @@ class MapChunk {
 		}
 		this.mapWorker.postMessage(message);
 		this.mapWorker.onmessage = function(e) {
+			self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
 			self.tileMap = [];
-			var imgData = game.miniMap.context.createImageData(self.chunkSize, self.chunkSize);
+
+			var miniChunk = game.miniMap.getChunk(self.x, self.y);
+			//bool if this chunk apears on the minimap yet
+			var seen = miniChunk.seen[correctMod(self.x, game.miniMap.mapChunkPerMiniMapChunk)][correctMod(self.y, game.miniMap.mapChunkPerMiniMapChunk)];
+			if(!seen){
+				var imgData = game.miniMap.context.createImageData(self.chunkSize, self.chunkSize);
+			}
 			
 			for(var j = 0; j < self.chunkSize; j += 1){
 				self.tileMap.push([]);
@@ -77,23 +84,25 @@ class MapChunk {
 					}
 
 					tile.draw(self.context, i * self.tileSize, j * self.tileSize);
-					
-					var pos = ((j) * self.chunkSize + i)*4;
-					// imgData.data[pos] = j;
-					// imgData.data[pos+1] = j;
-					// imgData.data[pos+2] = j;
-					// imgData.data[pos+3] = 255;
-					imgData.data[pos] = tile.r;
-					imgData.data[pos+1] = tile.g;
-					imgData.data[pos+2] = tile.b;
-					imgData.data[pos+3] = 255;
-
+					if(!seen){
+						if(Math.random() < game.spawnService.randomChunkSpawnRate){
+							if(tile.spawn){
+								tile.spawn((self.x*self.chunkSize + i) * self.tileSize, (self.y*self.chunkSize + j) * self.tileSize, true);
+							}
+						}
+						
+						var pos = ((j) * self.chunkSize + i)*4;
+						imgData.data[pos] = tile.r;
+						imgData.data[pos+1] = tile.g;
+						imgData.data[pos+2] = tile.b;
+						imgData.data[pos+3] = 255;
+					}
 					self.tileMap[i][j] = tile;
-					//collisionLine.push(noCollision);
 				}
-				//self.collisionMap.push(collisionLine);
 			}
-			game.miniMap.addChunkImage(imgData, self.x, self.y, self.chunkSize);
+			if(!seen){
+				miniChunk.addChunkImage(imgData, self.x, self.y, self.chunkSize);
+			}
 		}
 		
 		this.clear = false;

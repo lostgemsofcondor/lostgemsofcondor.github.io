@@ -4,7 +4,8 @@ class MiniMapChunk {
 		this.y = y;
 		this.miniChunkSize = miniChunkSize;
 
-		this.collisionMap = [];
+
+		this.seen = [];
 		
 		//this.clear = true;
 		this.canvas = addCanvas();
@@ -27,12 +28,25 @@ class MiniMapChunk {
 
 	reload(){
 		this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		//this.context.strokeRect(0, 0, this.canvas.width, this.canvas.height);
+		this.seen = [];
+		for(var i = 0; i < game.miniMap.mapChunkPerMiniMapChunk; i++){
+			var temp = []
+			for(var j = 0; j < game.miniMap.mapChunkPerMiniMapChunk; j++){
+				temp.push(false);
+			}
+			this.seen.push(temp);
+		}
 		
 	}
+	
+	addChunkImage(imgData, x, y){ // x and y in terms of map chunks
+		this.putImageData(imgData, correctMod(x, game.miniMap.mapChunkPerMiniMapChunk), correctMod(y, game.miniMap.mapChunkPerMiniMapChunk));
+	}
 
-	putImageData(imgData, x, y){ // x and y in terms of pixels
-		this.context.putImageData(imgData, x, y);
+	putImageData(imgData, x, y){ // x and y in terms of chunks
+		console.log("seen: "+ this.seen[x][y]);
+		this.seen[x][y] = true;
+		this.context.putImageData(imgData, x * game.map.chunkSize, y * game.map.chunkSize);
 	}
 
 }

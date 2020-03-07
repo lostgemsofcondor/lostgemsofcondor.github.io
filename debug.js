@@ -29,6 +29,7 @@ class Debug {
 		//this.drawDebugThings.drawPixel(200, 200);
 		//this.drawDebugThings.drawCircle(200, 200, 30);
 		this.drawDebugThings.mark(game.player);
+		this.drawDebugThings.markPoint(game.spawnService.point);
 		this.drawDebugThings.markSprite(game.player.sprite);
 		this.drawDebugThings.direction(game.player);
 		// try {
@@ -82,6 +83,7 @@ class Debug {
 		this.debugInfo.add("Endurance EXP: "+ game.experienceService.endurance, 4);
 		this.debugInfo.add("Endurance Level: "+ game.experienceService.enduranceLevel, 4);
 		this.debugInfo.add("game.player.baseStaminaRegen: "+ game.player.baseStaminaRegen, 5);
+		this.debugInfo.add("Spawn Rate: "+ game.spawnService.spawnRate, 4);
 	}
 
 	getKeys(){
@@ -138,8 +140,12 @@ class DrawDebugThings {
 		context.stroke();
 	}
 
+	
+	markPoint(p){
+		this.drawCircle(p.positionX, p.positionY, 24);
+	}
+
 	mark(entity){
-		//this.drawPixel(entity.positionX, entity.positionY);
 		this.drawCircle(entity.positionX, entity.positionY, entity.sprite.width/2);
 	}
 

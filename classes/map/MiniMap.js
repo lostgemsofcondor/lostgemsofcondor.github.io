@@ -82,15 +82,11 @@ class MiniMap {
 
 	}
 
-	addChunkImage(imgData, x, y){ // x and y in terms of map chunks
-		var miniChunk = this.getChunk(x, y);
-		miniChunk.putImageData(imgData, correctMod(x * game.map.chunkSize, this.miniChunkSize), correctMod(y * game.map.chunkSize, this.miniChunkSize));
-	}
-
 	getChunk(x, y){ // x and y in terms of map chunks
 		var miniMapChunkX = Math.floor(x / this.mapChunkPerMiniMapChunk);
 		var miniMapChunkY = Math.floor(y / this.mapChunkPerMiniMapChunk);
 		for(var i in this.chunks){
+
 			if(this.chunks[i].x == miniMapChunkX && this.chunks[i].y == miniMapChunkY){
 				return this.chunks[i];
 			}

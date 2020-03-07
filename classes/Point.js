@@ -17,6 +17,10 @@ class Point {
 		this.y = y;
 	}
 
+	distance(p){
+		return Math.sqrt(Math.pow(this.positionX - p.positionX, 2) + Math.pow(this.positionY - p.positionY, 2));
+	}
+
 	adjustXCord(){
 		var cos = Math.cos(game.angle);
 		var sin = Math.sin(game.angle);

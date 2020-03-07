@@ -316,14 +316,17 @@ class Game {
 
 	spawns(){
 		if(!this.paused){
+			game.spawnService.updateSpawnRate();
 			var r = 1200;
 			var amount = 10;
 			for(var theta = 0; theta <= Math.PI*2; theta += Math.PI*2/amount){
-				var x = this.player.positionX + r*Math.cos(theta);
-				var y = this.player.positionY + r*Math.sin(theta);
-				var tile = this.map.getTile(x, y);
-				if(tile && tile.spawn){
-					tile.spawn(x, y);
+				if(Math.random() <= game.spawnService.spawnRate * game.spawnService.randomSpawnRate){
+					var x = this.player.positionX + r*Math.cos(theta);
+					var y = this.player.positionY + r*Math.sin(theta);
+					var tile = this.map.getTile(x, y);
+					if(tile && tile.spawn){
+						tile.spawn(x, y);
+					}
 				}
 			}
 		}
