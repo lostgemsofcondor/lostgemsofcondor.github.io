@@ -4,11 +4,14 @@ class Overlay {
         this.context = this.canvas.getContext("2d");
 
         this.dayLength = 86400;
-        this.nightLevel = .75;
+        this.nightLevel = .9;
         this.sunset = 54000;
         this.sunsetLength = 3600;
-        this.nightLength
         this.sunrise = this.dayLength - this.sunsetLength;
+
+        
+        this.img = new Image();
+        this.img.src = "./sprites/lighting/light.png";
 
     }
 
@@ -27,8 +30,15 @@ class Overlay {
     }
 
     draw(){
-
         this.dayNight();
+        this.drawLighting();
+    }
+
+    drawLighting(){
+        this.context.globalCompositeOperation = "destination-out";
+        //this.context.drawImage(this.img, game.player.sprite.adjustXCord(), game.player.sprite.adjustYCord())
+        this.context.drawImage(this.img, game.player.sprite.adjustXCord() - 1080/2, game.player.sprite.adjustYCord() - 1080/2)
+        this.context.globalCompositeOperation = "source-over";
     }
     
     dayNight(){
@@ -38,6 +48,7 @@ class Overlay {
     }
 
     lightLevel(){
+        //return this.nightLevel;
         var tick = game.gameTick % this.dayLength;
         if(tick < this.sunset){
             return 0;

@@ -45,7 +45,7 @@ class Game {
 		this.overlay = new Overlay();
 		this.items = []
 		this.itemSprites = new ItemSprites();
-		this.inventory = new Inventory(4, 5);
+		this.inventory = new Inventory(5, 6);
 
 		this.experienceService = new ExperienceService();
 

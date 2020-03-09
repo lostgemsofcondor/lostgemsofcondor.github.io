@@ -6,15 +6,15 @@ class Hud {
         
         this.hudImg = new Image();
         this.hudImg.src = "./sprites/hud/hud.png";
-        this.width = 255;
+        this.width = 384;
         this.height = 1080;
 
         //this.items = [];
 
-        this.inventoryX = 9;
+        this.inventoryX = 42;
         this.inventoryY = 510;
         this.itemSize = 48;
-        this.slotSize = 63;
+        this.slotSize = 68;
 
         this.temp = 0;
         this.temp2 = 0;
@@ -43,24 +43,24 @@ class Hud {
 
     draw(){
         //this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addHealthBar();
         this.addStaminaBar();
+
+        this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addSkillBar();
         this.addText();
         this.drawItems();
     }
 
     addText(){
-        var x = this.offset + 4;
-        var y = 835;
+        var x = this.offset + 12;
+        var y = 920;
         this.context.font = "14px pixel_font";
         this.context.textAlign = "left";
 
-		this.context.fillStyle = game.config.white;
+		this.context.fillStyle = game.config.black;
         this.context.fillText("Press the space to dash", x, y);
-        this.context.fillText("Hold the shift bar to", x, y+14);
-        this.context.fillText("fire arrows", x, y+28);
+        this.context.fillText("Hold shift to fire arrows", x, y+14);
 
         this.context.fillText("Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);
         this.context.fillText("Endurance EXP: " + game.experienceService.endurance, x, y+14*5);
@@ -69,17 +69,17 @@ class Hud {
     }
 
     addHealthBar(){
-        var x = this.offset + 4;
-        var y = 30;
-        var width = 247;
-        var height = 30;
+        var x = this.offset + 48;
+        var y = 100;
+        var width = 288;
+        var height = 24;
         var health = game.player.health;
         var maxHealth = game.player.maxHealth;
 
         this.context.fillStyle = game.config.healthGreen;
         this.context.fillRect(x, y, width, height);
         
-        this.context.fillStyle = game.config.healthRed;
+        this.context.fillStyle = game.config.lightGray;
         this.context.fillRect(x + width * health/maxHealth, y, width - width * health/maxHealth, height);
 
         this.context.font = "20px pixel_font";
@@ -91,10 +91,10 @@ class Hud {
     }
 
     addStaminaBar(){
-        var x = this.offset + 4;
-        var y = 70;
-        var width = 247;
-        var height = 30;
+        var x = this.offset + 48;
+        var y = 136;
+        var width = 288;
+        var height = 24;
         var stamina = game.player.stamina;
         var maxStamina = game.player.maxStamina;
 
@@ -104,7 +104,7 @@ class Hud {
         this.context.fillStyle = game.config.lightGray;
         this.context.fillRect(x + width * stamina/maxStamina, y, width - width * stamina/maxStamina, height);
 
-        this.context.font = "20px pixel_font";
+        this.context.font = "19px pixel_font";
         this.context.textAlign = "center";
         this.context.textBaseline = "middle";
 		this.context.fillStyle = game.config.gray;
@@ -233,7 +233,7 @@ class Hud {
         this.context.textAlign = "left";
         this.context.textBaseline = "hanging";
 
-        this.context.fillStyle = game.config.white;
+        this.context.fillStyle = game.config.black;
         
         var heldItem = null
         for(var j = 0; j < game.inventory.height; j++){

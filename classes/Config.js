@@ -10,6 +10,7 @@ class Config {
         this.white = "#EEEEEE";
         this.lightGray = "#AAAAAA";
         this.gray = "#222222";
+        this.black = "#000000";
 
         this.healthGreen = "#00CC00";
         this.healthRed = "#DD0000";
