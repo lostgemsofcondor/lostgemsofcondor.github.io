@@ -8,6 +8,7 @@ class Game {
 		this.mouse = new Mouse();
 		this.spawnService = new SpawnService();
 		this.bulletBuilder = new BulletBuilder();
+		this.imageBuilder = new ImageBuilder();
 		
 		var playerSpeed = 7;
 		this.player = new Player(0, 0)
@@ -24,7 +25,7 @@ class Game {
 		this.cameraCenterY = 0;
 		this.angle = Math.PI/4;
 		this.rotateSpeed = this.config.rotateSpeed/180 * Math.PI;
-		this.gameTick = 0;
+		this.gameTick = 76400;
 		this.mainTick = 0;
 		this.paused = false;
 		
@@ -334,5 +335,14 @@ class Game {
 
 	addButton(button){
 		this.buttons.push(button);
+	}
+
+	periodic(length, period){
+		var tick = Math.floor(this.gameTick / length);
+		var value = tick%(period * 2)
+		if(value >= period){
+			return period - tick%period - 1;
+		}
+		return value;
 	}
 }

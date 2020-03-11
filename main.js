@@ -102,6 +102,8 @@ function gameLoop(){
 function redraw(){
 	clearCanvas();
 	draw();
+
+	addToContext(game.imageBuilder.buildLighting(5), 0, 0);
 }
 
 function clearCanvas(){

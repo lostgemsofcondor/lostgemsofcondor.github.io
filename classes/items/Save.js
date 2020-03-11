@@ -7,7 +7,7 @@ class Save {
         this.enduranceLevel = 1;
 
         this.health = 20;
-        this.stamina = 100;
+        this.stamina = 20;
     }
 
     save(){

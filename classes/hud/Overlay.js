@@ -2,6 +2,9 @@ class Overlay {
     constructor(){
 		this.canvas = addCanvas();
         this.context = this.canvas.getContext("2d");
+        
+		this.lightCanvas = addCanvas();
+        this.lightContext = this.lightCanvas.getContext("2d");
 
         this.dayLength = 86400;
         this.nightLevel = .9;
@@ -10,14 +13,15 @@ class Overlay {
         this.sunrise = this.dayLength - this.sunsetLength;
 
         
-        this.img = new Image();
-        this.img.src = "./sprites/lighting/light.png";
 
     }
 
     resize(){
         this.canvas.width = game.width;
         this.canvas.height = game.height;
+
+        this.lightCanvas.width = game.width;
+        this.lightCanvas.height = game.height;
     }
 
     redraw(){
@@ -27,6 +31,7 @@ class Overlay {
 
     clearCanvas(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.lightContext.clearRect(0, 0, this.lightCanvas.width, this.lightCanvas.height);
     }
 
     draw(){
@@ -35,11 +40,41 @@ class Overlay {
     }
 
     drawLighting(){
+        this.lightContext.globalCompositeOperation = "lighter";
+        
+        var lightingImg = game.imageBuilder.buildLighting(128 + game.periodic(8, 32), 5)
+        this.lightContext.drawImage(lightingImg, game.player.sprite.adjustXCord() - lightingImg.width/2, game.player.sprite.adjustYCord() - lightingImg.height/2)
+
+
+        lightingImg = game.imageBuilder.buildLighting(32 + game.periodic(8, 32), 2);
+
+        var enemies = game.getEnemies();
+		for(var i = 0; i < enemies.length; i++){
+            this.lightContext.drawImage(lightingImg, enemies[i].sprite.adjustXCord() - lightingImg.width/2, enemies[i].sprite.adjustYCord() - lightingImg.height/2);
+        }
+
+
+
+        lightingImg = game.imageBuilder.buildLighting(16 + game.periodic(8, 8), 2);
+
+        
+        var bullets = game.getBullets();
+		for(var i = 0; i < bullets.length; i++){
+            this.lightContext.drawImage(lightingImg, bullets[i].sprite.adjustXCord() - lightingImg.width/2, bullets[i].sprite.adjustYCord() - lightingImg.height/2);
+        }
+        
+        var droppedItems = game.getDroppedItems();
+		for(var i = 0; i < droppedItems.length; i++){
+            this.lightContext.drawImage(lightingImg, droppedItems[i].sprite.adjustXCord() - lightingImg.width/2, droppedItems[i].sprite.adjustYCord() - lightingImg.height/2);
+        }
+
         this.context.globalCompositeOperation = "destination-out";
-        //this.context.drawImage(this.img, game.player.sprite.adjustXCord(), game.player.sprite.adjustYCord())
-        this.context.drawImage(this.img, game.player.sprite.adjustXCord() - 1080/2, game.player.sprite.adjustYCord() - 1080/2)
+        this.context.drawImage(this.lightCanvas, 0, 0);
         this.context.globalCompositeOperation = "source-over";
+
+
     }
+
     
     dayNight(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
