@@ -24,18 +24,19 @@ class Mouse {
 		this.move(x, y);
 		this.onHud = game.hud.clickOnHud(x, y);
 		this.left.press();
+		delete game.menu;
 	}
 	
 	clickLeftRelease(){
 		this.left.release();
-		game.hud.clickLeftRelease
+		//game.hud.clickLeftRelease()
 	}
 	
 	clickRight(x, y){
 		this.move(x, y);
 		this.onHud = game.hud.clickOnHud(x, y);
 		this.right.press();
-		
+		game.menu = new Menu();
 	}
 	
 	clickRightRelease(){

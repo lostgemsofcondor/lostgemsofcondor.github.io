@@ -44,7 +44,6 @@ class MiniMapChunk {
 	}
 
 	putImageData(imgData, x, y){ // x and y in terms of chunks
-		console.log("seen: "+ this.seen[x][y]);
 		this.seen[x][y] = true;
 		this.context.putImageData(imgData, x * game.map.chunkSize, y * game.map.chunkSize);
 	}

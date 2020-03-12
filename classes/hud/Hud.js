@@ -6,6 +6,18 @@ class Hud {
         
         this.hudImg = new Image();
         this.hudImg.src = "./sprites/hud/hud.png";
+
+        this.menuImg = new Image();
+        this.menuImg.src = "./sprites/hud/menu.png";
+        this.menuSingleImg = new Image();
+        this.menuSingleImg.src = "./sprites/hud/menuSingle.png";
+        
+        this.menuTopImg = new Image();
+        this.menuTopImg.src = "./sprites/hud/menuTop.png";
+        this.menuBottomImg = new Image();
+        this.menuBottomImg.src = "./sprites/hud/menuBottom.png";
+        
+
         this.width = 384;
         this.height = 1080;
 
@@ -50,6 +62,7 @@ class Hud {
         this.addSkillBar();
         this.addText();
         this.drawItems();
+        this.drawRightClickMenu();
     }
 
     addText(){
@@ -266,5 +279,32 @@ class Hud {
         this.skillNext = skillNext;
         this.skillUpdated = game.gameTick + 600;
         this.skillText = "Endurance Progress"
+    }
+
+    drawRightClickMenu(){
+        if(game.menu && game.menu.options.length > 0){
+            this.context.font = "19px pixel_font";
+            this.context.textBaseline = "middle";
+            this.context.fillStyle = game.config.black;
+            var offsetY = 0;
+            offsetY += this.menuHelper(this.menuTopImg, game.menu.x, game.menu.y + offsetY);
+            var i;
+            for(i = 0; i < game.menu.options.length - 1; i += 2){
+                offsetY += this.menuHelper(this.menuImg, game.menu.x, game.menu.y + offsetY);
+                this.context.fillText(game.menu.options[i].getText(), game.menu.x + 48, game.menu.y + offsetY - 80+18);
+                this.context.fillText(game.menu.options[i + 1].getText(), game.menu.x + 48, game.menu.y + offsetY - 80+58);
+                
+            }
+            if(game.menu.options.length%2 == 1){
+                offsetY += this.menuHelper(this.menuSingleImg, game.menu.x, game.menu.y + offsetY);
+                this.context.fillText(game.menu.options[i].getText(), game.menu.x + 48, game.menu.y + offsetY - 40+18);
+            }
+            offsetY += this.menuHelper(this.menuBottomImg, game.menu.x, game.menu.y + offsetY);
+        }
+    }
+
+    menuHelper(img, x, y){
+        this.context.drawImage(img, x, y);
+        return img.height;
     }
 }

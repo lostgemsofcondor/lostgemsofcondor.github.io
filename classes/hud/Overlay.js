@@ -13,7 +13,17 @@ class Overlay {
         this.sunrise = this.dayLength - this.sunsetLength;
 
         
-
+        for(var i = 0; i < 4; i++){
+            game.imageBuilder.buildLighting(128 + i, 5)
+            // game.imageBuilder.buildLighting(32 + i, 2)
+            // game.imageBuilder.buildLighting(16 + i, 2)
+        }
+        for(var i = 0; i < 8; i++){
+            game.imageBuilder.buildLighting(32 + i, 2)
+        }
+        for(var i = 0; i < 8; i++){
+            game.imageBuilder.buildLighting(16 + i, 2)
+        }
     }
 
     resize(){
@@ -42,11 +52,11 @@ class Overlay {
     drawLighting(){
         this.lightContext.globalCompositeOperation = "lighter";
         
-        var lightingImg = game.imageBuilder.buildLighting(128 + game.periodic(8, 32), 5)
+        var lightingImg = game.imageBuilder.buildLighting(128 + game.periodic(32, 4), 5)
         this.lightContext.drawImage(lightingImg, game.player.sprite.adjustXCord() - lightingImg.width/2, game.player.sprite.adjustYCord() - lightingImg.height/2)
 
 
-        lightingImg = game.imageBuilder.buildLighting(32 + game.periodic(8, 32), 2);
+        lightingImg = game.imageBuilder.buildLighting(32 + game.periodic(16, 8), 2);
 
         var enemies = game.getEnemies();
 		for(var i = 0; i < enemies.length; i++){

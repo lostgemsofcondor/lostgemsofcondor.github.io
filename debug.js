@@ -100,8 +100,8 @@ class Debug {
 		this.str = "";
 		this.str += game.mouse.left.down ? "left " : "";
 		this.str += game.mouse.left.start ? "pressed " : "";
-		this.str += game.mouse.left.down ? "right " : "";
-		this.str += game.mouse.left.start ? "pressed " : "";
+		this.str += game.mouse.right.down ? "right " : "";
+		this.str += game.mouse.right.start ? "pressed " : "";
 		return this.str;
 	}
 }

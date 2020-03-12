@@ -7,6 +7,7 @@ class ImageBuilder {
         if(this.lightingImages[rings + "," + shades] != null){
             return this.lightingImages[rings + "," + shades];
         }
+        console.log(rings + "," + shades);
         var ringWidth = 4;
         var ringsPerShade = rings/shades;
         var canvas = addCanvas();

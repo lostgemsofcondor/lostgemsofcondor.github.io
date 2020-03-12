@@ -32,11 +32,9 @@ function startUp(){
 	window.addEventListener("mousemove", handelMouseMove);
 	window.addEventListener("resize", resize);
 
-	/* disable right click */
-	// canvas.oncontextmenu = function (e) {
-	// 	e.preventDefault();
-	// };
-	/* disable right click */
+	canvas.oncontextmenu = function (e) {
+		e.preventDefault();
+	};
 
 
 	
@@ -102,8 +100,6 @@ function gameLoop(){
 function redraw(){
 	clearCanvas();
 	draw();
-
-	addToContext(game.imageBuilder.buildLighting(5), 0, 0);
 }
 
 function clearCanvas(){

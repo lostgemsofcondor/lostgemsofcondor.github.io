@@ -25,7 +25,7 @@ class Game {
 		this.cameraCenterY = 0;
 		this.angle = Math.PI/4;
 		this.rotateSpeed = this.config.rotateSpeed/180 * Math.PI;
-		this.gameTick = 76400;
+		this.gameTick = 0;
 		this.mainTick = 0;
 		this.paused = false;
 		
@@ -43,6 +43,7 @@ class Game {
 		this.loadSave();
 		this.miniMap = new MiniMap();
 		this.hud = new Hud();
+		this.menu = null;
 		this.overlay = new Overlay();
 		this.items = []
 		this.itemSprites = new ItemSprites();

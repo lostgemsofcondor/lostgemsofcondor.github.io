@@ -3,6 +3,7 @@ class BulletBuilder{
 		this.damage = 1;
 		this.theta = 0;
 		this.amount = 1;
+		this.name = "Bullet"
 	}
 
 	setDamage(damage){
@@ -17,6 +18,11 @@ class BulletBuilder{
 
 	setAmount(amount){
 		this.amount = amount;
+		return this;
+	}
+	
+	setName(name){
+		this.name = name;
 		return this;
 	}
 
@@ -35,7 +41,8 @@ class BulletBuilder{
 					.setFriendly(false)
 					.setBaseDamage(this.bulletBuilder.damage)
 					.setAngle(angle + t)
-					.setFriendly(this.friendly);
+					.setFriendly(this.friendly)
+					.setName(this.name);
 				if(count == Math.floor(this.bulletBuilder.amount/2)){
 					arrow.setItemSpriteKey("arrow");
 				}
@@ -55,7 +62,8 @@ class BulletBuilder{
 				.setBaseDamage(1)
 				.setPiercing(true)
 				.setFriendly(this.friendly)
-				.setStaminaCost(2); // This Should come from some kind of weapon class
+				.setStaminaCost(2)
+				.setName("Swipe"); // This Should come from some kind of weapon class
 			swipe.AI = new CombineAI(new TetherAI(this.key, 96, 96, angle), new BulletAI(swipe, 10)); 
 		}
 	}
@@ -75,7 +83,8 @@ class BulletBuilder{
 					.setFriendly(false)
 					.setBaseDamage(damage)
 					.setAngle(angle + t)
-					.setFriendly(this.friendly);
+					.setFriendly(this.friendly)
+					.setName("Bubble");
 				arrow.AI = new BulletAI(arrow, 100);
 			}
 		}
@@ -95,7 +104,8 @@ class BulletBuilder{
 				.setFriendly(false)
 				.setBaseDamage(damage)
 				.setAngle(angle - cone/2 + Math.random()*cone)
-				.setFriendly(this.friendly);
+				.setFriendly(this.friendly)
+				.setName("Bubble");
 			arrow.AI = new BulletAI(arrow, 100);
 		}
 	}
@@ -111,7 +121,8 @@ class BulletBuilder{
 				.setBaseDamage(1)
 				.setAngle(angle)
 				.setFriendly(this.friendly)
-				.setItemSpriteKey("arrow");
+				.setItemSpriteKey("arrow")
+				.setName("Arrow");
 			arrow.AI = new BulletAI(arrow, 100);
 		}
 	}

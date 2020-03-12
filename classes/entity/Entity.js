@@ -32,6 +32,7 @@ class Entity {
 		this.friendly = false;
 		this.age = 0;
 		this.hasIcon = false;
+		this.name = null;
 
 		this.setRotates(true);
 		
@@ -84,6 +85,10 @@ class Entity {
 		return this;
 	}
 
+	setName(name){
+		this.name = name;
+		return this;
+	}
 	//logic functions
 	correctMod(a, b){
 		return ((a % b) + b) % b;
@@ -177,20 +182,34 @@ class Entity {
 
 	strictCollides(e){
 		var d = Math.sqrt(Math.pow(this.positionX - e.positionX, 2) + Math.pow(this.positionY - e.positionY, 2));
-		
 		return d <= e.width / 2;
 	}
 
 	collides(e){
 		var d = Math.sqrt(Math.pow(this.positionX - e.positionX, 2) + Math.pow(this.positionY - e.positionY, 2));
-		
 		return d <= (this.width + e.width) / 2;
 	}
-
+	
+	collidesPoint(p){
+		var d = Math.sqrt(Math.pow(this.positionX - p.positionX, 2) + Math.pow(this.positionY - p.positionY, 2));
+		return d <= this.width;
+	}
+	
 	risingText(text, color = game.config.gray){
 		return new Text(this.x, this.y, text)
 			.setColor(color)
 			.setOffset(this.height);
+	}
+
+	getDescription(){
+		return "Unknown entity";
+	}
+
+	getName(){
+		if(this.name){
+			return this.name;
+		}
+		return this.__proto__.constructor.name;
 	}
 
 	drop(item){
