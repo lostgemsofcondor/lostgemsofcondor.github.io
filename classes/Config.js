@@ -17,7 +17,9 @@ class Config {
         this.staminaOrange = "#FF9900";
         this.expGold = "#EAEA00";
 
-
+        this.hudDark = "#9E7F68"
+        this.hudMedium = "#C3AA8F"
+        this.hudLight = "#E8D4B5"
         /// end colors
     }
 }

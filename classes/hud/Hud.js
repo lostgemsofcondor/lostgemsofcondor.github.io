@@ -3,9 +3,16 @@ class Hud {
 		this.canvas = addCanvas();
         this.context = this.canvas.getContext("2d");
 
+        this.width = 384;
+        this.height = 1080;
         
         this.hudImg = new Image();
         this.hudImg.src = "./sprites/hud/hud.png";
+        
+        this.consoleImg = new Image();
+        this.consoleImg.src = "./sprites/hud/console.png";
+
+        this.consoleOpen = true;
 
         this.menuImg = new Image();
         this.menuImg.src = "./sprites/hud/menu.png";
@@ -16,10 +23,20 @@ class Hud {
         this.menuTopImg.src = "./sprites/hud/menuTop.png";
         this.menuBottomImg = new Image();
         this.menuBottomImg.src = "./sprites/hud/menuBottom.png";
-        
 
-        this.width = 384;
-        this.height = 1080;
+        this.windowTopLeft = new Image();
+        this.windowTopLeft.src = "./sprites/hud/windowTopLeft.png";
+        this.windowTopRight = new Image();
+        this.windowTopRight.src = "./sprites/hud/windowTopRight.png";
+        this.windowBottomLeft = new Image();
+        this.windowBottomLeft.src = "./sprites/hud/windowBottomLeft.png";
+        this.windowBottomRight = new Image();
+        this.windowBottomRight.src = "./sprites/hud/windowBottomRight.png";
+
+        this.console = new Window(0, this.height - 256).setWidth(512).setHeight(256);
+
+
+        
 
         //this.items = [];
 
@@ -60,6 +77,7 @@ class Hud {
 
         this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
         this.addSkillBar();
+        this.drawConsole();
         this.addText();
         this.drawItems();
         this.drawRightClickMenu();
@@ -306,5 +324,9 @@ class Hud {
     menuHelper(img, x, y){
         this.context.drawImage(img, x, y);
         return img.height;
+    }
+
+    drawConsole(){
+        this.console.draw(this.context);
     }
 }

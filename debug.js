@@ -12,6 +12,13 @@ class Debug {
 	setAllDebug(bool){
 		this.debugging = bool;
 		this.overRideMove = bool;
+		if(bool){
+			canvas.oncontextmenu = null;
+		} else {
+			canvas.oncontextmenu = function (e) {
+				e.preventDefault();
+			};
+		}
 	}
 
 	draw(){

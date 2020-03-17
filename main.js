@@ -32,6 +32,12 @@ function startUp(){
 	window.addEventListener("mousemove", handelMouseMove);
 	window.addEventListener("resize", resize);
 
+	context.imageSmoothingEnabled = false;       /* standard */
+    context.mozImageSmoothingEnabled = false;    /* Firefox */
+    context.oImageSmoothingEnabled = false;      /* Opera */
+    context.webkitImageSmoothingEnabled = false; /* Safari */
+    context.msImageSmoothingEnabled = false;     /* IE */
+
 	canvas.oncontextmenu = function (e) {
 		e.preventDefault();
 	};
@@ -195,7 +201,7 @@ function copyMap(chunk){
 }
 
 function adjustCanvasSize(){
-	canvas.width = game.width = game.zoom/canvasDiv.offsetHeight * canvasDiv.offsetWidth;
+	canvas.width = game.width = Math.max(980, game.zoom/canvasDiv.offsetHeight * canvasDiv.offsetWidth);
 	canvas.height = game.height = game.zoom;
 }
 
@@ -208,7 +214,7 @@ function resize(){
 
 function addSprite(sprite){
 	if(sprite.rotates){
-		addToContext(sprite.getImg(), sprite.adjustXCordSprite(), sprite.adjustYCordSprite(), sprite.width, sprite.height);
+		addToContext(sprite.getImg(), Math.round(sprite.adjustXCordSprite()), Math.round(sprite.adjustYCordSprite()), sprite.width, sprite.height);
 	} else {
 		context.save();
 		context.translate(sprite.adjustXCord() , sprite.adjustYCord());
