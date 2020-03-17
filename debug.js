@@ -91,6 +91,7 @@ class Debug {
 		this.debugInfo.add("Endurance Level: "+ game.experienceService.enduranceLevel, 4);
 		this.debugInfo.add("game.player.baseStaminaRegen: "+ game.player.baseStaminaRegen, 5);
 		this.debugInfo.add("Spawn Rate: "+ game.spawnService.spawnRate, 4);
+		this.debugInfo.add("Window: "+ game.hud.console.clicked(game.mouse.x, game.mouse.y), 4);
 	}
 
 	getKeys(){

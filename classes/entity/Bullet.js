@@ -66,5 +66,6 @@ class Bullet extends Entity{
 
     die(){
         super.die();
-    }
+	}
+	
 }

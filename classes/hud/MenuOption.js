@@ -18,4 +18,15 @@ class MenuOption {
 
         return this.text;
     }
+
+    getLog(){
+        var text = ""
+        if(this.type == "examine"){
+            var e = game.get(this.key);
+            if(e){
+                text = e.getDescription();
+            }
+        }
+        return text;
+    }
 }

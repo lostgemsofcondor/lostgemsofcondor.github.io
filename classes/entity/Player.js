@@ -134,5 +134,9 @@ class Player extends Mortal {
 
 	getStaminaRegenTime(){
 		return this.baseStaminaRegen;
-	}	
+	}
+	
+	getDescription(){
+		return "This is you.";
+	}
 }

@@ -2,6 +2,7 @@ class Window {
     constructor(x, y){
         this.x = x;
         this.y = y;
+        this.open = true;
     }
 
     setWidth(width){
@@ -26,5 +27,17 @@ class Window {
         context.drawImage(game.hud.windowTopRight, this.x + this.width - game.hud.windowTopRight.width, this.y - 28);
         context.drawImage(game.hud.windowBottomLeft, this.x, this.y + this.height - game.hud.windowBottomLeft.height);
         context.drawImage(game.hud.windowBottomRight, this.x + this.width - game.hud.windowTopRight.width, this.y + this.height - game.hud.windowBottomLeft.height);
+    }
+
+    clicked(x, y){ // 1 is clicked, 2 is close, 0 is not clicked on
+        if(!this.open){
+            return 0;
+        }
+        if(x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height){
+            return 1;
+        } else if(x >= this.x + this.width - 12 - 36 && x <= this.x + this.width - 12 && y >= this.y - 28 && y <= this.y){
+            return 2;
+        }
+        return 0;
     }
 }

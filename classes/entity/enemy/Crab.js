@@ -15,8 +15,12 @@ class Crab extends Enemy {
     }
 
     die(){
-		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
+        new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
 
         super.die();
     }
+
+	getDescription(){
+		return "A lowly crab. Watch it scurry.";
+	}
 }

@@ -35,7 +35,10 @@ class ExperienceService {
 		game.hud.setSkill("endurance", lastLevel, nextLevel)
 		if(this.endurance >= nextLevel){
 			game.player.risingText("Endurance Level Up ").setLife(180);
+			
 			this.enduranceLevel += 1;
+			game.hud.log("Well done!\nYou are now Endurance level " + this.enduranceLevel)
+
 			this.updateStaminaRegen();
 			this.updateEndurance();
 			game.player.stamina = game.player.maxStamina;

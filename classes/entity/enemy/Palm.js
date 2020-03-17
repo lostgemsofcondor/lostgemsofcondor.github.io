@@ -11,4 +11,8 @@ class Palm extends Enemy {
 
         super.die();
     }
+    
+	getDescription(){
+		return "This does not look very sturdy";
+	}
 }

@@ -24,7 +24,6 @@ class Mouse {
 		this.move(x, y);
 		this.onHud = game.hud.clickOnHud(x, y);
 		this.left.press();
-		delete game.menu;
 	}
 	
 	clickLeftRelease(){
@@ -37,6 +36,9 @@ class Mouse {
 		this.onHud = game.hud.clickOnHud(x, y);
 		this.right.press();
 		game.menu = new Menu();
+		if(game.menu.options.length == 0){
+			delete game.menu;
+		}
 	}
 	
 	clickRightRelease(){

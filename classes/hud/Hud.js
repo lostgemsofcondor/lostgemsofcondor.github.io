@@ -12,7 +12,6 @@ class Hud {
         this.consoleImg = new Image();
         this.consoleImg.src = "./sprites/hud/console.png";
 
-        this.consoleOpen = true;
 
         this.menuImg = new Image();
         this.menuImg.src = "./sprites/hud/menu.png";
@@ -34,6 +33,7 @@ class Hud {
         this.windowBottomRight.src = "./sprites/hud/windowBottomRight.png";
 
         this.console = new Window(0, this.height - 256).setWidth(512).setHeight(256);
+        this.consoleLog = [];
 
 
         
@@ -184,7 +184,12 @@ class Hud {
     }
 
     clickOnHud(x, y){
-        return x >= this.offset;
+        if(x >= this.offset || this.console.clicked(x, y) || (game.menu && game.menu.clicked(x, y))){
+            return true;
+        } else {
+            delete game.menu;
+            return false;
+        }
     }
 
     handleClick(x, y){
@@ -207,7 +212,30 @@ class Hud {
         return this.inventoryY + y * this.slotSize;
     }
 
+    log(text){
+        if(text){
+            this.console.open = true;
+            this.consoleLog.push(text);
+        }
+    }
+
     handleClickStart(x, y){
+        if(this.console.clicked(x, y) == 2){
+            this.console.open = false;
+            return;
+        }
+
+        if((game.menu && game.menu.clicked(x, y))){
+            var option = game.menu.clickedOption(x, y);
+            if(option){
+                this.log(option.getLog());
+                delete game.menu;
+            }
+            return;
+        } else {
+            delete game.menu;
+        }
+
         var x = this.getSlotX(x);
         var y = this.getSlotY(y);
         if(x != null && y != null && game.inventory.get(x, y)){
@@ -318,6 +346,8 @@ class Hud {
                 this.context.fillText(game.menu.options[i].getText(), game.menu.x + 48, game.menu.y + offsetY - 40+18);
             }
             offsetY += this.menuHelper(this.menuBottomImg, game.menu.x, game.menu.y + offsetY);
+
+            game.menu.height = offsetY;
         }
     }
 
@@ -327,6 +357,25 @@ class Hud {
     }
 
     drawConsole(){
-        this.console.draw(this.context);
+        if(this.console.open){
+            this.console.draw(this.context);
+
+            this.context.font = "19px pixel_font";
+            this.context.textAlign = "left";
+            this.context.textBaseline = "bottom";
+    
+            this.context.fillStyle = game.config.black;
+            var offsetY = 0;
+            for(var i = this.consoleLog.length - 1; i >= 0; i--){
+                var strings = this.consoleLog[i].split("\n").reverse();
+                for(var s in strings){
+                    if(offsetY > 200){
+                        return;
+                    }
+                    this.context.fillText(strings[s], this.console.x + 20, this.console.y + this.console.height - 20 - offsetY);
+                    offsetY += 20
+                }
+            }
+        }
     }
 }
