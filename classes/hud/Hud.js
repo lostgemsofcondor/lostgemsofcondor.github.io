@@ -220,11 +220,6 @@ class Hud {
     }
 
     handleClickStart(x, y){
-        if(this.console.clicked(x, y) == 2){
-            this.console.open = false;
-            return;
-        }
-
         if((game.menu && game.menu.clicked(x, y))){
             var option = game.menu.clickedOption(x, y);
             if(option){
@@ -234,6 +229,11 @@ class Hud {
             return;
         } else {
             delete game.menu;
+        }
+
+        if(this.console.clicked(x, y) == 2){
+            this.console.open = false;
+            return;
         }
 
         var x = this.getSlotX(x);

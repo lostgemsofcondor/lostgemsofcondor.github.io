@@ -68,4 +68,11 @@ class Bullet extends Entity{
         super.die();
 	}
 	
+	
+	getDescription(){
+		if(this.friendly){
+			return "Your Bullet"
+		}
+		return "Looks dangerous."
+	}
 }

@@ -40,6 +40,12 @@ class Map {
 		}
 	}
 
+	draw(){
+		this.chunks.forEach(c => {
+			copyMapChunk(c);
+		})
+	}
+
 	loadAllChunks(){
 		this.chunks.forEach(c => {
 			if(c.clear){

@@ -113,10 +113,7 @@ function clearCanvas(){
 }
 
 function draw(){
-	game.map.chunks.forEach(c => {
-		copyMap(c);
-	})
-	//copyMap(game.map.chunks[0].canvas);
+	game.map.draw();
 	drawObjects();
 	drawOverlay();
 	drawMiniMap();
@@ -186,7 +183,7 @@ function drawHealth(e){
 	
 }
 
-function copyMap(chunk){
+function copyMapChunk(chunk){
 	// var p = new Point(0, 0);
 	var adjXCamera = game.cameraCenterX + game.cameraX;
 	var adjYCamera = game.cameraCenterY + game.cameraY;
