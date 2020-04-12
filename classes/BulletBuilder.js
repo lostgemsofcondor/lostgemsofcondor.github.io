@@ -34,7 +34,7 @@ class BulletBuilder{
 					var t = -1 * this.bulletBuilder.theta/2 + count*this.bulletBuilder.theta/(this.bulletBuilder.amount - 1);
 				}
 				var arrow = new Bullet(this.positionX, this.positionY)
-					.setImage("./sprites/bullets/arrows/arrowGreen.png", angle + t + Math.PI/4)
+					.setImage("./sprites/bullets/arrows/arrowGreenBullet.png", angle + t + Math.PI/4)
 					.setSpeed(10)
 					.setDimensions(48, 48)
 					.setRotates(false)
@@ -114,7 +114,7 @@ class BulletBuilder{
 		return function(angle){
 			//"this" refers to the Entity who calls this shoot function not the BulletBuilder
 			var arrow = new Bullet(this.positionX, this.positionY)
-				.setImage("./sprites/bullets/arrows/arrowGreen.png", angle + Math.PI/4)
+				.setImage("./sprites/bullets/arrows/arrowGreenBullet.png", angle + Math.PI/4)
 				.setSpeed(10)
 				.setDimensions(48, 48)
 				.setRotates(false)

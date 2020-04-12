@@ -35,7 +35,7 @@ class Hud {
         this.console = new Window(0, this.height - 256).setWidth(512).setHeight(256);
         this.consoleLog = [];
 
-
+        this.entityInfo = new EntityInfo();
         
 
         //this.items = [];
@@ -79,6 +79,7 @@ class Hud {
         this.addSkillBar();
         this.drawConsole();
         this.addText();
+        this.entityInfo.draw(this.context);
         this.drawItems();
         this.drawRightClickMenu();
     }
@@ -223,7 +224,10 @@ class Hud {
         if((game.menu && game.menu.clicked(x, y))){
             var option = game.menu.clickedOption(x, y);
             if(option){
-                this.log(option.getLog());
+                option.execute();
+                if(option.log != null){
+                    this.log(option.log);
+                }
                 delete game.menu;
             }
             return;

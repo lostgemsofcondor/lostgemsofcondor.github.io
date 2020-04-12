@@ -71,8 +71,8 @@ class Bullet extends Entity{
 	
 	getDescription(){
 		if(this.friendly){
-			return "Your Bullet"
+			return "Your Bullet it does " + this.baseDamage + " damage";
 		}
-		return "Looks dangerous."
+		return "Looks dangerous it does " + this.baseDamage + " damage";
 	}
 }

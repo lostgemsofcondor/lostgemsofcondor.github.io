@@ -3,6 +3,7 @@ class MenuOption {
         this.type = "examine";
         this.key = key;
         this.text = null;
+        this.log = null;
     }
 
     getText(){
@@ -10,23 +11,22 @@ class MenuOption {
             return this.text;
         }
         if(this.type == "examine"){
-            var e = game.get(this.key);
-            if(e){
-                this.text = "Examine " + e.getName();
-            }
+            this.examine();
         }
-
         return this.text;
     }
 
-    getLog(){
-        var text = ""
-        if(this.type == "examine"){
-            var e = game.get(this.key);
-            if(e){
-                text = e.getDescription();
-            }
+    examine(){
+        var e = game.get(this.key);
+        if(e){
+            this.text = "Examine " + e.getName();
+            this.log =  e.getDescription();
         }
-        return text;
+    }
+
+    execute(){
+        if(this.type == "examine"){
+            game.hud.entityInfo.setKey(this.key);
+        }
     }
 }

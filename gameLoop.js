@@ -82,7 +82,6 @@ class GameLoopService {
 			game.zoom = 1080;
 			main.adjustCanvasSize();
 			game.hud.resize();
-			drawTimeMax = 0; //for debug
 			game.adjustAllSpriteDirections();
 			return;
 		}
