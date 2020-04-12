@@ -9,7 +9,7 @@ class ImageBuilder {
         }
         var ringWidth = 4;
         var ringsPerShade = rings/shades;
-        var canvas = addCanvas();
+        var canvas = main.addCanvas();
         var context = canvas.getContext("2d");
         canvas.width = 2 * rings * ringWidth
         canvas.height = 2 * rings * ringWidth;

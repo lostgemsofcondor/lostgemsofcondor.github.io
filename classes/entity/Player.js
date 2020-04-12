@@ -35,8 +35,8 @@ class Player extends Mortal {
 	}
 
 	handelShoot(x, y){
-		if((debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
-			this.lastShot = debug.overRideMove ? game.mainTick : game.gameTick;
+		if((main.debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
+			this.lastShot = main.debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
 			this.bulletBuilder = new BulletBuilder();
 			if(game.keyboard.run.down){

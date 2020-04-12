@@ -1,7 +1,7 @@
 class MiniMap {
 	constructor(){
 		game.miniMap = this;
-		this.canvas = addCanvas();
+		this.canvas = main.addCanvas();
 		this.context = this.canvas.getContext("2d");
 		this.size = 200;
         this.canvas.width = this.size;

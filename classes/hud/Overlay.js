@@ -1,9 +1,9 @@
 class Overlay {
     constructor(){
-		this.canvas = addCanvas();
+		this.canvas = main.addCanvas();
         this.context = this.canvas.getContext("2d");
         
-		this.lightCanvas = addCanvas();
+		this.lightCanvas = main.addCanvas();
         this.lightContext = this.lightCanvas.getContext("2d");
 
         this.dayLength = 86400;

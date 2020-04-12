@@ -13,9 +13,9 @@ class Debug {
 		this.debugging = bool;
 		this.overRideMove = bool;
 		if(bool){
-			canvas.oncontextmenu = null;
+			main.canvas.oncontextmenu = null;
 		} else {
-			canvas.oncontextmenu = function (e) {
+			main.canvas.oncontextmenu = function (e) {
 				e.preventDefault();
 			};
 		}
@@ -28,7 +28,7 @@ class Debug {
 	
 	drawThings(){
 		if(!this.debugging) return;
-		context.fillStyle = "#000000";
+		main.context.fillStyle = "#000000";
 		this.drawDebugThings.drawPixel(0, 0);
 		this.drawDebugThings.drawCircle(0, 0, 30);
 		//this.drawDebugThings.drawPixel(game.player.positionX, game.player.positionY);
@@ -55,20 +55,20 @@ class Debug {
 	}
 
 	addText(){
-		context.fillStyle = "#000000";
-		context.textAlign = "left";
+		main.context.fillStyle = "#000000";
+		main.context.textAlign = "left";
 		this.debugInfo.reset();
-		this.debugInfo.add("fps: " + fps.toFixed(0), 1);
+		this.debugInfo.add("fps: " + main.fps.toFixed(0), 1);
 		this.debugInfo.add("time: " + game.overlay.getTimeString(), 1);
 		if(!this.debugging) return;
-		this.debugInfo.add("Width: " + canvas.width, 5);
-		this.debugInfo.add("Height: " + canvas.height, 5);
-		this.debugInfo.add("Draw Time: " + drawTime, 4);
-		this.debugInfo.add("Frame Time: " + frameTime, 3);
-		this.debugInfo.add("Frame Time Max: " + drawTimeMax, 2);
+		this.debugInfo.add("Width: " + main.canvas.width, 5);
+		this.debugInfo.add("Height: " + main.canvas.height, 5);
+		// this.debugInfo.add("Draw Time: " + drawTime, 4);
+		// this.debugInfo.add("Frame Time: " + frameTime, 3);
+		// this.debugInfo.add("Frame Time Max: " + drawTimeMax, 2);
 		this.debugInfo.add("performance.now: " + performance.now(), 4);
-		this.debugInfo.add("Frame Time: " + frameTime, 4);
-		this.debugInfo.add("adjust: " + adjust, 4);
+		// this.debugInfo.add("Frame Time: " + frameTime, 4);
+		// this.debugInfo.add("adjust: " + adjust, 4);
 		this.debugInfo.add("Keys Pressed: " + this.getKeys(), 3);
 		this.debugInfo.add("Mouse clicked: " + this.getMouse(), 3);
 		this.debugInfo.add("Mouse clicked on hud: " + game.mouse.onHud, 3);
@@ -122,16 +122,16 @@ class DrawDebugThings {
 		var p = new Point(x, y);
 		var adjX = p.adjustXCord();
 		var adjY = p.adjustYCord();
-		context.fillRect(adjX, adjY, 1, 1);        
+		main.context.fillRect(adjX, adjY, 1, 1);        
 	}
 
 	drawCircle(x, y, r){
 		var p = new Point(x, y);
 		var adjX = p.adjustXCord();
 		var adjY = p.adjustYCord();
-		context.beginPath();
-		context.arc(adjX, adjY, r, 0, 2 * Math.PI);
-		context.stroke();  
+		main.context.beginPath();
+		main.context.arc(adjX, adjY, r, 0, 2 * Math.PI);
+		main.context.stroke();  
 	}
 	
 	drawLine(x, y, angle, len){
@@ -142,10 +142,10 @@ class DrawDebugThings {
 		var adjXEnd = adjX + Math.cos(angle)*len;
 		var adjYEnd = adjY + Math.sin(angle)*len;
 
-		context.beginPath();
-		context.moveTo(adjX, adjY);
-		context.lineTo(adjXEnd, adjYEnd);
-		context.stroke();
+		main.context.beginPath();
+		main.context.moveTo(adjX, adjY);
+		main.context.lineTo(adjXEnd, adjYEnd);
+		main.context.stroke();
 	}
 
 	
@@ -181,12 +181,12 @@ class DebugInfo {
 		this.lines = 0;
 		this.offset = game.miniMap.offsetY + game.miniMap.size
 		this.level = game.config.debugLevel;
-		context.font = this.font;
+		main.context.font = this.font;
 	}
 	
 	add(str, level=0){
 		if(level <= this.level){
-			context.fillText(str, this.leftMargin, this.gap * (this.lines + 1) + this.offset);
+			main.context.fillText(str, this.leftMargin, this.gap * (this.lines + 1) + this.offset);
 			this.lines++;
 		}
 	}

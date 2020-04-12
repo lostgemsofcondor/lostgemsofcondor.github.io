@@ -8,7 +8,7 @@ class MapChunk {
 		this.tileMap = [];
 		
 		this.clear = true;
-		this.canvas = addCanvas();
+		this.canvas = main.addCanvas();
 		this.context = this.canvas.getContext("2d");
 
 		this.offsetX = this.tileSize / 2;
@@ -37,7 +37,7 @@ class MapChunk {
 
 			var miniChunk = game.miniMap.getChunk(self.x, self.y);
 			//bool if this chunk apears on the minimap yet
-			var seen = miniChunk.seen[correctMod(self.x, game.miniMap.mapChunkPerMiniMapChunk)][correctMod(self.y, game.miniMap.mapChunkPerMiniMapChunk)];
+			var seen = miniChunk.seen[main.correctMod(self.x, game.miniMap.mapChunkPerMiniMapChunk)][main.correctMod(self.y, game.miniMap.mapChunkPerMiniMapChunk)];
 			if(!seen){
 				var imgData = game.miniMap.context.createImageData(self.chunkSize, self.chunkSize);
 			}

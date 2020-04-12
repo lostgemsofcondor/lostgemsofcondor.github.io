@@ -1,6 +1,6 @@
 class Hud {
     constructor(){
-		this.canvas = addCanvas();
+		this.canvas = main.addCanvas();
         this.context = this.canvas.getContext("2d");
 
         this.width = 384;
@@ -53,7 +53,7 @@ class Hud {
     }
 
     get offset(){
-        return canvas.width - this.width;
+        return main.canvas.width - this.width;
     }
 
     resize(){

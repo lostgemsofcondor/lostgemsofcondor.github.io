@@ -9,6 +9,7 @@ class Game {
 		this.spawnService = new SpawnService();
 		this.bulletBuilder = new BulletBuilder();
 		this.imageBuilder = new ImageBuilder();
+		this.gameLoopService = new GameLoopService();
 		
 		var playerSpeed = 7;
 		this.player = new Player(0, 0)
@@ -179,11 +180,10 @@ class Game {
 	adjustCamera(){
 		this.cameraX = (this.width - this.hud.width) / 2 - this.cameraCenterX ;
 		this.cameraY = this.height*.7 - this.cameraCenterY;
-		
 	}
 
 	updateAllObjects(){
-		//update player too
+		//also updates player
 		if(!this.paused){
 			this.entityList.list.forEach(o => {
 				var e = this.get(o.key);
@@ -193,7 +193,7 @@ class Game {
 				var e = this.get(o.key);
 				e.updateAI();
 			});
-		} else if(debug.overRideMove){
+		} else if(main.debug.overRideMove){
 			game.player.update();
 		}
 	}

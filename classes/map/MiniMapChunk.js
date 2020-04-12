@@ -8,7 +8,7 @@ class MiniMapChunk {
 		this.seen = [];
 		
 		//this.clear = true;
-		this.canvas = addCanvas();
+		this.canvas = main.addCanvas();
 		this.context = this.canvas.getContext("2d");
 		
 		this.canvas.width = this.miniChunkSize;
@@ -40,7 +40,7 @@ class MiniMapChunk {
 	}
 	
 	addChunkImage(imgData, x, y){ // x and y in terms of map chunks
-		this.putImageData(imgData, correctMod(x, game.miniMap.mapChunkPerMiniMapChunk), correctMod(y, game.miniMap.mapChunkPerMiniMapChunk));
+		this.putImageData(imgData, main.correctMod(x, game.miniMap.mapChunkPerMiniMapChunk), main.correctMod(y, game.miniMap.mapChunkPerMiniMapChunk));
 	}
 
 	putImageData(imgData, x, y){ // x and y in terms of chunks

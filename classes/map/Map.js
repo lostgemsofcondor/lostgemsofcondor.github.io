@@ -42,7 +42,7 @@ class Map {
 
 	draw(){
 		this.chunks.forEach(c => {
-			copyMapChunk(c);
+			main.copyMapChunk(c);
 		})
 	}
 
