@@ -76,9 +76,6 @@ class Debug {
 		this.debugInfo.add("Player Position Y: " + game.player.positionY.toFixed(2), 2);
 		this.debugInfo.add("Player Angle: " + game.player.angle, 4);
 		this.debugInfo.add("Player Angle Absolute: " + game.player.angleAbsolute, 4);
-		this.debugInfo.add("Game Angle: " + game.angle, 4);
-		this.debugInfo.add("Game cameraX: " + game.cameraX, 4);
-		this.debugInfo.add("Game cameraY: " + game.cameraY, 4);
 		this.debugInfo.add("Game tick: " + game.gameTick, 3);
 		this.debugInfo.add("Chunk X: " + game.map.currentChunkX(), 4);
 		this.debugInfo.add("Chunk Y: " + game.map.currentChunkY(), 4);
@@ -86,10 +83,6 @@ class Debug {
 		this.debugInfo.add("Chunk under mouse Y: " + game.map.getChunkY(game.mouse.point.y), 4);
 		this.debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
 		this.debugInfo.add("JSON.stringify(game.save): "+ JSON.stringify(game.save), 6);
-		this.debugInfo.add("Running: "+ game.player.running, 4);
-		this.debugInfo.add("Endurance EXP: "+ game.experienceService.endurance, 4);
-		this.debugInfo.add("Endurance Level: "+ game.experienceService.enduranceLevel, 4);
-		this.debugInfo.add("game.player.baseStaminaRegen: "+ game.player.baseStaminaRegen, 5);
 		this.debugInfo.add("inv slot: "+ game.hud.getSlotX(game.mouse.x) + ", " + game.hud.getSlotY(game.mouse.y), 5);
 		this.debugInfo.add("Spawn Rate: "+ game.spawnService.spawnRate, 4);
 		this.debugInfo.add("Window: "+ game.hud.console.clicked(game.mouse.x, game.mouse.y), 4);
@@ -187,7 +180,7 @@ class DebugInfo {
 	
 	add(str, level=0){
 		if(level <= this.level){
-			main.context.fillText(str, this.leftMargin, this.gap * (this.lines + 1) + this.offset);
+			game.font.write(main.context, str, this.leftMargin, this.gap * (this.lines + 1) + this.offset)
 			this.lines++;
 		}
 	}

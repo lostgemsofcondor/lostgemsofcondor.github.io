@@ -6,7 +6,7 @@ class Bullet extends Entity{
 		this.friendly = true;
 		this.piercing = false;
 		this.hit = [];
-		this.itemSpriteKey = null;
+		this.itemKey = null;
 		this.baseDamage = 1;
 		this.gainEndurance = 0;
 
@@ -37,8 +37,8 @@ class Bullet extends Entity{
 		return this;
 	}
 
-	setItemSpriteKey(itemSpriteKey){
-		this.itemSpriteKey = itemSpriteKey;
+	setItemKey(itemKey){
+		this.itemKey = itemKey;
 		return this;
 	}
 
@@ -59,8 +59,8 @@ class Bullet extends Entity{
 		if(this.gainEndurance){
 			game.experienceService.spendStamina(this.gainEndurance);
 		}
-		if(this.itemSpriteKey){
-			new DroppedItem(this.x, this.y).setItemSpriteKey(this.itemSpriteKey);
+		if(this.itemKey){
+			new DroppedItem(this.x, this.y).setItemKey(this.itemKey);
 		}
 	}
 

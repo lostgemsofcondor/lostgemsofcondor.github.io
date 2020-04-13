@@ -1,12 +1,12 @@
 class ItemEntity {
 
     get data(){
-        return game.save.inventory[this.itemKey];
+        return game.save.inventory[this.itemEntityKey];
     }
 
     set data(data){
-        game.save.inventory[this.itemKey] = data;
-        game.save.inventory[this.itemKey].itemKey = this.itemKey;
+        game.save.inventory[this.itemEntityKey] = data;
+        game.save.inventory[this.itemEntityKey].itemEntityKey = this.itemEntityKey;
     }
 
 	get x(){
@@ -37,33 +37,33 @@ class ItemEntity {
         this.data.location = location;
     }
     
-	get itemSpriteKey(){
-		return this.data.itemSpriteKey;
+	get itemKey(){
+		return this.data.itemKey;
     }
-	set itemSpriteKey(itemSpriteKey) {
-		this.data.itemSpriteKey = itemSpriteKey;
+	set itemKey(itemKey) {
+		this.data.itemKey = itemKey;
     }
 
     // get itemKey(){
     //     return this.data.itemKey;
     // }
     
-	constructor(itemKey){
-        if(itemKey == null){
-            this.itemKey = null;
+	constructor(itemEntityKey){
+        if(itemEntityKey == null){
+            this.itemEntityKey = null;
         } else {
-            this.itemKey = itemKey;
+            this.itemEntityKey = itemEntityKey;
         }
     }
 
-    newEntity(itemSpriteKey, location, amount = 1){
+    newEntity(itemKey, location, amount = 1){
         
-        this.itemKey = game.save.itemIdNext;
+        this.itemEntityKey = game.save.itemIdNext;
         game.save.itemIdNext++;
 
         this.data = {};
         
-        this.itemSpriteKey = itemSpriteKey;
+        this.itemKey = itemKey;
         this.amount = amount;
         
         return game.inventory.add(this, location);
@@ -80,7 +80,7 @@ class ItemEntity {
     }
 
     drop(x, y){
-        new DroppedItem(x, y).setItemSpriteKey(this.itemSpriteKey).setDroppedByPlayer(this.droppedByPlayer).setAmount(this.amount);
+        new DroppedItem(x, y).setItemKey(this.itemKey).setDroppedByPlayer(this.droppedByPlayer).setAmount(this.amount);
         this.delete();
     }
 
@@ -101,7 +101,7 @@ class ItemEntity {
     }
 
     remove(){
-        delete game.save.inventory[this.itemKey];
+        delete game.save.inventory[this.itemEntityKey];
     }
 
 }

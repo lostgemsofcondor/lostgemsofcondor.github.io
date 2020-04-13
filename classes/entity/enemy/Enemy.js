@@ -12,6 +12,7 @@ class Enemy extends Mortal {
 		// this.positionY = 0;
 	}
 
+
 	setIcon(){
 		this.hasIcon = true;
 		new Icon(this.key, "./sprites/miniMap/enemyIcon.png", 3, 3);
@@ -26,7 +27,9 @@ class Enemy extends Mortal {
 	}
 	
 	die(){
-		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
+		if(this.dropTable){
+			this.dropTable.drop(this.x, this.y);
+		}
 		this.delete();
 
 	}

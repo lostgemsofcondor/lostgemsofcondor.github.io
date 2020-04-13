@@ -40,7 +40,7 @@ class Player extends Mortal {
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
 			this.bulletBuilder = new BulletBuilder();
 			if(game.keyboard.run.down){
-				var arrow = game.inventory.getWithItemSpriteKey("arrow");
+				var arrow = game.inventory.getWithItemKey("arrow");
 				if(arrow != null){
 					arrow.discard(1);
 					this.shoot = this.bulletBuilder
@@ -111,7 +111,6 @@ class Player extends Mortal {
 		// might use Math.floor
 		var recovered = Math.min(s + this.stamina, this.maxStamina) - this.stamina;
 		if(recovered > 0){
-			//this.risingText("+" + recovered, game.config.healthGreen);
 			this.stamina += recovered;
 		}
 	}

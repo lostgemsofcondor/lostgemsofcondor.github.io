@@ -12,12 +12,9 @@ class Crab extends Enemy {
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));
         this.shoot = new BulletBuilder().newBubbler(1);
-    }
 
-    die(){
-        new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
-
-        super.die();
+        this.dropTable = new DropTable().addDrop("arrow", 2)
+        .addDropsAlways(["amethyst", "emerald", "ruby", "topaz", "diamond", "sapphire"]);
     }
 
 	getDescription(){

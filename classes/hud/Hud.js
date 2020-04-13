@@ -8,15 +8,18 @@ class Hud {
         
         this.hudImg = new Image();
         this.hudImg.src = "./sprites/hud/hud.png";
-        
-        this.consoleImg = new Image();
-        this.consoleImg.src = "./sprites/hud/console.png";
-
 
         this.menuImg = new Image();
         this.menuImg.src = "./sprites/hud/menu.png";
         this.menuSingleImg = new Image();
         this.menuSingleImg.src = "./sprites/hud/menuSingle.png";
+
+        this.menuImgSelectTop = new Image();
+        this.menuImgSelectTop.src = "./sprites/hud/menuSelectTop.png";
+        this.menuImgSelectBotom = new Image();
+        this.menuImgSelectBotom.src = "./sprites/hud/menuSelectBottom.png";
+        this.menuSingleImgSelected = new Image();
+        this.menuSingleImgSelected.src = "./sprites/hud/menuSingleSelected.png";
         
         this.menuTopImg = new Image();
         this.menuTopImg.src = "./sprites/hud/menuTop.png";
@@ -87,24 +90,21 @@ class Hud {
     addText(){
         var x = this.offset + 12;
         var y = 920;
-        this.context.font = "14px pixel_font";
-        this.context.textAlign = "left";
+        
+        game.font.write(this.context, "Press the space to dash", x, y);
+        game.font.write(this.context, "Hold shift to fire arrows", x, y+14);
 
-		this.context.fillStyle = game.config.black;
-        this.context.fillText("Press the space to dash", x, y);
-        this.context.fillText("Hold shift to fire arrows", x, y+14);
-
-        this.context.fillText("Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);
-        this.context.fillText("Endurance EXP: " + game.experienceService.endurance, x, y+14*5);
-        this.context.fillText("Endurance EXP to", x, y+14*6);
-        this.context.fillText("Next Level: " + game.experienceService.nextLevelEXP(game.experienceService.enduranceLevel), x, y+14*7);
+        game.font.write(this.context, "Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);
+        game.font.write(this.context, "Endurance EXP: " + game.experienceService.endurance, x, y+14*5);
+        game.font.write(this.context, "Endurance EXP to", x, y+14*6);
+        game.font.write(this.context, "Next Level: " + game.experienceService.nextLevelEXP(game.experienceService.enduranceLevel), x, y+14*7);
     }
 
     addHealthBar(){
         var x = this.offset + 42;
         var y = 99;
         var width = 300;
-        var height = 24;
+        var height = 21;
         var health = game.player.health;
         var maxHealth = game.player.maxHealth;
 
@@ -114,11 +114,7 @@ class Hud {
         this.context.fillStyle = game.config.lightGray;
         this.context.fillRect(x + width * health/maxHealth, y, width - width * health/maxHealth, height);
 
-        this.context.font = "20px pixel_font";
-        this.context.textAlign = "center";
-        this.context.textBaseline = "middle";
-		this.context.fillStyle = game.config.gray;
-        this.context.fillText(health + "/" + maxHealth, x + width/2, y + height/2);
+        game.font.writeCentered(this.context, health + "/" + maxHealth, x + width/2, y + 3, true);
 
     }
 
@@ -126,7 +122,7 @@ class Hud {
         var x = this.offset + 42;
         var y = 135;
         var width = 300;
-        var height = 24;
+        var height = 21;
         var stamina = game.player.stamina;
         var maxStamina = game.player.maxStamina;
 
@@ -136,11 +132,7 @@ class Hud {
         this.context.fillStyle = game.config.lightGray;
         this.context.fillRect(x + width * stamina/maxStamina, y, width - width * stamina/maxStamina, height);
 
-        this.context.font = "19px pixel_font";
-        this.context.textAlign = "center";
-        this.context.textBaseline = "middle";
-		this.context.fillStyle = game.config.gray;
-        this.context.fillText(stamina + "/" + maxStamina, x + width/2, y + height/2);
+        game.font.writeCentered(this.context, stamina + "/" + maxStamina, x + width/2, y + 3, true);
     }
 
     addSkillBar(){
@@ -150,7 +142,7 @@ class Hud {
         var x = this.offset - 300;
         var y = 30;
         var width = 247;
-        var height = 30;
+        var height = 21;
 
         
 
@@ -164,16 +156,9 @@ class Hud {
         
         this.context.fillStyle = game.config.lightGray;
         this.context.fillRect(x + width * (current - last)/(max - last), y, width - width * (current - last)/(max - last), height);
-
-        this.context.font = "20px pixel_font";
-        this.context.fillStyle = game.config.gray;
         
-        this.context.textAlign = "left";
-        this.context.textBaseline = "top";
-        this.context.fillText(this.skillText, x, y - 20);
-        this.context.textAlign = "center";
-        this.context.textBaseline = "middle";
-        this.context.fillText(current + "/" + max, x + width/2, y + height/2);
+        game.font.write(this.context, this.skillText, x, y - 20);
+        game.font.writeCentered(this.context, current + "/" + max, Math.floor(x + width/2), y + 3, true);
     }
 
     addToContext(img, x, y, width = null, height = null){
@@ -270,7 +255,7 @@ class Hud {
 
     clickItem(item){
         game.mouse.holdingItem = true;
-        game.mouse.heldItem = item.itemKey;
+        game.mouse.heldItem = item.itemEntityKey;
     }
 
     getSlotX(x){
@@ -303,22 +288,22 @@ class Hud {
             for(var i = 0; i < game.inventory.width; i++){
                 var item = game.inventory.get(i, j);
                 if(item != null){
-                    if(game.mouse.heldItem == item.itemKey){
+                    if(game.mouse.heldItem == item.itemEntityKey){
                         heldItem = item;
                     } else {
-                        var img = game.itemSprites[item.itemSpriteKey];
+                        var img = game.itemService[item.itemKey].img;
                         var x = this.inventorySlotX(item.x);
                         var y = this.inventorySlotY(item.y);
                         this.context.drawImage(img, x, y);
                         if(item.amount > 1){
-                            this.context.fillText(item.amount, x, y);
+                            game.font.write(this.context, item.amount, x - 4, y - 4);
                         }
                     }
                 }
             }
         }
         if(heldItem != null){
-            var img = game.itemSprites[heldItem.itemSpriteKey];
+            var img = game.itemService[heldItem.itemKey].img;
             this.context.drawImage(img, game.mouse.x, game.mouse.y);
         }
     }
@@ -332,43 +317,15 @@ class Hud {
     }
 
     drawRightClickMenu(){
-        if(game.menu && game.menu.options.length > 0){
-            this.context.font = "19px pixel_font";
-            this.context.textBaseline = "middle";
-            this.context.fillStyle = game.config.black;
-            var offsetY = 0;
-            offsetY += this.menuHelper(this.menuTopImg, game.menu.x, game.menu.y + offsetY);
-            var i;
-            for(i = 0; i < game.menu.options.length - 1; i += 2){
-                offsetY += this.menuHelper(this.menuImg, game.menu.x, game.menu.y + offsetY);
-                this.context.fillText(game.menu.options[i].getText(), game.menu.x + 48, game.menu.y + offsetY - 80+18);
-                this.context.fillText(game.menu.options[i + 1].getText(), game.menu.x + 48, game.menu.y + offsetY - 80+58);
-                
-            }
-            if(game.menu.options.length%2 == 1){
-                offsetY += this.menuHelper(this.menuSingleImg, game.menu.x, game.menu.y + offsetY);
-                this.context.fillText(game.menu.options[i].getText(), game.menu.x + 48, game.menu.y + offsetY - 40+18);
-            }
-            offsetY += this.menuHelper(this.menuBottomImg, game.menu.x, game.menu.y + offsetY);
-
-            game.menu.height = offsetY;
+        if(game.menu){
+            game.menu.draw(this.context);
         }
-    }
-
-    menuHelper(img, x, y){
-        this.context.drawImage(img, x, y);
-        return img.height;
     }
 
     drawConsole(){
         if(this.console.open){
             this.console.draw(this.context);
 
-            this.context.font = "19px pixel_font";
-            this.context.textAlign = "left";
-            this.context.textBaseline = "bottom";
-    
-            this.context.fillStyle = game.config.black;
             var offsetY = 0;
             for(var i = this.consoleLog.length - 1; i >= 0; i--){
                 var strings = this.consoleLog[i].split("\n").reverse();
@@ -376,7 +333,7 @@ class Hud {
                     if(offsetY > 200){
                         return;
                     }
-                    this.context.fillText(strings[s], this.console.x + 20, this.console.y + this.console.height - 20 - offsetY);
+                    game.font.write(this.context, strings[s], this.console.x + 20, this.console.y + this.console.height - 30 - offsetY);
                     offsetY += 20
                 }
             }

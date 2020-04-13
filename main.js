@@ -158,7 +158,7 @@ class Main {
 		for(var i in game.text){
 			var t = game.text[i];
 			this.context.fillStyle = t.color;
-			this.context.fillText(t.str, t.adjustXCord(), t.adjustYCord());
+			game.font.write(this.context, t.str, t.adjustXCord(), t.adjustYCord(), true);
 		}
 	}
 

@@ -4,12 +4,9 @@ class Palm extends Enemy {
             .setImage("./sprites/trees/palm.png", 0)
             .setDimensions(96, 96)
             .setSolid(true);
-    }
-
-    die(){
-		new DroppedItem(this.x, this.y).setItemSpriteKey("palmLog");
-
-        super.die();
+        this.dropTable = new DropTable()
+            .addDropAlways("palmLog", 1)
+            .addDropAlways("arrow", 1);
     }
     
 	getDescription(){

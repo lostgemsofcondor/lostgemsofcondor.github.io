@@ -26,7 +26,7 @@ class Inventory {
         if(oldX != null && oldY != null){
             this.inv[oldY][oldX] = null;
         }
-        this.inv[item.y][item.x] = item.itemKey;
+        this.inv[item.y][item.x] = item.itemEntityKey;
     }
 
     get(x, y){
@@ -40,12 +40,12 @@ class Inventory {
         return new ItemEntity(key);
     }
 
-    getWithItemSpriteKey(itemSpriteKey, nonFullStack = false){
+    getWithItemKey(itemKey, nonFullStack = false){
         var maxStack = 32;
         for(var y = 0; y < this.height; y++){
             for(var x = 0; x < this.width; x++){
                 var item = new ItemEntity(this.inv[y][x]);
-                if(item.data && item.itemSpriteKey == itemSpriteKey){
+                if(item.data && item.itemKey == itemKey){
                     if(!nonFullStack || item.amount < maxStack){
                         return item;
                     }
@@ -62,7 +62,7 @@ class Inventory {
 
     add(item, location){
         
-        var stack = game.inventory.getWithItemSpriteKey(item.itemSpriteKey, true);
+        var stack = game.inventory.getWithItemKey(item.itemKey, true);
         if(stack != null){
             var maxStack = 32;
             var temp = Math.min(maxStack, stack.amount + item.amount);
@@ -79,7 +79,7 @@ class Inventory {
         for(var j = 0; j < this.height; j++){
             for(var i = 0; i < this.width; i++){
                 if(this.inv[j][i] == null){
-                    this.inv[j][i] = item.itemKey;
+                    this.inv[j][i] = item.itemEntityKey;
                     item.move(i, j);
                     return 0;
                 }

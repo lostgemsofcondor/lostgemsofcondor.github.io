@@ -46,7 +46,7 @@ class Mouse {
 	}
 	
 	move(x, y){
-		this.x = x;
-		this.y = y;
+		this.x = Math.floor(x);
+		this.y = Math.floor(y);
 	}
 }

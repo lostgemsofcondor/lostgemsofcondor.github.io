@@ -7,11 +7,16 @@ class DroppedItem extends Entity {
         this.droppedByPlayer = false;
         this.amount = 1;
     }
-    
-    setItemSpriteKey(itemSpriteKey){
-        this.itemSpriteKey = itemSpriteKey;
+
+    setItemKey(itemKey){
+        this.itemKey = itemKey;
         this.sprite.setAngle(0);
-        this.sprite.image = game.itemSprites[itemSpriteKey];
+        this.sprite.image = game.itemService[itemKey].img;
+        if(this.amount > 1){
+            this.name = game.itemService[this.itemKey].name + " (" + this.amount + ")";
+        } else {
+            this.name = game.itemService[this.itemKey].name;
+        }
         return this;
     }
 
@@ -23,12 +28,17 @@ class DroppedItem extends Entity {
     
     setAmount(amount){
         this.amount = amount;
+        if(this.amount > 1){
+            this.name = game.itemService[this.itemKey].name + " (" + this.amount + ")";
+        } else {
+            this.name = game.itemService[this.itemKey].name;
+        }
         return this;
     }
 
     getPicked(){
         if(this.canBePicked()){
-            this.amount = new ItemEntity().newEntity(this.itemSpriteKey, "inventory", this.amount);
+            this.amount = new ItemEntity().newEntity(this.itemKey, "inventory", this.amount);
             if(this.amount <= 0){
                 game.delete(this);
             }
@@ -37,6 +47,10 @@ class DroppedItem extends Entity {
 
     canBePicked(){
         return !this.droppedByPlayer || this.age >= 180;
+    }
+
+    getDescription(){
+        return game.itemService[this.itemKey].description;
     }
 
 }

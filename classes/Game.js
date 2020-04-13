@@ -6,10 +6,12 @@ class Game {
 		this.config = new Config();
 		this.keyboard = new Keyboard();
 		this.mouse = new Mouse();
+		this.dropTableService = new DropTableService();
 		this.spawnService = new SpawnService();
 		this.bulletBuilder = new BulletBuilder();
 		this.imageBuilder = new ImageBuilder();
 		this.gameLoopService = new GameLoopService();
+		this.font = new Font();
 		
 		var playerSpeed = 7;
 		this.player = new Player(0, 0)
@@ -47,7 +49,7 @@ class Game {
 		this.menu = null;
 		this.overlay = new Overlay();
 		this.items = []
-		this.itemSprites = new ItemSprites();
+		this.itemService = new ItemService();
 		this.inventory = new Inventory(5, 6);
 
 		this.experienceService = new ExperienceService();
@@ -110,14 +112,21 @@ class Game {
 	loadSave(){
         var saveOnFile = localStorage.getItem("save");
         if(saveOnFile != null){
-            this.save = Object.assign(new Save, JSON.parse(saveOnFile));
+			this.save = Object.assign(new Save, JSON.parse(saveOnFile));
+			if(this.save.version == null || this.config.versionCompare(this.save.version, this.config.version) > 0){
+				this.newSave();
+			}
         } else {
-			this.save = new Save();
+			this.newSave();
 		}
 
 		this.player.health = this.save.health;
 		this.player.stamina = this.save.stamina;
+	}
 
+	newSave(){
+		this.save = new Save();
+        this.save.version = this.config.version;
 	}
 	
 	vectorField(){

@@ -44,7 +44,7 @@ class BulletBuilder{
 					.setFriendly(this.friendly)
 					.setName(this.name);
 				if(count == Math.floor(this.bulletBuilder.amount/2)){
-					arrow.setItemSpriteKey("arrow");
+					arrow.setItemKey("arrow");
 				}
 				arrow.AI = new BulletAI(arrow, 100);
 			}
@@ -121,7 +121,7 @@ class BulletBuilder{
 				.setBaseDamage(1)
 				.setAngle(angle)
 				.setFriendly(this.friendly)
-				.setItemSpriteKey("arrow")
+				.setItemKey("arrow")
 				.setName("Arrow");
 			arrow.AI = new BulletAI(arrow, 100);
 		}
