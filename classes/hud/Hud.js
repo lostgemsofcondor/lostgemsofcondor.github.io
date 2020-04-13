@@ -38,12 +38,12 @@ class Hud {
         this.entityInfo = new EntityInfo();
         
 
-        //this.items = [];
-
-        this.inventoryX = 42;
+        //inventory dimensions
+        this.inventoryX = 45;
         this.inventoryY = 510;
         this.itemSize = 48;
-        this.slotSize = 68;
+        this.slotSize = 66; //including gap
+        this.slotGap = this.slotSize - this.itemSize;
 
         this.temp = 0;
         this.temp2 = 0;
@@ -101,9 +101,9 @@ class Hud {
     }
 
     addHealthBar(){
-        var x = this.offset + 48;
-        var y = 100;
-        var width = 288;
+        var x = this.offset + 42;
+        var y = 99;
+        var width = 300;
         var height = 24;
         var health = game.player.health;
         var maxHealth = game.player.maxHealth;
@@ -123,9 +123,9 @@ class Hud {
     }
 
     addStaminaBar(){
-        var x = this.offset + 48;
-        var y = 136;
-        var width = 288;
+        var x = this.offset + 42;
+        var y = 135;
+        var width = 300;
         var height = 24;
         var stamina = game.player.stamina;
         var maxStamina = game.player.maxStamina;
@@ -274,18 +274,18 @@ class Hud {
     }
 
     getSlotX(x){
-        x = x - this.inventorySlotX(0);
-        if(x % this.slotSize < this.itemSize){
-            return Math.floor(x / 63)
+        x = x - this.inventorySlotX(0) + this.slotGap/2;
+        if(x % this.slotSize < this.itemSize + this.slotGap){
+            return Math.floor(x / this.slotSize)
         } else {
             return null;
         }
     }
 
     getSlotY(y){
-        y = y - this.inventorySlotY(0);
-        if(y % this.slotSize < this.itemSize){
-            return Math.floor(y / 63)
+        y = y - this.inventorySlotY(0) + this.slotGap/2;
+        if(y % this.slotSize < this.itemSize + this.slotGap){
+            return Math.floor(y / this.slotSize)
         } else {
             return null;
         }

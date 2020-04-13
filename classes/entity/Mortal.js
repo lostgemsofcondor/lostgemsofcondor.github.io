@@ -20,11 +20,13 @@ class Mortal extends Entity {
 	struck(bullet){
 		this.drawHealth = true;
 		var damage = bullet.getDamage();
-		this.risingText("-" + damage, game.config.healthRed);
-		this.health -= damage; 
-		if(this.health <= 0 && !this.dead){
-			this.dead = true;
-			this.die();
+		if(damage > 0){
+			this.risingText("-" + damage, game.config.healthRed);
+			this.health -= damage; 
+			if(this.health <= 0 && !this.dead){
+				this.dead = true;
+				this.die();
+			}
 		}
 	}
     

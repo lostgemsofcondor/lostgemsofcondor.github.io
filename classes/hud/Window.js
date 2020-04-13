@@ -19,12 +19,12 @@ class Window {
         context.fillStyle = game.config.hudLight;
         context.fillRect(this.x, this.y, this.width, this.height);
         context.fillStyle = game.config.hudDark;
-        context.fillRect(this.x + 4, this.y + 4, this.width - 8, this.height - 8);
+        context.fillRect(this.x + 3, this.y + 3, this.width - 6, this.height - 6);
         context.fillStyle = game.config.hudLight;
-        context.fillRect(this.x + 8, this.y + 8, this.width - 16, this.height - 16);
+        context.fillRect(this.x + 6, this.y + 6, this.width - 12, this.height - 12);
 
         context.drawImage(game.hud.windowTopLeft, this.x, this.y);
-        context.drawImage(game.hud.windowTopRight, this.x + this.width - game.hud.windowTopRight.width, this.y - 28);
+        context.drawImage(game.hud.windowTopRight, this.x + this.width - game.hud.windowTopRight.width, this.y - 21);
         context.drawImage(game.hud.windowBottomLeft, this.x, this.y + this.height - game.hud.windowBottomLeft.height);
         context.drawImage(game.hud.windowBottomRight, this.x + this.width - game.hud.windowTopRight.width, this.y + this.height - game.hud.windowBottomLeft.height);
     }

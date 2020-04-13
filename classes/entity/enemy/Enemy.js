@@ -18,6 +18,12 @@ class Enemy extends Mortal {
 		return this;
 	}
 
+	struck(bullet){
+		super.struck(bullet);
+		if(!this.dead){
+			game.hud.entityInfo.setKey(this.key);
+		}
+	}
 	
 	die(){
 		new DroppedItem(this.x, this.y).setItemSpriteKey("arrow").setAmount(1);
