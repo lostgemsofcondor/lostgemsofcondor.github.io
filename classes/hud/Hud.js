@@ -183,9 +183,8 @@ class Hud {
             this.handleClickStart(x, y);
         } else if(game.mouse.left.end){
             this.handleClickEnd(x, y);
-
-        } else {
-            
+        } else if(game.mouse.right.start){
+            this.handleRightClick(x, y);
         }
         //this.addToContext(game.map.grass.img, x, y, game.map.grass.width, game.map.grass.height);
     }

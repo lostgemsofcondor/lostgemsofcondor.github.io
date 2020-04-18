@@ -21,7 +21,7 @@ class Mortal extends Entity {
 		this.drawHealth = true;
 		var damage = bullet.getDamage();
 		if(damage > 0){
-			this.risingText("-" + damage, game.config.healthRed);
+			this.risingText("-" + damage, "red");
 			this.health -= damage; 
 			if(this.health <= 0 && !this.dead){
 				this.dead = true;
@@ -34,7 +34,7 @@ class Mortal extends Entity {
 		// might use Math.floor
 		var healed = Math.min(h + this.health, this.maxHealth) - this.health;
 		if(healed > 0){
-			this.risingText("+" + healed, game.config.healthGreen);
+			this.risingText("+" + healed, "green");
 			this.health += healed;
 		}
 	}

@@ -6,12 +6,19 @@ class MenuOption {
         this.log = null;
     }
 
+    setType(type){
+        this.type = type;
+        return this;
+    }
+
     getText(){
         if(this.text != null){
             return this.text;
         }
         if(this.type == "examine"){
             this.examine();
+        } else {
+            this.text = "Option Error";
         }
         return this.text;
     }
@@ -27,6 +34,9 @@ class MenuOption {
     execute(){
         if(this.type == "examine"){
             game.hud.entityInfo.setKey(this.key);
+        } else if(this.type == "enter"){
+            var enterance = game.get(this.key);
+            game.enter(enterance);
         }
     }
 }

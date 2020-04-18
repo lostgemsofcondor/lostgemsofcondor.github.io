@@ -8,7 +8,8 @@ class Text extends Point {
 		this.speed = 2;
 		this.life = 60;
 		this.deathTick = game.gameTick + this.life;
-		this.color = game.config.gray;
+		this.color = "gray";
+		this.stackSize = 0;
 
 		game.addText(this);
 	}
@@ -40,5 +41,10 @@ class Text extends Point {
 		var angle = 3 * Math.PI / 2 - game.angle;
 		this.x = this.x + Math.cos(angle)*this.speed;
 		this.y = this.y + Math.sin(angle)*this.speed;
+	}
+
+	stack(text, color){
+		this.stackSize++;
+		return new Text(this.x, this.y, text).setColor(color).setOffset(this.stackSize * 21);
 	}
 }

@@ -31,6 +31,8 @@ class Entity {
 		this.solid = false;
 		this.friendly = false;
 		this.age = 0;
+		this.nextNewTextTick = -1;
+		this.lastText = null;
 		this.hasIcon = false;
 		this.name = null;
 
@@ -195,10 +197,16 @@ class Entity {
 		return d <= this.width;
 	}
 	
-	risingText(text, color = game.config.gray){
-		return new Text(this.x, this.y, text)
+	risingText(text, color = "gray"){
+		if(this.nextNewTextTick <= game.gameTick){
+			this.nextNewTextTick = game.gameTick + 45;
+			this.lastText = new Text(this.x, this.y, text)
 			.setColor(color)
 			.setOffset(this.height);
+			return this.lastText;
+		} else {
+			return this.lastText.stack(text, color);
+		}
 	}
 
 	getDescription(){
@@ -218,6 +226,10 @@ class Entity {
 
 	die(){
 
+	}
+
+	rightClick(){
+		return [new MenuOption(this.key)];
 	}
 
 	delete(){
