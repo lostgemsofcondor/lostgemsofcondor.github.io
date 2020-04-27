@@ -125,8 +125,13 @@ class Main {
 	}
 
 	drawMiniMap(){
-		game.miniMap.redraw();
-		this.addToContext(game.miniMap.canvas, game.miniMap.offsetX, game.miniMap.offsetY, game.miniMap.canvas.width, game.miniMap.canvas.height);
+		if(game.scene){
+			game.scene.miniMap.redraw();
+			this.addToContext(game.scene.miniMap.canvas, game.scene.miniMap.offsetX, game.scene.miniMap.offsetY, game.scene.miniMap.canvas.width, game.scene.miniMap.canvas.height);
+		} else {
+			game.miniMap.redraw();
+			this.addToContext(game.miniMap.canvas, game.miniMap.offsetX, game.miniMap.offsetY, game.miniMap.canvas.width, game.miniMap.canvas.height);
+		}
 	}
 
 	drawHud(){

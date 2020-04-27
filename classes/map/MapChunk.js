@@ -1,9 +1,10 @@
 class MapChunk {
-	constructor(x, y, tileSize, chunkSize){
+	constructor(x, y, tileSize, chunkSize, overworld = true){
 		this.x = x;
 		this.y = y;
 		this.tileSize = tileSize;
 		this.chunkSize = chunkSize;
+		this.overworld = overworld;
 
 		this.tileMap = [];
 		
@@ -19,8 +20,12 @@ class MapChunk {
 
 		// this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize);
 		// this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
-		
-		this.mapWorker = new Worker('classes/map/MapWorker.js');
+		if(this.overworld){
+			this.mapWorker = new Worker('classes/map/MapWorker.js');
+		}
+		this.loaded = false;
+
+		this.imgData = null;
 	}
 
 	load(){
@@ -33,18 +38,14 @@ class MapChunk {
 		this.mapWorker.postMessage(message);
 		this.mapWorker.onmessage = function(e) {
 			self.context.clearRect(0, 0, self.canvas.width, self.canvas.height);
-			self.tileMap = [];
-
-			var miniChunk = game.miniMap.getChunk(self.x, self.y);
-			//bool if this chunk apears on the minimap yet
-			var seen = miniChunk.seen[main.correctMod(self.x, game.miniMap.mapChunkPerMiniMapChunk)][main.correctMod(self.y, game.miniMap.mapChunkPerMiniMapChunk)];
-			if(!seen){
-				var imgData = game.miniMap.context.createImageData(self.chunkSize, self.chunkSize);
-			}
 			
-			for(var j = 0; j < self.chunkSize; j += 1){
-				self.tileMap.push([]);
-			}
+			var miniChunk = self.miniMap.getChunk(self.x, self.y);
+			//bool if this chunk apears on the minimap yet
+			var seen = miniChunk.seen[main.correctMod(self.x, self.miniMap.mapChunkPerMiniMapChunk)][main.correctMod(self.y, self.miniMap.mapChunkPerMiniMapChunk)];
+
+			self.clearTileMap(!seen);
+
+			
 			for(var j = 0; j < self.chunkSize; j += 1){
 				for(var i = 0; i < self.chunkSize; i += 1){
 					//var noCollision = true;
@@ -82,31 +83,81 @@ class MapChunk {
 							}
 						}
 					}
-
-					tile.draw(self.context, i * self.tileSize, j * self.tileSize);
-					if(!seen){
-						if(Math.random() < game.spawnService.randomChunkSpawnRate){
-							if(tile.spawn){
-								tile.spawn((self.x*self.chunkSize + i) * self.tileSize, (self.y*self.chunkSize + j) * self.tileSize, true);
-							}
-						}
-						
-						var pos = ((j) * self.chunkSize + i)*4;
-						imgData.data[pos] = tile.r;
-						imgData.data[pos+1] = tile.g;
-						imgData.data[pos+2] = tile.b;
-						imgData.data[pos+3] = 255;
-					}
-					self.tileMap[i][j] = tile;
+					self.setTile(tile, i, j, seen);
 				}
 			}
 			if(!seen){
-				miniChunk.addChunkImage(imgData, self.x, self.y, self.chunkSize);
+				self.setMiniMapChunk();
+			}
+			self.loaded = true;
+
+			if(self.x == 0 && self.y == 0){
+				var e = new Entrance(100, 100)
+					.setImage("./sprites/entrance/hole.png", 0)
+					.setDimensions(96,96)
+					.setSolid(true)
 			}
 		}
+		//end of map worker call
 		
 		this.clear = false;
 	}
+
+	setTile(tile, x, y, seen = true){
+
+		tile.draw(this.context, x * this.tileSize, y * this.tileSize);
+		if(!seen){
+			if(Math.random() < game.spawnService.randomChunkSpawnRate){
+				if(tile.spawn){
+					tile.spawn((this.x*this.chunkSize + x) * this.tileSize, (this.y*this.chunkSize + y) * this.tileSize, true);
+				}
+			}
+			
+			var pos = ((y) * this.chunkSize + x)*4;
+			this.imgData.data[pos] = tile.r;
+			this.imgData.data[pos+1] = tile.g;
+			this.imgData.data[pos+2] = tile.b;
+			this.imgData.data[pos+3] = 255;
+		}
+		this.tileMap[x][y] = tile;
+	}
+
+	setMiniMapChunk(){
+		var miniChunk = this.miniMap.getChunk(this.x, this.y);
+		miniChunk.addChunkImage(this.imgData, this.x, this.y, this.chunkSize);
+	}
+
+	clearTileMap(newImgData){
+		this.tileMap = [];
+
+		for(var j = 0; j < this.chunkSize; j += 1){
+			this.tileMap.push([]);
+		}
+		
+		if(newImgData){
+			this.imgData = this.miniMap.context.createImageData(this.chunkSize, this.chunkSize);
+		}
+	}
+
+	getTile(x, y){
+		var mapX = Math.floor(x / this.tileSize) - this.x*this.chunkSize;
+		var line = this.tileMap[mapX];
+		if(line){
+			var mapY = Math.floor(y / this.tileSize) - this.y*this.chunkSize;
+			return line[mapY] == null ? null : line[mapY];
+		} else {
+			return null;
+		}
+	}
+
+	get miniMap(){
+		if(this.overworld){
+			return game.miniMap;
+		} else {
+			return game.scene.miniMap;
+		}
+	}
+
 	get positionX(){
 		return this.x * this.tileSize * this.chunkSize;
 	}

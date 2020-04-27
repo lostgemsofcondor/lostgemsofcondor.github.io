@@ -93,7 +93,9 @@ class Overlay {
     }
 
     lightLevel(){
-        //return this.nightLevel;
+        if(game.scene){
+            return game.scene.lightLevel;
+        }
         var tick = game.gameTick % this.dayLength;
         if(tick < this.sunset){
             return 0;

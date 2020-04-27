@@ -37,7 +37,7 @@ class ExperienceService {
 			game.player.risingText("Endurance Level Up ").setLife(180);
 			
 			this.enduranceLevel += 1;
-			game.hud.log("Well done!\nYou are now Endurance level " + this.enduranceLevel)
+			game.hud.log("Well done!\nYou are now Endurance level " + this.enduranceLevel + ".")
 
 			this.updateStaminaRegen();
 			this.updateEndurance();

@@ -224,12 +224,14 @@ class Hud {
             return;
         }
 
-        var x = this.getSlotX(x);
-        var y = this.getSlotY(y);
-        if(x != null && y != null && game.inventory.get(x, y)){
-            var item = game.inventory.get(x, y);
+        var slotX = this.getSlotX(x);
+        var slotY = this.getSlotY(y);
+        if(slotX != null && slotY != null && game.inventory.get(slotX, slotY)){
+            var item = game.inventory.get(slotX, slotY);
             if(item != null){
-                this.clickItem(item);
+                var x = this.inventorySlotX(item.x);
+                var y = this.inventorySlotY(item.y);
+                game.mouse.clickItem(item, x, y);
             }
         }
     }
@@ -250,11 +252,6 @@ class Hud {
         }
         game.mouse.holdingItem = false;
         game.mouse.heldItem = -1;
-    }
-
-    clickItem(item){
-        game.mouse.holdingItem = true;
-        game.mouse.heldItem = item.itemEntityKey;
     }
 
     getSlotX(x){
@@ -303,7 +300,7 @@ class Hud {
         }
         if(heldItem != null){
             var img = game.itemService[heldItem.itemKey].img;
-            this.context.drawImage(img, game.mouse.x, game.mouse.y);
+            this.context.drawImage(img, game.mouse.x - game.mouse.itemOffsetX, game.mouse.y - game.mouse.itemOffsetY);
         }
     }
     

@@ -26,7 +26,7 @@ class Entity {
 		this.positionX = x;
 		this.positionY = y;
 		this.speed = 1;
-		this.angle = Math.random() * Math.PI*2;
+		this.angle = 0;
 		this.moving = false;
 		this.solid = false;
 		this.friendly = false;
@@ -166,6 +166,14 @@ class Entity {
 			this.solidCollision();
 		}
 	}
+
+	
+	setIcon(image, width, height, rotates = false){
+		this.hasIcon = true;
+		var icon = new Icon(this.key, image, width, height, rotates);
+		game.addIcon(icon);
+		return this;
+	}
 	
 	solidCollision(){
 		game.getSolids().forEach(e => {
@@ -234,7 +242,7 @@ class Entity {
 
 	delete(){
 		if(this.hasIcon){
-			game.miniMap.deleteIcon(this.key);
+			game.deleteIcon(this.key);
 		}
 		game.delete(this);
 	}

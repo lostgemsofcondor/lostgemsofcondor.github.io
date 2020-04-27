@@ -12,11 +12,7 @@ class DroppedItem extends Entity {
         this.itemKey = itemKey;
         this.sprite.setAngle(0);
         this.sprite.image = game.itemService[itemKey].img;
-        if(this.amount > 1){
-            this.name = game.itemService[this.itemKey].name + " (" + this.amount + ")";
-        } else {
-            this.name = game.itemService[this.itemKey].name;
-        }
+        this.name = game.itemService[this.itemKey].name;
         return this;
     }
 
@@ -28,11 +24,6 @@ class DroppedItem extends Entity {
     
     setAmount(amount){
         this.amount = amount;
-        if(this.amount > 1){
-            this.name = game.itemService[this.itemKey].name + " (" + this.amount + ")";
-        } else {
-            this.name = game.itemService[this.itemKey].name;
-        }
         return this;
     }
 
@@ -50,7 +41,19 @@ class DroppedItem extends Entity {
     }
 
     getDescription(){
-        return game.itemService[this.itemKey].description;
+        if(game.itemService[this.itemKey].description){
+            return game.itemService[this.itemKey].description;
+        } else {
+            return this.name;
+        }
+    }
+
+    getName(){
+        if(this.amount > 1){
+            return this.name + " (" + this.amount + ")";
+        } else {
+            return this.name;
+        }
     }
 
 }

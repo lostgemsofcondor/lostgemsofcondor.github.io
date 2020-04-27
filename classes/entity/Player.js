@@ -46,6 +46,7 @@ class Player extends Mortal {
 					this.shoot = this.bulletBuilder
 						.setTheta(Math.PI)
 						.setAmount(1)
+						.setDamage(1)
 						.build();
 					this.shoot(angle);
 				}

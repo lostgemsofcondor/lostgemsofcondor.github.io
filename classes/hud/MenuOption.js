@@ -17,6 +17,10 @@ class MenuOption {
         }
         if(this.type == "examine"){
             this.examine();
+        } else if(this.type == "enter") {
+            this.text = "Enter";
+        } else if(this.type == "exit") {
+            this.text = "Exit";
         } else {
             this.text = "Option Error";
         }
@@ -37,6 +41,9 @@ class MenuOption {
         } else if(this.type == "enter"){
             var enterance = game.get(this.key);
             game.enter(enterance);
+        } else if(this.type == "exit"){
+            var exit = game.get(this.key);
+            game.exit(exit);
         }
     }
 }

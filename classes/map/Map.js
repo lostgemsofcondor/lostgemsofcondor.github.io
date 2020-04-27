@@ -22,6 +22,11 @@ class Map {
 		this.pmoutain = new Tile("./sprites/background/pallete2/moutainBasic.png", 96, 96, this.tileSize, "#333333", game.spawnService.mountain, true);
 		this.psnow = new Tile("./sprites/background/pallete2/snowBasic.png", 96, 96, this.tileSize, "#7F7F7F", game.spawnService.mountain, true);
 
+		
+		this.undergroundFloor = new Tile("./sprites/background/underground/undergroundFloor.png", 96, 96, this.tileSize, "#724E30", null, true);
+		this.underground = new Tile("./sprites/background/underground/underground.png", 96, 96, this.tileSize, "#3D2F1C", null, false);
+		this.underground2 = new Tile("./sprites/background/underground/underground2.png", 96, 96, this.tileSize, "#3D2F1C", null, false);
+
 		this.chunkSize = 32;
 		this.chunks = [];
 
@@ -41,20 +46,27 @@ class Map {
 	}
 
 	draw(){
-		this.chunks.forEach(c => {
-			main.copyMapChunk(c);
-		})
+		if(game.scene){
+			main.copyMapChunk(game.scene.chunk);
+		} else [
+			this.chunks.forEach(c => {
+				main.copyMapChunk(c);
+			})
+		]
 	}
 
-	loadAllChunks(){
+	loadAllChunks(force = false){
 		this.chunks.forEach(c => {
-			if(c.clear){
+			if(force || c.clear){
 				c.load();
 			}
 		})
 	}
 
 	adjustChunks(){ //run on each frame
+		if(game.scene){
+			return;
+		}
 		this.loadAllChunks();
 		
 		var chunkX = this.currentChunkX();
@@ -124,21 +136,31 @@ class Map {
 	}
 
 	getTile(x, y){
-		var chunkX = this.getChunkX(x);
-		var chunkY = this.getChunkY(y);
-		for(var i = 0; i < this.chunks.length; i++){
-			if(this.chunks[i].x == chunkX && this.chunks[i].y == chunkY){
-				var mapX = Math.floor(x / this.tileSize) - chunkX*this.chunkSize;
-				var line = this.chunks[i].tileMap[mapX];
-				if(line){
-					var mapY = Math.floor(y / this.tileSize) - chunkY*this.chunkSize;
-					return line[mapY] == null ? null : line[mapY];
-				} else {
-					return null;
+		if(game.scene){
+			return game.scene.chunk.getTile(x, y);
+		} else {
+			var chunkX = this.getChunkX(x);
+			var chunkY = this.getChunkY(y);
+			for(var i = 0; i < this.chunks.length; i++){
+				if(this.chunks[i].x == chunkX && this.chunks[i].y == chunkY){
+					return this.chunks[i].getTile(x, y);
 				}
 			}
 		}
 		return null;
+
+		if(chunk == null){
+			game.hud.log("chunk is null");
+		}
+
+		var mapX = Math.floor(x / this.tileSize) - chunkX*this.chunkSize;
+		var line = chunk.tileMap[mapX];
+		if(line){
+			var mapY = Math.floor(y / this.tileSize) - chunkY*this.chunkSize;
+			return line[mapY] == null ? null : line[mapY];
+		} else {
+			return null;
+		}
 	}
 
 	noCollsion(x, y){

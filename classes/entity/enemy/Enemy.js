@@ -12,10 +12,8 @@ class Enemy extends Mortal {
 		// this.positionY = 0;
 	}
 
-
 	setIcon(){
-		this.hasIcon = true;
-		new Icon(this.key, "./sprites/miniMap/enemyIcon.png", 3, 3);
+		super.setIcon("./sprites/miniMap/enemyIcon.png", 3, 3);
 		return this;
 	}
 

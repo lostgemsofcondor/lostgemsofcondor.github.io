@@ -9,6 +9,8 @@ class Mouse {
 
 		this.heldItem = -1;
 		this.holdingItem = false;
+		this.itemOffsetX = 0;
+		this.itemOffsetY = 0;
 		
 		this.onHud = false;
 	}
@@ -44,6 +46,13 @@ class Mouse {
 	clickRightRelease(){
 		this.right.release();
 	}
+	
+    clickItem(item, x, y){
+        this.holdingItem = true;
+		this.heldItem = item.itemEntityKey;
+		this.itemOffsetX = this.x - x;
+		this.itemOffsetY = this.y - y;
+    }
 	
 	move(x, y){
 		this.x = Math.floor(x);

@@ -9,18 +9,20 @@ class Icon {
     }
     
 	get angle(){
-        var e = game.get(this.key);
-		return e.angle + Math.PI/4;
+		if(this.key == 0){
+			var e = game.get(this.key);
+			return e.angle + Math.PI/4;
+		}
+		return -game.angle;
 	}
 
-	constructor(key, icon, width = 15, height = 15){
+	constructor(key, icon, width, height, rotates){
         this.key = key;
         this.image = new Image();
         this.image.src = icon;
         this.width = width;
-        this.height = height;
-
-        game.miniMap.addIcon(this);
+		this.height = height;
+		this.rotates = rotates;
     }
     
 	adjustXCordSprite(){

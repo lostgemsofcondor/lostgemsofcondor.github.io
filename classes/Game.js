@@ -13,12 +13,6 @@ class Game {
 		this.gameLoopService = new GameLoopService();
 		this.font = new Font();
 		
-		var playerSpeed = 7;
-		this.player = new Player(0, 0)
-			.setImage("player")
-			.setSpeed(playerSpeed)
-			.setDimensions(48, 48)
-			.setMaxHealth(20);
 		this.width;
 		this.height;
 		this.zoom = 1080;
@@ -32,6 +26,12 @@ class Game {
 		this.mainTick = 0;
 		this.paused = false;
 		
+		var playerSpeed = 7;
+		this.player = new Player(0, 0)
+			.setImage("player")
+			.setSpeed(playerSpeed)
+			.setDimensions(48, 48)
+			.setMaxHealth(20);
 		this.entities = []; //does not include player
 		this.entitieIDNext = 1;
 		this.entityList = new EntityList();
@@ -41,14 +41,15 @@ class Game {
 		this.map = new Map();
 		this.entityList.add(0); // Add player
 
-
+		this.scene = null;
 		
 		this.loadSave();
-		this.miniMap = new MiniMap();
+		this.miniMap = new MiniMap("game");
+		this.icons = [];
 		this.hud = new Hud();
 		this.menu = null;
 		this.overlay = new Overlay();
-		this.items = []
+		this.items = [];
 		this.itemService = new ItemService();
 		this.inventory = new Inventory(5, 6);
 
@@ -56,6 +57,9 @@ class Game {
 
         this.solids = null;
 		this.solidsTickUpdated = -1;
+
+		
+		this.player.setIcon("./sprites/miniMap/playerIcon.png", 16, 16, true);
 		
 		// ********************* Start Temp Enemy creation ****************
 		/*
@@ -96,7 +100,6 @@ class Game {
 		// axe.AI = new WeaponAI();
 		// this.add(axe);
 
-		
 
 		//this.vectorField();
 		
@@ -162,6 +165,14 @@ class Game {
 		} else {
 			return this.entities[key];
 		}
+	}
+	
+	addIcon(icon){
+		this.icons[icon.key] = icon;
+	}
+
+	deleteIcon(key){
+		delete this.icons[key];
 	}
 	
 	addText(text){
@@ -354,5 +365,25 @@ class Game {
 			return period - tick%period - 1;
 		}
 		return value;
+	}
+
+	enter(enterance){
+		this.scene = new Scene(enterance.positionX, enterance.positionY);
+		this.clearEntities();
+		this.scene.init();
+	}
+
+	clearEntities(){
+		for(var i in this.entities){
+			this.entities[i].delete();
+		}
+	}
+
+	exit(exit){
+		game.player.positionX = game.scene.overworldX;
+		game.player.positionY = game.scene.overworldY;
+		this.clearEntities();
+		this.scene.delete();
+		this.scene = null;
 	}
 }

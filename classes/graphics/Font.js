@@ -23,11 +23,11 @@ class Font {
     
     placeLargeChar(context, charCode, x, y, color){
         if(color == "green"){
-            context.drawImage(this.fontLargeGreen, (charCode%32)*18, Math.floor(charCode/32)*18, 15, 15, x, y, 15, 15);
+            context.drawImage(this.fontLargeGreen, Math.floor(charCode%32)*18, Math.floor(charCode/32)*18, 15, 15, x, y, 15, 15);
         } else if(color == "red"){
-            context.drawImage(this.fontLargeRed, (charCode%32)*18, Math.floor(charCode/32)*18, 15, 15, x, y, 15, 15);
+            context.drawImage(this.fontLargeRed, Math.floor(charCode%32)*18, Math.floor(charCode/32)*18, 15, 15, x, y, 15, 15);
         } else {
-            context.drawImage(this.fontLarge, (charCode%32)*18, Math.floor(charCode/32)*18, 15, 15, x, y, 15, 15);
+            context.drawImage(this.fontLarge, Math.floor(charCode%32)*18, Math.floor(charCode/32)*18, 15, 15, x, y, 15, 15);
         }
     }
 

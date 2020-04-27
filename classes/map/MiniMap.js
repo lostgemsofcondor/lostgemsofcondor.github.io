@@ -1,6 +1,7 @@
 class MiniMap {
-	constructor(){
-		game.miniMap = this;
+	constructor(name){
+		this.name = name;
+		//game.miniMap = this;
 		this.canvas = main.addCanvas();
 		this.context = this.canvas.getContext("2d");
 		this.size = 200;
@@ -18,13 +19,11 @@ class MiniMap {
 		this.miniChunkSize = this.mapChunkPerMiniMapChunk * game.map.chunkSize;
 		
 		this.icons = [];
-
-		new Icon(game.player.key, "./sprites/miniMap/playerIcon.png");
         
 		this.resolution = 1;
 		for(var i = -this.resolution; i <= this.resolution; i++){
 			for(var j = -this.resolution; j <= this.resolution; j++){
-				this.chunks.push(new MiniMapChunk(i, j, this.miniChunkSize));
+				this.chunks.push(new MiniMapChunk(i, j, this.miniChunkSize, this.mapChunkPerMiniMapChunk));
 			}
 		}
 	}
@@ -32,8 +31,8 @@ class MiniMap {
 
 
 	redraw(){
-			this.context.fillStyle = game.config.gray;
-			this.context.fillRect(0, 0, this.size, this.size);
+		this.context.fillStyle = game.config.gray;
+		this.context.fillRect(0, 0, this.size, this.size);
 			
 		for(var i in this.chunks){
 			var x = this.chunks[i].x * this.miniChunkSize - game.cameraCenterX/game.map.tileSize + this.size/2;
@@ -46,7 +45,6 @@ class MiniMap {
 	}
 
 	draw(chunk){
-		
 		var adjXCamera = this.size/2;
 		var adjYCamera = this.size/2;
 		var adjXZero = chunk.x * this.miniChunkSize - game.cameraCenterX/game.map.tileSize + this.size/2;
@@ -61,23 +59,22 @@ class MiniMap {
 		this.context.restore();
 	}
 
-	addIcon(icon){
-		this.icons[icon.key] = icon;
-	}
-
-	deleteIcon(key){
-		delete this.icons[key];
-	}
-
 	drawIcons(){
-		for(var i in this.icons){
-			//this.context.drawImage(this.icons[i].image, this.icons[i].adjustXCordSprite(), this.icons[i].adjustYCordSprite());
-			var icon = this.icons[i];
-			this.context.save();
-			this.context.translate(icon.adjustXCord() , icon.adjustYCord());
-			this.context.rotate(icon.angle + game.angle);
-			this.context.drawImage(icon.image, -icon.width/2, -icon.height/2, icon.width, icon.height);
-			this.context.restore();
+		for(var i in game.icons){
+			var icon = game.icons[i];
+			if(icon.rotates){
+				this.context.save();
+				this.context.translate(icon.adjustXCord(), icon.adjustYCord());
+				this.context.rotate(icon.angle + game.angle);
+				this.context.drawImage(icon.image, -icon.width/2, -icon.height/2, icon.width, icon.height);
+				this.context.restore();
+			} else {
+				this.context.save();
+				this.context.translate(icon.adjustXCord(), icon.adjustYCord());
+				this.context.rotate(0.01);
+				this.context.drawImage(icon.image, -icon.width/2, -icon.height/2, icon.width, icon.height);
+				this.context.restore();
+			}
 		}
 
 	}
