@@ -70,17 +70,17 @@ class Game {
 		// var AI2 = new Enemy("player", 5, 100, 100, 48, 48, true);
 		// var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
 
-		var AI1 = new Enemy(100, 100)
+		var AI1 = new Crab(100, 100)
 			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)
 			.setSpeed(5);
-		var AI2 = new Enemy(100, 100)
+		var AI2 = new Crab(101, 100)
 			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)
 			.setSpeed(5);
-		var AI3 = new Enemy(100, 100)
+		var AI3 = new Crab(100, 101)
 			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)
@@ -89,7 +89,7 @@ class Game {
 		AI2.AI = new CircleAI(AI3.key, 200);
 		AI3.AI = new CircleAI(AI1.key, 200);
 		
-		var tester = new Enemy(100, 100)
+		var tester = new Crab(100, 100)
 			.setImage("enemy/crab")
 			.setDimensions(48, 48)
 			.setMoving(true)

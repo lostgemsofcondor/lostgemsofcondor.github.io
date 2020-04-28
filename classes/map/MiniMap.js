@@ -8,8 +8,8 @@ class MiniMap {
         this.canvas.width = this.size;
         this.canvas.height = this.size;
 
-        this.offsetX = 50;
-        this.offsetY = 50;
+        this.offsetX = 18;
+        this.offsetY = 18;
         this.context.fillStyle = game.config.gray;
         this.context.fillRect(0, 0, this.size, this.size);
 
@@ -17,6 +17,9 @@ class MiniMap {
 		this.chunks = [];
 		this.mapChunkPerMiniMapChunk = 32;
 		this.miniChunkSize = this.mapChunkPerMiniMapChunk * game.map.chunkSize;
+
+		
+        this.window = new Window(0, 0).setWidth(this.size + this.offsetX * 2).setHeight(this.size + this.offsetY * 2);
 		
 		this.icons = [];
         
@@ -31,6 +34,8 @@ class MiniMap {
 
 
 	redraw(){
+		this.window.draw(main.context);
+
 		this.context.fillStyle = game.config.gray;
 		this.context.fillRect(0, 0, this.size, this.size);
 			
@@ -42,9 +47,11 @@ class MiniMap {
 		}
 
 		this.drawIcons();
+		
+		main.addToContext(this.canvas, this.offsetX, this.offsetY, this.canvas.width, this.canvas.height);
 	}
 
-	draw(chunk){
+	draw(chunk, context){
 		var adjXCamera = this.size/2;
 		var adjYCamera = this.size/2;
 		var adjXZero = chunk.x * this.miniChunkSize - game.cameraCenterX/game.map.tileSize + this.size/2;
@@ -59,7 +66,7 @@ class MiniMap {
 		this.context.restore();
 	}
 
-	drawIcons(){
+	drawIcons(context){
 		for(var i in game.icons){
 			var icon = game.icons[i];
 			if(icon.rotates){

@@ -60,6 +60,7 @@ class Player extends Mortal {
 	}
 
 	die(){
+		game.hud.log("You died! Refresh the page to continue.")
 		game.paused = true;
 	}
 

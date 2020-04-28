@@ -126,10 +126,10 @@ class Main {
 
 	drawMiniMap(){
 		if(game.scene){
-			game.scene.miniMap.redraw();
+			game.scene.miniMap.redraw(this.context);
 			this.addToContext(game.scene.miniMap.canvas, game.scene.miniMap.offsetX, game.scene.miniMap.offsetY, game.scene.miniMap.canvas.width, game.scene.miniMap.canvas.height);
 		} else {
-			game.miniMap.redraw();
+			game.miniMap.redraw(this.context);
 			this.addToContext(game.miniMap.canvas, game.miniMap.offsetX, game.miniMap.offsetY, game.miniMap.canvas.width, game.miniMap.canvas.height);
 		}
 	}

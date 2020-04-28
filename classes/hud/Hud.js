@@ -36,6 +36,7 @@ class Hud {
         this.windowBottomRight.src = "./sprites/hud/windowBottomRight.png";
 
         this.console = new Window(0, this.height - 256).setWidth(512).setHeight(256);
+        this.console.open = false;
         this.consoleLog = [];
 
         this.entityInfo = new EntityInfo();
@@ -170,7 +171,7 @@ class Hud {
     }
 
     clickOnHud(x, y){
-        if(x >= this.offset || this.console.clicked(x, y) || (game.menu && game.menu.clicked(x, y))){
+        if(x >= this.offset || this.console.clicked(x, y) || this.entityInfo.clicked(x, y) || (game.menu && game.menu.clicked(x, y))){
             return true;
         } else {
             delete game.menu;
@@ -184,9 +185,9 @@ class Hud {
         } else if(game.mouse.left.end){
             this.handleClickEnd(x, y);
         } else if(game.mouse.right.start){
-            this.handleRightClick(x, y);
-        }
-        //this.addToContext(game.map.grass.img, x, y, game.map.grass.width, game.map.grass.height);
+            this.handleRightClickStart(x, y);
+        } 
+        //do nothing on right click end
     }
 
     inventorySlotX(x){
@@ -223,6 +224,11 @@ class Hud {
             this.console.open = false;
             return;
         }
+        
+        if(this.entityInfo.clicked(x, y) == 2){
+            this.entityInfo.open = false;
+            return;
+        }
 
         var slotX = this.getSlotX(x);
         var slotY = this.getSlotY(y);
@@ -252,6 +258,10 @@ class Hud {
         }
         game.mouse.holdingItem = false;
         game.mouse.heldItem = -1;
+    }
+
+    handleRightClickStart(){
+
     }
 
     getSlotX(x){
