@@ -4,6 +4,7 @@ class BulletBuilder{
 		this.theta = 0;
 		this.amount = 1;
 		this.name = "Bullet"
+		this.image = "./sprites/bullets/arrows/arrowGreenBullet.png";
 	}
 
 	setDamage(damage){
@@ -25,7 +26,18 @@ class BulletBuilder{
 		this.name = name;
 		return this;
 	}
+	
+	setImage(image){
+		this.image = image;
+		return this;
+	}
+	
+	setImage(image){
+		this.image = image;
+		return this;
+	}
 
+	//only use if class has bulletBuilder field
 	build(){
 		return function(angle){
 			for(var count = 0; count < this.bulletBuilder.amount; count++){
@@ -34,7 +46,7 @@ class BulletBuilder{
 					var t = -1 * this.bulletBuilder.theta/2 + count*this.bulletBuilder.theta/(this.bulletBuilder.amount - 1);
 				}
 				var arrow = new Bullet(this.positionX, this.positionY)
-					.setImage("./sprites/bullets/arrows/arrowGreenBullet.png", angle + t + Math.PI/4)
+					.setImage(this.bulletBuilder.image, angle + t + Math.PI/4)
 					.setSpeed(10)
 					.setDimensions(48, 48)
 					.setRotates(false)
@@ -69,24 +81,19 @@ class BulletBuilder{
 	}
 
 	newBubble(damage){
-		var amount = 3;
-		var theta = 3*Math.PI/16;
 		return function(angle){
 			//"this" refers to the Entity who calls this shoot function not the BulletBuilder
-			for(var count = 0; count < amount; count++){
-				var t = -1 * theta/2 + count*theta/(amount - 1);
-				var arrow = new Bullet(this.positionX, this.positionY)
-					.setImage("./sprites/bullets/arrows/bubble.png", Math.random()*Math.PI*2)
-					.setSpeed(10)
-					.setDimensions(48, 48)
-					.setRotates(false)
-					.setFriendly(false)
-					.setBaseDamage(damage)
-					.setAngle(angle + t)
-					.setFriendly(this.friendly)
-					.setName("Bubble");
-				arrow.AI = new BulletAI(arrow, 100);
-			}
+			var bubble = new Bullet(this.positionX, this.positionY)
+				.setImage("./sprites/bullets/arrows/bubble.png", Math.random()*Math.PI*2)
+				.setSpeed(10)
+				.setDimensions(48, 48)
+				.setRotates(false)
+				.setFriendly(false)
+				.setBaseDamage(damage)
+				.setAngle(angle)
+				.setFriendly(this.friendly)
+				.setName("Bubble");
+			bubble.AI = new BulletAI(bubble, 100);
 		}
 	}
 

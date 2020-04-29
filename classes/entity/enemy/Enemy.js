@@ -10,6 +10,7 @@ class Enemy extends Mortal {
 		// this.key = 0; // for game class
 		// this.positionX = 0;
 		// this.positionY = 0;
+		this.bulletBuilder = new BulletBuilder();
 	}
 
 	setIcon(){

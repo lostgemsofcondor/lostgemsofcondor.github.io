@@ -16,23 +16,33 @@ class SpawnService {
     }
 
     sand(x, y, chunkLoad = false){
+        if(chunkLoad){
+            new Palm(x, y);
+        }
 
         var rand = Math.random();
-        if(rand < 1){
-            var crab = new Crab(x, y);
-            if(chunkLoad){
-                var tree = new Palm(x, y);
-            }
-        }
-        if(rand < .1){
-            var chest = new Chest(x, y)
+
+        if(rand < .05){
+            new Chest(x, y)
+        } else if(rand < .2){
+            new KingCrab(x, y);
+        } else if(rand < .6){
+            new Crab(x, y);
         }
     }
 
     mountain(x, y){
         var rand = Math.random();
-        if(rand < 1){
-            var skeleton = new Skeleton(x, y);
+        if(rand < .5){
+            new Skeleton(x, y);
         }
+    }
+
+    forest(x, y){
+        var rand = Math.random();
+        if(rand < .5){
+            //new Wasp(x, y);
+        }
+
     }
 }

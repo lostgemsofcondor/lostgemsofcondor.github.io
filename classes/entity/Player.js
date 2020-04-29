@@ -25,8 +25,10 @@ class Player extends Mortal {
 		this.jumpLength = 3;
 		// this.positionX = 0;
 		// this.positionY = 0;
+		this.bulletBuilder = new BulletBuilder();
 		this.shoot = this.bulletBuilder.newTripleArrow(1);
 	}
+
 	//override
 	setSpeed(speed){
 		this.baseSpeed = speed;
@@ -38,19 +40,17 @@ class Player extends Mortal {
 		if((main.debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
 			this.lastShot = main.debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
-			this.bulletBuilder = new BulletBuilder();
-			if(game.keyboard.run.down){
-				var arrow = game.inventory.getWithItemKey("arrow");
-				if(arrow != null){
-					arrow.discard(1);
-					this.shoot = this.bulletBuilder
-						.setTheta(Math.PI)
-						.setAmount(1)
-						.setDamage(1)
-						.build();
-					this.shoot(angle);
-				}
-			} else {
+			var arrow = game.getInventory("weapons").getWithItemKey("arrow");
+			if(arrow != null){
+				arrow.discard(1);
+				this.shoot = this.bulletBuilder
+					.setTheta(Math.PI)
+					.setAmount(1)
+					.setDamage(1)
+					.build();
+				this.shoot(angle);
+			}
+			else {
 				if(this.reduceStamina(1, false)){
 					this.shoot = this.bulletBuilder.newSwipeMedium();
 					this.shoot(angle);

@@ -31,7 +31,8 @@ class Game {
 			.setImage("player")
 			.setSpeed(playerSpeed)
 			.setDimensions(48, 48)
-			.setMaxHealth(20);
+			.setMaxHealth(20)
+			.setLight("large");
 		this.entities = []; //does not include player
 		this.entitieIDNext = 1;
 		this.entityList = new EntityList();
@@ -44,6 +45,8 @@ class Game {
 		this.scene = null;
 		
 		this.loadSave();
+		this.inventories = [];
+
 		this.miniMap = new MiniMap("game");
 		this.icons = [];
 		this.hud = new Hud();
@@ -51,7 +54,7 @@ class Game {
 		this.overlay = new Overlay();
 		this.items = [];
 		this.itemService = new ItemService();
-		this.inventory = new Inventory(5, 6);
+
 
 		this.experienceService = new ExperienceService();
 
@@ -165,6 +168,16 @@ class Game {
 		} else {
 			return this.entities[key];
 		}
+	}
+
+	getInventory(name){
+		for(var i in this.inventories){
+			var inventory = this.inventories[i];
+			if(inventory.location == name){
+				return inventory;
+			}
+		}
+		return null;
 	}
 	
 	addIcon(icon){
@@ -368,9 +381,11 @@ class Game {
 	}
 
 	enter(enterance){
-		this.scene = new Scene(enterance.positionX, enterance.positionY);
-		this.clearEntities();
-		this.scene.init();
+		if(enterance){
+			this.scene = new Scene(enterance.positionX, enterance.positionY);
+			this.clearEntities();
+			this.scene.init();
+		}
 	}
 
 	clearEntities(){

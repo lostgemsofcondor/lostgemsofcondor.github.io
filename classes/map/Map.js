@@ -10,7 +10,7 @@ class Map {
 		this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize, "#1A42E1", null, false);
 		this.sand = new Tile("./sprites/background/sandBasic.png", 96, 96, this.tileSize, "#BF9E72", game.spawnService.sand, true);
 		this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize, "#43A047", null, true);
-		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize, "#29753E", null, true);
+		this.forest = new Tile("./sprites/background/forestBasic.png", 96, 96, this.tileSize, "#29753E", game.spawnService.forest, true);
 		this.moutain = new Tile("./sprites/background/moutainBasic.png", 96, 96, this.tileSize, "#333333", game.spawnService.mountain, true);
 		this.snow = new Tile("./sprites/background/snowBasic.png", 96, 96, this.tileSize, "#E5E5E5", game.spawnService.mountain, true);
 

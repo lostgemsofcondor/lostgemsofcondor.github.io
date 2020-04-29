@@ -1,7 +1,10 @@
 class DroppedItem extends Entity {
 	constructor(x, y){
-        super(x, y).setDimensions(32, 32);
+        super(x, y)
+            .setDimensions(32, 32)
+            .setLight("small");
 		game.add(this);
+
 		this.moving = false;
         this.noCollsion = true;
         this.droppedByPlayer = false;

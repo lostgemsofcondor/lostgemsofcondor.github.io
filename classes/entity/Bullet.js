@@ -1,6 +1,7 @@
 class Bullet extends Entity{
 	constructor(x, y){
-		super(x, y);
+		super(x, y)
+			.setLight("small");
 		this.moving = true;
 		this.noCollsion = true;
 		this.friendly = true;
@@ -10,7 +11,7 @@ class Bullet extends Entity{
 		this.baseDamage = 1;
 		this.gainEndurance = 0;
 
-		game.add(this);
+		game.add(this)
 		// this.key = 0; // for game class
 		// this.positionX = 0;
 		// this.positionY = 0;

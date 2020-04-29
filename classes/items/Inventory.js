@@ -1,9 +1,19 @@
 class Inventory {
-	constructor(width, height, location = "inventory"){
+	constructor(x, y, width, height, location = "inventory"){
         this.width = width;
         this.height = height;
         this.location = location;
         this.inv = [];
+
+        
+        //inventory dimensions
+        this.x = x;
+        this.y = y;
+        this.itemSize = 48;
+        this.slotSize = 66; //including gap
+        this.slotGap = this.slotSize - this.itemSize;
+
+
         for(var j = 0; j < this.height; j++){
             var temp = [];
             for(var i = 0; i < this.width; i++){
@@ -16,17 +26,35 @@ class Inventory {
         for(var i in game.save.inventory){
             if(game.save.inventory[i].location == this.location){
                 this.inv[game.save.inventory[i].y][game.save.inventory[i].x] = i;
-                //game.items[i] = 
             }
         }
     }
 
-    update(item, oldX, oldY){
-        //var item = game.save.inventory[key]
-        if(oldX != null && oldY != null){
-            this.inv[oldY][oldX] = null;
+    
+    inventorySlotX(x){
+        return game.hud.offset + this.x + x * this.slotSize;
+    }
+    
+    inventorySlotY(y){
+        return this.y + y * this.slotSize;
+    }
+    
+    getSlotX(x){
+        x = x - this.inventorySlotX(0) + this.slotGap/2;
+        if(x % this.slotSize < this.itemSize + this.slotGap){
+            return Math.floor(x / this.slotSize)
+        } else {
+            return null;
         }
-        this.inv[item.y][item.x] = item.itemEntityKey;
+    }
+
+    getSlotY(y){
+        y = y - this.inventorySlotY(0) + this.slotGap/2;
+        if(y % this.slotSize < this.itemSize + this.slotGap){
+            return Math.floor(y / this.slotSize)
+        } else {
+            return null;
+        }
     }
 
     get(x, y){
@@ -56,13 +84,46 @@ class Inventory {
         
     }
 
+    draw(context){
+        var heldItem = null;
+        for(var j = 0; j < this.height; j++){
+            for(var i = 0; i < this.width; i++){
+                var item = this.get(i, j);
+                if(item != null){
+                    if(game.mouse.heldItem == item.itemEntityKey){
+                        heldItem = item;
+                    } else {
+                        var img = game.itemService[item.itemKey].img;
+                        var x = this.inventorySlotX(item.x);
+                        var y = this.inventorySlotY(item.y);
+                        context.drawImage(img, x, y);
+                        if(item.amount > 1){
+                            game.font.write(context, item.amount, x - 4, y - 4);
+                        }
+                    }
+                }
+            }
+        }
+        return heldItem;
+    }
+
     valid(x, y){
         return x >= 0 && x < this.width && y >= 0 && y < this.height;
     }
 
-    add(item, location){
+    removeAt(oldX, oldY){
+        if(oldX != null && oldY != null){
+            this.inv[oldY][oldX] = null;
+        }
+    }
+
+    forceAdd(item){
+        this.inv[item.y][item.x] = item.itemEntityKey;
+    }
+
+    add(item){
         
-        var stack = game.inventory.getWithItemKey(item.itemKey, true);
+        var stack = this.getWithItemKey(item.itemKey, true);
         if(stack != null){
             var maxStack = 32;
             var temp = Math.min(maxStack, stack.amount + item.amount);
@@ -72,15 +133,15 @@ class Inventory {
                 item.remove();
                 return 0;
             } else {
-                return this.add(item, location);
+                return this.add(item);
             }
         }
-        item.location = location;
+        item.location = this.location;
         for(var j = 0; j < this.height; j++){
             for(var i = 0; i < this.width; i++){
                 if(this.inv[j][i] == null){
                     this.inv[j][i] = item.itemEntityKey;
-                    item.move(i, j);
+                    item.move(this, i, j);
                     return 0;
                 }
             }

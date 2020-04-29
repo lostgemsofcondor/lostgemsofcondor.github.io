@@ -41,13 +41,10 @@ class Hud {
 
         this.entityInfo = new EntityInfo();
         
-
-        //inventory dimensions
-        this.inventoryX = 45;
-        this.inventoryY = 510;
-        this.itemSize = 48;
-        this.slotSize = 66; //including gap
-        this.slotGap = this.slotSize - this.itemSize;
+        game.inventories.push(
+            new Inventory(45, 510, 5, 6, "inventory"),
+            new Inventory(66, 258, 1, 2, "weapons"),
+            new Inventory(177, 237, 1, 3, "armor"));
 
         this.temp = 0;
         this.temp2 = 0;
@@ -93,7 +90,7 @@ class Hud {
         var y = 920;
         
         game.font.write(this.context, "Press the space to dash", x, y);
-        game.font.write(this.context, "Hold shift to fire arrows", x, y+14);
+        game.font.write(this.context, "Equip arrows to fire arrows", x, y+14);
 
         game.font.write(this.context, "Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);
         game.font.write(this.context, "Endurance EXP: " + game.experienceService.endurance, x, y+14*5);
@@ -190,13 +187,6 @@ class Hud {
         //do nothing on right click end
     }
 
-    inventorySlotX(x){
-        return this.offset + this.inventoryX + x * this.slotSize;
-    }
-    
-    inventorySlotY(y){
-        return this.inventoryY + y * this.slotSize;
-    }
 
     log(text){
         if(text){
@@ -230,56 +220,57 @@ class Hud {
             return;
         }
 
-        var slotX = this.getSlotX(x);
-        var slotY = this.getSlotY(y);
-        if(slotX != null && slotY != null && game.inventory.get(slotX, slotY)){
-            var item = game.inventory.get(slotX, slotY);
-            if(item != null){
-                var x = this.inventorySlotX(item.x);
-                var y = this.inventorySlotY(item.y);
-                game.mouse.clickItem(item, x, y);
+        for(var i in game.inventories){
+            var inventory = game.inventories[i];
+            var slotX = inventory.getSlotX(x);
+            var slotY = inventory.getSlotY(y);
+            if(slotX != null && slotY != null && inventory.get(slotX, slotY)){
+                var item = inventory.get(slotX, slotY);
+                if(item != null){
+                    var x = inventory.inventorySlotX(item.x);
+                    var y = inventory.inventorySlotY(item.y);
+                    game.mouse.clickItem(item, x, y);
+                    return;
+                }
             }
         }
     }
 
     handleClickEnd(x, y){
-        var slotX = this.getSlotX(x);
-        var slotY = this.getSlotY(y);
-        if(game.mouse.holdingItem && slotX != null && slotY != null && game.inventory.get(slotX, slotY) == null){
-            var item = game.inventory.getWithKey(game.mouse.heldItem);
-            item.move(slotX, slotY);
-            //move selected item
-        } 
-        if(!this.clickOnHud(x, y) && game.mouse.holdingItem){
-            var item = game.inventory.getWithKey(game.mouse.heldItem);
-            item.droppedByPlayer = true;
-            game.player.drop(item);
-            
+        if(game.mouse.holdingItem){
+            if(!this.clickOnHud(x, y)){
+                
+                for(var i in game.inventories){
+                    var inventory = game.inventories[i];
+                    var item = inventory.getWithKey(game.mouse.heldItem);
+                    if(item != null){
+                        break;
+                    }
+                }
+                item.droppedByPlayer = true;
+                game.player.drop(item);
+            } else {
+                
+                for(var i in game.inventories){
+                    var inventory = game.inventories[i];
+                    var slotX = inventory.getSlotX(x);
+                    var slotY = inventory.getSlotY(y);
+                    //validate position
+                    if(slotX != null && slotY != null && inventory.get(slotX, slotY) == null){
+                        var item = inventory.getWithKey(game.mouse.heldItem);
+                        item.move(inventory, slotX, slotY);
+                        //move selected item
+                    }
+                }
+            }
+
+            game.mouse.holdingItem = false;
+            game.mouse.heldItem = -1;
         }
-        game.mouse.holdingItem = false;
-        game.mouse.heldItem = -1;
     }
 
     handleRightClickStart(){
 
-    }
-
-    getSlotX(x){
-        x = x - this.inventorySlotX(0) + this.slotGap/2;
-        if(x % this.slotSize < this.itemSize + this.slotGap){
-            return Math.floor(x / this.slotSize)
-        } else {
-            return null;
-        }
-    }
-
-    getSlotY(y){
-        y = y - this.inventorySlotY(0) + this.slotGap/2;
-        if(y % this.slotSize < this.itemSize + this.slotGap){
-            return Math.floor(y / this.slotSize)
-        } else {
-            return null;
-        }
     }
 
     drawItems(){
@@ -290,22 +281,11 @@ class Hud {
         this.context.fillStyle = game.config.black;
         
         var heldItem = null
-        for(var j = 0; j < game.inventory.height; j++){
-            for(var i = 0; i < game.inventory.width; i++){
-                var item = game.inventory.get(i, j);
-                if(item != null){
-                    if(game.mouse.heldItem == item.itemEntityKey){
-                        heldItem = item;
-                    } else {
-                        var img = game.itemService[item.itemKey].img;
-                        var x = this.inventorySlotX(item.x);
-                        var y = this.inventorySlotY(item.y);
-                        this.context.drawImage(img, x, y);
-                        if(item.amount > 1){
-                            game.font.write(this.context, item.amount, x - 4, y - 4);
-                        }
-                    }
-                }
+        for(var i in game.inventories){
+            var inventory = game.inventories[i];
+            var temp = inventory.draw(this.context);
+            if(temp != null){
+                heldItem = temp;
             }
         }
         if(heldItem != null){

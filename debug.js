@@ -83,7 +83,6 @@ class Debug {
 		this.debugInfo.add("Chunk under mouse Y: " + game.map.getChunkY(game.mouse.point.y), 4);
 		this.debugInfo.add("Last Chunk Tick: " + game.map.lastChunkTick, 4);
 		this.debugInfo.add("JSON.stringify(game.save): "+ JSON.stringify(game.save), 6);
-		this.debugInfo.add("inv slot: "+ game.hud.getSlotX(game.mouse.x) + ", " + game.hud.getSlotY(game.mouse.y), 5);
 		this.debugInfo.add("Spawn Rate: "+ game.spawnService.spawnRate, 4);
 		this.debugInfo.add("Window: "+ game.hud.console.clicked(game.mouse.x, game.mouse.y), 4);
 	}
@@ -173,7 +172,7 @@ class DebugInfo {
 		this.leftMargin = 10;
 		this.gap = game.zoom/1080*21;
 		this.lines = 0;
-		this.offset = game.miniMap.offsetY + game.miniMap.size
+		this.offset = game.miniMap.offsetY + game.miniMap.size + 6
 		this.level = game.config.debugLevel;
 		main.context.font = this.font;
 	}

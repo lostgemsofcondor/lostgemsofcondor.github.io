@@ -52,31 +52,25 @@ class Overlay {
     drawLighting(){
         this.lightContext.globalCompositeOperation = "lighter";
         
-        var lightingImg = game.imageBuilder.buildLighting(128 + game.periodic(32, 4), 5)
-        this.lightContext.drawImage(lightingImg, game.player.sprite.adjustXCord() - lightingImg.width/2, game.player.sprite.adjustYCord() - lightingImg.height/2)
+        var largeLightImg = game.imageBuilder.buildLighting(128 + game.periodic(32, 4), 5)
 
+        var mediumLightImg = game.imageBuilder.buildLighting(32 + game.periodic(16, 8), 2);
 
-        lightingImg = game.imageBuilder.buildLighting(32 + game.periodic(16, 8), 2);
-
-        var enemies = game.getEnemies();
-		for(var i = 0; i < enemies.length; i++){
-            this.lightContext.drawImage(lightingImg, enemies[i].sprite.adjustXCord() - lightingImg.width/2, enemies[i].sprite.adjustYCord() - lightingImg.height/2);
-        }
-
-
-
-        lightingImg = game.imageBuilder.buildLighting(16 + game.periodic(8, 8), 2);
+        var smallLightImg = game.imageBuilder.buildLighting(16 + game.periodic(8, 8), 2);
 
         
-        var bullets = game.getBullets();
-		for(var i = 0; i < bullets.length; i++){
-            this.lightContext.drawImage(lightingImg, bullets[i].sprite.adjustXCord() - lightingImg.width/2, bullets[i].sprite.adjustYCord() - lightingImg.height/2);
-        }
+
         
-        var droppedItems = game.getDroppedItems();
-		for(var i = 0; i < droppedItems.length; i++){
-            this.lightContext.drawImage(lightingImg, droppedItems[i].sprite.adjustXCord() - lightingImg.width/2, droppedItems[i].sprite.adjustYCord() - lightingImg.height/2);
-        }
+		game.entityList.list.forEach(o => {
+            var e = game.get(o.key);
+            if(e.light == "large"){
+                this.lightContext.drawImage(largeLightImg, e.sprite.adjustXCord() - largeLightImg.width/2, e.sprite.adjustYCord() - largeLightImg.height/2);
+            } else if(e.light == "medium"){
+                this.lightContext.drawImage(mediumLightImg, e.sprite.adjustXCord() - mediumLightImg.width/2, e.sprite.adjustYCord() - mediumLightImg.height/2);
+            } else if(e.light == "small"){
+                this.lightContext.drawImage(smallLightImg, e.sprite.adjustXCord() - smallLightImg.width/2, e.sprite.adjustYCord() - smallLightImg.height/2);
+            }
+        });
 
         this.context.globalCompositeOperation = "destination-out";
         this.context.drawImage(this.lightCanvas, 0, 0);

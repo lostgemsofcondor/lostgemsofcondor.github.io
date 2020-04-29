@@ -36,6 +36,8 @@ class Entity {
 		this.hasIcon = false;
 		this.name = null;
 
+		this.light = null;
+
 		this.setRotates(true);
 		
 		this.key; //defined in adding to game
@@ -91,6 +93,12 @@ class Entity {
 		this.name = name;
 		return this;
 	}
+
+	setLight(light){
+		this.light = light;
+		return this;
+	}
+
 	//logic functions
 	correctMod(a, b){
 		return ((a % b) + b) % b;

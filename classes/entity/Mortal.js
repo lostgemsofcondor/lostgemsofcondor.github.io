@@ -1,6 +1,7 @@
 class Mortal extends Entity {
     constructor(x, y){
-		super(x, y);
+		super(x, y)
+			.setLight("medium");
 		this.dead = false;
 		this.despawnDistance = 4000;
         this.bulletBuilder = new BulletBuilder();

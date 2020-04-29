@@ -38,11 +38,45 @@ class Scene {
         game.player.positionX = spawnX;
         game.player.positionY = spawnY + 48;
 
-		var e = new Entrance(spawnX, spawnY)
+		new Entrance(spawnX, spawnY)
             .setImage("./sprites/entrance/ropeUp.png", 0)
-            .setDimensions(96,96)
-            .setSolid(true)
+            .setDimensions(96, 96)
             .setExit(true);
+
+		var e = new Entity(spawnX + 300, spawnY)
+            .setImage("./sprites/furniture/bed.png", 0)
+            .setDimensions(144, 72);
+
+        game.add(e);
+
+		var e = new Entity(spawnX + 450, spawnY)
+            .setImage("./sprites/furniture/bed.png", 0)
+            .setDimensions(144, 72);
+
+        game.add(e);
+
+        
+		var e = new Entity(spawnX - 32, spawnY + 32)
+        .setImage("./sprites/lighting/torch.png", 0)
+        .setDimensions(48, 48)
+        .setLight("medium");
+
+        game.add(e);
+        
+		var e = new Entity(spawnX + 32, spawnY - 32)
+        .setImage("./sprites/lighting/torch.png", 0)
+        .setDimensions(48, 48)
+        .setLight("medium");
+
+        game.add(e);
+
+        
+		var e = new Entity((this.boarderSize + 8) * 48, (this.boarderSize + 8) * 48)
+        .setImage("./sprites/lighting/torch.png", 0)
+        .setDimensions(48, 48)
+        .setLight("large");
+
+        game.add(e);
     }
 
     getTile(x, y){

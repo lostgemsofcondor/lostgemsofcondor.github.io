@@ -226,13 +226,6 @@ class Main {
 		}
 	}
 
-	drawMap(){
-		throw "unused?";
-		mapCanvas.width = 5000;
-		mapCanvas.height = 5000;
-	}
-
-
 	handelMouseDown(){
 		var canvasX = event.clientX / this.canvasDiv.offsetWidth * this.canvas.width;
 		var canvasY = event.clientY / this.canvasDiv.offsetHeight * this.canvas.height;

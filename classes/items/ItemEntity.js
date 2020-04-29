@@ -66,16 +66,31 @@ class ItemEntity {
         this.itemKey = itemKey;
         this.amount = amount;
         
-        return game.inventory.add(this, location);
+        for(var i in game.inventories){
+            var inventory = game.inventories[i];
+            if(inventory.location == location){
+                return inventory.add(this);
+            }
+        }
+        return null;
     }
 
-    move(x, y){
-        if(game.inventory.valid(x, y)){
+    move(inventory, x, y){
+        if(inventory.valid(x, y)){
             var oldX = this.x;
             var oldY = this.y;
             this.data.x = x;
             this.data.y = y;
-            game.inventory.update(this, oldX, oldY);
+            
+            for(var i in game.inventories){
+                var oldInventory = game.inventories[i];
+                if(oldInventory.location == this.location){
+                    oldInventory.removeAt(oldX, oldY);
+                    inventory.forceAdd(this);
+                    break;
+                }
+            }
+            this.data.location = inventory.location;
         }
     }
 
@@ -96,12 +111,16 @@ class ItemEntity {
     }
 
     delete(){
-        game.inventory.delete(this)
+        for(var i in game.inventories){
+            var inventory = game.inventories[i];
+            if(inventory.location == this.location){
+                inventory.delete(this)
+            }
+        }
         this.remove();
     }
 
     remove(){
         delete game.save.inventory[this.itemEntityKey];
     }
-
 }
