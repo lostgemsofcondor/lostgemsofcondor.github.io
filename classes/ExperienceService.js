@@ -65,6 +65,13 @@ class ExperienceService {
 
 	updateStaminaRegen(){
 		game.player.baseStaminaRegen = Math.floor(Math.pow(0.9819, this.enduranceLevel)*60);
-		game.player.maxStamina = 19 + this.enduranceLevel;
+		game.player.maxStamina = this.updateMaxStamina(this.enduranceLevel);
+	}
+
+	updateMaxStamina(level){
+		// one point per level and 5 points per level ending in 9 up to 79
+		// at level 99 you should have 150 points
+		return level + 19 + Math.min(Math.floor((level+1)/10)*4,32);
+
 	}
 }

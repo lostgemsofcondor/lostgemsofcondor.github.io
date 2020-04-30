@@ -117,7 +117,7 @@ class Game {
 
 	loadSave(){
         var saveOnFile = localStorage.getItem("save");
-        if(saveOnFile != null){
+        if(false && saveOnFile != null){
 			this.save = Object.assign(new Save, JSON.parse(saveOnFile));
 			if(this.save.version == null || this.config.versionCompare(this.save.version, this.config.version) > 0){
 				this.newSave();
