@@ -47,6 +47,7 @@ class Player extends Mortal {
 					.setTheta(Math.PI)
 					.setAmount(1)
 					.setDamage(1)
+					.setDropChance(.5)
 					.build();
 				this.shoot(angle);
 			}

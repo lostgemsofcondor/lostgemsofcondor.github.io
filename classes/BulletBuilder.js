@@ -5,6 +5,8 @@ class BulletBuilder{
 		this.amount = 1;
 		this.name = "Bullet"
 		this.image = "./sprites/bullets/arrows/arrowGreenBullet.png";
+		this.dropChance = 0;
+		this.drop = "arrow";
 	}
 
 	setDamage(damage){
@@ -32,8 +34,13 @@ class BulletBuilder{
 		return this;
 	}
 	
-	setImage(image){
-		this.image = image;
+	setDrop(drop){
+		this.drop = drop;
+		return this;
+	}
+	
+	setDropChance(dropChance){
+		this.dropChance = dropChance;
 		return this;
 	}
 
@@ -55,8 +62,8 @@ class BulletBuilder{
 					.setAngle(angle + t)
 					.setFriendly(this.friendly)
 					.setName(this.name);
-				if(count == Math.floor(this.bulletBuilder.amount/2)){
-					arrow.setItemKey("arrow");
+				if(Math.random() < this.bulletBuilder.dropChance && count == Math.floor(this.bulletBuilder.amount/2)){
+					arrow.setItemKey(this.bulletBuilder.drop);
 				}
 				arrow.AI = new BulletAI(arrow, 100);
 			}
