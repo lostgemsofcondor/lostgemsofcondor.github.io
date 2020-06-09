@@ -12,10 +12,12 @@ class DroppedItem extends Entity {
     }
 
     setItemKey(itemKey){
+        var item = game.itemService[itemKey];
+
         this.itemKey = itemKey;
         this.sprite.setAngle(0);
-        this.sprite.image = game.itemService[itemKey].img;
-        this.name = game.itemService[this.itemKey].name;
+        this.sprite.image = item.img;
+        this.name = item.name;
         return this;
     }
 
@@ -32,6 +34,10 @@ class DroppedItem extends Entity {
 
     getPicked(){
         if(this.canBePicked()){
+            var item = game.itemService[this.itemKey];
+            if(item.pickedSound){
+                item.pickedSound.play()
+            }
             this.amount = new ItemEntity().newEntity(this.itemKey, "inventory", this.amount);
             if(this.amount <= 0){
                 game.delete(this);
@@ -58,5 +64,4 @@ class DroppedItem extends Entity {
             return this.name;
         }
     }
-
 }

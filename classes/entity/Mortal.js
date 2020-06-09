@@ -4,7 +4,8 @@ class Mortal extends Entity {
 			.setLight("medium");
 		this.dead = false;
 		this.despawnDistance = 4000;
-        this.bulletBuilder = new BulletBuilder();
+		this.bulletBuilder = new BulletBuilder();
+		this.hitSound = game.sounds.defultHit;
 	}
 	
 	setDespawnDistance(despawnDistance){
@@ -17,11 +18,21 @@ class Mortal extends Entity {
 		this.health = this.maxHealth;
 		return this;
 	}
+
+	setHitSound(hitSound){
+		this.hitSound = hitSound;
+		return this;
+		
+	}
 	
 	struck(bullet){
 		this.drawHealth = true;
 		var damage = bullet.getDamage();
 		if(damage > 0){
+			if(this.hitSound){
+				this.hitSound.play();
+			}
+			
 			this.risingText("-" + damage, "red");
 			this.health -= damage; 
 			if(this.health <= 0 && !this.dead){

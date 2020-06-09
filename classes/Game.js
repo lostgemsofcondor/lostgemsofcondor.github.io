@@ -6,6 +6,7 @@ class Game {
 		this.config = new Config();
 		this.keyboard = new Keyboard();
 		this.mouse = new Mouse();
+		this.sounds = new Sounds();
 		this.dropTableService = new DropTableService();
 		this.spawnService = new SpawnService();
 		this.bulletBuilder = new BulletBuilder();
@@ -25,6 +26,7 @@ class Game {
 		this.gameTick = 0;
 		this.mainTick = 0;
 		this.paused = false;
+
 		
 		var playerSpeed = 7;
 		this.player = new Player(0, 0)
@@ -32,7 +34,8 @@ class Game {
 			.setSpeed(playerSpeed)
 			.setDimensions(48, 48)
 			.setMaxHealth(20)
-			.setLight("large");
+			.setLight("large")
+			.setHitSound(this.sounds.playerHit);
 		this.entities = []; //does not include player
 		this.entitieIDNext = 1;
 		this.entityList = new EntityList();
@@ -117,7 +120,7 @@ class Game {
 
 	loadSave(){
         var saveOnFile = localStorage.getItem("save");
-        if(false && saveOnFile != null){
+        if(saveOnFile != null){
 			this.save = Object.assign(new Save, JSON.parse(saveOnFile));
 			if(this.save.version == null || this.config.versionCompare(this.save.version, this.config.version) > 0){
 				this.newSave();

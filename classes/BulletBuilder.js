@@ -73,6 +73,7 @@ class BulletBuilder{
 	newSwipeMedium(){
 		return function(angle){
 			//"this" refers to the Entity who calls this shoot function not the BulletBuilder
+			game.sounds.swipe1.play();
 			var swipe = new Bullet(this.positionX, this.positionY)
 				.setImage("./sprites/bullets/melee/swipe.png", angle)
 				.setSpeed(0)

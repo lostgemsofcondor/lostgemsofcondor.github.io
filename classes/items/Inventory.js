@@ -69,11 +69,11 @@ class Inventory {
     }
 
     getWithItemKey(itemKey, nonFullStack = false){
-        var maxStack = 32;
         for(var y = 0; y < this.height; y++){
             for(var x = 0; x < this.width; x++){
                 var item = new ItemEntity(this.inv[y][x]);
                 if(item.data && item.itemKey == itemKey){
+                    var maxStack = game.itemService[item.itemKey].maxStack;
                     if(!nonFullStack || item.amount < maxStack){
                         return item;
                     }
@@ -97,7 +97,7 @@ class Inventory {
                         var x = this.inventorySlotX(item.x);
                         var y = this.inventorySlotY(item.y);
                         context.drawImage(img, x, y);
-                        if(item.amount > 1){
+                        if(item.amount != 1){
                             game.font.write(context, item.amount, x - 4, y - 4);
                         }
                     }
@@ -125,7 +125,7 @@ class Inventory {
         
         var stack = this.getWithItemKey(item.itemKey, true);
         if(stack != null){
-            var maxStack = 32;
+            var maxStack = game.itemService[item.itemKey].maxStack;
             var temp = Math.min(maxStack, stack.amount + item.amount);
             item.amount -= maxStack - stack.amount;
             stack.amount = temp;

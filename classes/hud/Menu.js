@@ -1,15 +1,27 @@
 class Menu {
     constructor(){
-        this.x = game.mouse.x;
-        this.y = game.mouse.y;
-
+        
         this.width = 288;
         this.height = 0;
+        
+        this.x = Math.min(game.mouse.x, game.width - this.width);
+        this.y = game.mouse.y;
+
 
         this.options = [];
 
         if(game.mouse.onHud){
-            console.log()
+            for(var i in game.inventories){
+                var inventory = game.inventories[i];
+                var slotX = inventory.getSlotX(game.mouse.x);
+                var slotY = inventory.getSlotY(game.mouse.y);
+                //validate position
+                var item = inventory.get(slotX, slotY);
+                if(item != null){
+                    this.options = [new MenuItemOption(item.itemKey)];
+                    break;
+                }
+            }
         } else {
             game.entityList.list.forEach(o => {
                 var e = game.get(o.key);

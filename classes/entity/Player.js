@@ -43,6 +43,7 @@ class Player extends Mortal {
 			var arrow = game.getInventory("weapons").getWithItemKey("arrow");
 			if(arrow != null){
 				arrow.discard(1);
+				game.sounds.bowFire.play();
 				this.shoot = this.bulletBuilder
 					.setTheta(Math.PI)
 					.setAmount(1)
@@ -53,6 +54,7 @@ class Player extends Mortal {
 			}
 			else {
 				if(this.reduceStamina(1, false)){
+					game.sounds.swipe1.play();
 					this.shoot = this.bulletBuilder.newSwipeMedium();
 					this.shoot(angle);
 				}

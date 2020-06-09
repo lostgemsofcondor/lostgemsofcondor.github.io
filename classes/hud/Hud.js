@@ -269,7 +269,8 @@ class Hud {
         }
     }
 
-    handleRightClickStart(){
+    handleRightClickStart(x, y){
+
 
     }
 
