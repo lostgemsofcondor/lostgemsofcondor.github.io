@@ -75,7 +75,6 @@ class Sprite extends Point {
 
 	getAnimationDelta(){
 		if(this.frames > 1){
-			//console.log(this.width * (Math.floor(((game.gameTick + this.animationOffset) % (this.animationTime * this.frames)) / this.animationTime)))
 			return this.width * (Math.floor(((game.gameTick + this.animationOffset) % (this.animationTime * this.frames)) / this.animationTime));
 		} else {
 			return 0;

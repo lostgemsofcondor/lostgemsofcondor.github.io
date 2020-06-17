@@ -1,7 +1,7 @@
-class Wasp extends Enemy {
+class Slime extends Enemy {
 	constructor(x, y){
         super(x, y)
-            .setImage("enemy/wasp")
+            .setImage("enemy/slime")
             .setDimensions(96, 96)
             .setMoving(true)
             .setSpeed(1)
@@ -13,12 +13,12 @@ class Wasp extends Enemy {
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));
-        this.shoot = this.bulletBuilder.setImage("./sprites/bullets/magic/orange.png").setAmount(5).setTheta(Math.PI/8).setDamage(5).setLife(50).build();
+        this.shoot = this.bulletBuilder.setImage("./sprites/bullets/magic/green.png").setAmount(4).setTheta(Math.PI/8).setDamage(2).setLife(50).build();
 
         this.dropTable = new DropTable().addDrop("arrow", 1);
     }
 
 	getDescription(){
-		return "A wasp.";
+		return "A slime.";
 	}
 }

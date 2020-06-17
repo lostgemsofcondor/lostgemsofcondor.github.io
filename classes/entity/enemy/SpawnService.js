@@ -41,8 +41,14 @@ class SpawnService {
     forest(x, y){
         var rand = Math.random();
         if(rand < .5){
+            new Slime(x, y);
+        }
+    }
+
+    forest2(x, y){
+        var rand = Math.random();
+        if(rand < .5){
             new Wasp(x, y);
         }
-
     }
 }

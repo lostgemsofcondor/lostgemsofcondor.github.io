@@ -50,12 +50,12 @@ class EntityInfo {
 
             game.font.writeCentered(context, e.health + "/" + e.maxHealth, x + width/2, y + 3, true);
 
-            context.drawImage(e.sprite.getImg(), x + 6, y + 6, e.width/3*2, e.height/3*2);
+            main.addToContext(context, e.sprite.getImg(), x + 6, y + 6, e.width/3*2, e.height/3*2);
             
             if(e.dropTable){
                 var drops = e.dropTable.listDrops();
                 for(var i = 0; i < drops.length; i++){
-                    context.drawImage(game.itemService[drops[i]].img, x + e.width/3*2 + i * 34 + 8, y + 30, 32, 32);
+                    main.addToContext(context, game.itemService[drops[i]].img, x + e.width/3*2 + i * 34 + 8, y + 30, 32, 32);
                 }
             }
         } else {

@@ -126,21 +126,21 @@ class Main {
 	drawMiniMap(){
 		if(game.scene){
 			game.scene.miniMap.redraw(this.context);
-			this.addToContext(game.scene.miniMap.canvas, game.scene.miniMap.offsetX, game.scene.miniMap.offsetY, game.scene.miniMap.canvas.width, game.scene.miniMap.canvas.height);
+			this.addToContext(this.context, game.scene.miniMap.canvas, game.scene.miniMap.offsetX, game.scene.miniMap.offsetY, game.scene.miniMap.canvas.width, game.scene.miniMap.canvas.height);
 		} else {
 			game.miniMap.redraw(this.context);
-			this.addToContext(game.miniMap.canvas, game.miniMap.offsetX, game.miniMap.offsetY, game.miniMap.canvas.width, game.miniMap.canvas.height);
+			this.addToContext(this.context, game.miniMap.canvas, game.miniMap.offsetX, game.miniMap.offsetY, game.miniMap.canvas.width, game.miniMap.canvas.height);
 		}
 	}
 
 	drawHud(){
 		game.hud.redraw();
-		this.addToContext(game.hud.canvas, 0, 0, game.hud.canvas.width, game.hud.canvas.height);
+		this.addToContext(this.context, game.hud.canvas, 0, 0, game.hud.canvas.width, game.hud.canvas.height);
 	}
 
 	drawOverlay(){
 		game.overlay.redraw();
-		this.addToContext(game.overlay.canvas, 0, 0, game.overlay.canvas.width, game.overlay.canvas.height);
+		this.addToContext(this.context, game.overlay.canvas, 0, 0, game.overlay.canvas.width, game.overlay.canvas.height);
 	}
 
 	drawObjects(){
@@ -189,7 +189,7 @@ class Main {
 		this.context.translate(adjXCamera , adjYCamera);
 		this.context.rotate(game.angle);
 		this.context.translate(-adjXCamera, -adjYCamera);
-		this.addToContext(chunk.canvas, adjXZero, adjYZero);
+		this.addToContext(this.context, chunk.canvas, adjXZero, adjYZero);
 		this.context.restore();
 	}
 
@@ -207,25 +207,23 @@ class Main {
 
 	addSprite(sprite){
 		if(sprite.rotates){
-			this.addToContext(sprite.getImg(), Math.round(sprite.adjustXCordSprite()), Math.round(sprite.adjustYCordSprite()), sprite.width, sprite.height, sprite.getAnimationDelta());
+			this.addToContext(this.context, sprite.getImg(), Math.round(sprite.adjustXCordSprite()), Math.round(sprite.adjustYCordSprite()), sprite.width, sprite.height, sprite.getAnimationDelta());
 		} else {
 			this.context.save();
 			this.context.translate(sprite.adjustXCord() , sprite.adjustYCord());
 			this.context.rotate(sprite.angle + game.angle);
-			this.addToContext(sprite.getImg(), -sprite.width/2, -sprite.height/2, sprite.width, sprite.height, sprite.getAnimationDelta());
+			this.addToContext(this.context, sprite.getImg(), -sprite.width/2, -sprite.height/2, sprite.width, sprite.height, sprite.getAnimationDelta());
 			this.context.restore();
 		}
 	}
 
-	addToContext(img, x, y, width = null, height = null, sdx = 0, sdy = 0){
+	addToContext(context, img, x, y, width = null, height = null, sdx = 0, sdy = 0){
 		if(width && height){
-			if(img.height / height != img.width / width){
-				this.context.drawImage(img, sdx, sdy, width, height, x, y, width, height);
-			} else {
-				this.context.drawImage(img, x, y, width, height);
-			}
+			var w = img.height / height * width
+			var h = img.height;
+			context.drawImage(img, sdx, sdy, w, h, x, y, width, height);
 		} else {
-			this.context.drawImage(img, x, y);
+			context.drawImage(img, x, y);
 		}
 	}
 

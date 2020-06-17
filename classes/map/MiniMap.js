@@ -48,7 +48,7 @@ class MiniMap {
 
 		this.drawIcons();
 		
-		main.addToContext(this.canvas, this.offsetX, this.offsetY, this.canvas.width, this.canvas.height);
+		main.addToContext(main.context, this.canvas, this.offsetX, this.offsetY, this.canvas.width, this.canvas.height);
 	}
 
 	draw(chunk, context){
