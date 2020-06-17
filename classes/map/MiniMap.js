@@ -19,7 +19,7 @@ class MiniMap {
 		this.miniChunkSize = this.mapChunkPerMiniMapChunk * game.map.chunkSize;
 
 		
-        this.window = new Window(0, 0).setWidth(this.size + this.offsetX * 2).setHeight(this.size + this.offsetY * 2);
+        this.window = new GameWindow(0, 0).setWidth(this.size + this.offsetX * 2).setHeight(this.size + this.offsetY * 2);
 		
 		this.icons = [];
         

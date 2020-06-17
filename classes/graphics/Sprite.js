@@ -1,6 +1,9 @@
 class Sprite extends Point {
 	constructor(x, y){
 		super(x, y);
+		this.frames = 1;
+		this.animationOffset = 0;
+		this.animationTime = 20;
 	}
 
 	//builder functions
@@ -22,6 +25,21 @@ class Sprite extends Point {
 	
 	setDirection(direction){
 		this.direction = direction;
+		return this;
+	}
+	
+	setRandomOffset(){
+		this.animationOffset = Math.floor(Math.random() * this.frames * this.animationTime);
+		return this;
+	}
+
+	setAnimationTime(animationTime){
+		this.animationTime = animationTime;
+		return this;
+	}
+
+	setFrames(frames){
+		this.frames = frames;
 		return this;
 	}
 	
@@ -52,6 +70,15 @@ class Sprite extends Point {
 			return this.images[this.direction];
 		} else {
 			return this.image;
+		}
+	}
+
+	getAnimationDelta(){
+		if(this.frames > 1){
+			//console.log(this.width * (Math.floor(((game.gameTick + this.animationOffset) % (this.animationTime * this.frames)) / this.animationTime)))
+			return this.width * (Math.floor(((game.gameTick + this.animationOffset) % (this.animationTime * this.frames)) / this.animationTime));
+		} else {
+			return 0;
 		}
 	}
 

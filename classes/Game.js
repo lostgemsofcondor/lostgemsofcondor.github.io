@@ -53,7 +53,6 @@ class Game {
 		this.miniMap = new MiniMap("game");
 		this.icons = [];
 		this.hud = new Hud();
-		this.menu = null;
 		this.overlay = new Overlay();
 		this.items = [];
 		this.itemService = new ItemService();

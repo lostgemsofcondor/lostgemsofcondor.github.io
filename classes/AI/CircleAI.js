@@ -6,6 +6,7 @@ class CircleAI {
 	}
 	
 	calculate(entity){
+		entity.moving = true;
 		var target = game.get(this.target);
 		if(target){
 			var d = Math.sqrt(Math.pow(entity.positionX - target.positionX, 2) + Math.pow(entity.positionY - target.positionY, 2));

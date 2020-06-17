@@ -93,7 +93,6 @@ class Main {
 				}
 			}
 		}
-		throw "exit while true";
 	}
 
 	sleep(ms){
@@ -208,19 +207,23 @@ class Main {
 
 	addSprite(sprite){
 		if(sprite.rotates){
-			this.addToContext(sprite.getImg(), Math.round(sprite.adjustXCordSprite()), Math.round(sprite.adjustYCordSprite()), sprite.width, sprite.height);
+			this.addToContext(sprite.getImg(), Math.round(sprite.adjustXCordSprite()), Math.round(sprite.adjustYCordSprite()), sprite.width, sprite.height, sprite.getAnimationDelta());
 		} else {
 			this.context.save();
 			this.context.translate(sprite.adjustXCord() , sprite.adjustYCord());
 			this.context.rotate(sprite.angle + game.angle);
-			this.addToContext(sprite.getImg(), -sprite.width/2, -sprite.height/2, sprite.width, sprite.height);
+			this.addToContext(sprite.getImg(), -sprite.width/2, -sprite.height/2, sprite.width, sprite.height, sprite.getAnimationDelta());
 			this.context.restore();
 		}
 	}
 
-	addToContext(img, x, y, width = null, height = null){
+	addToContext(img, x, y, width = null, height = null, sdx = 0, sdy = 0){
 		if(width && height){
-			this.context.drawImage(img, x, y, width, height)
+			if(img.height / height != img.width / width){
+				this.context.drawImage(img, sdx, sdy, width, height, x, y, width, height);
+			} else {
+				this.context.drawImage(img, x, y, width, height);
+			}
 		} else {
 			this.context.drawImage(img, x, y);
 		}

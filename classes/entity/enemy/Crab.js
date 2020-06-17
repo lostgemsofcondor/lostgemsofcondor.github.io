@@ -6,8 +6,7 @@ class Crab extends Enemy {
             .setMoving(true)
             .setSpeed(1)
             .setIcon();
-        this.AI = new CombineAI(
-            new BuilderAI(30, 600, new ShootAI(10), null),
+        this.AI = new BuilderAI(60, 600, new StopAndShootAI(10, 30),
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));

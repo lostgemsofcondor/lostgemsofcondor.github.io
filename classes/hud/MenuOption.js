@@ -21,6 +21,8 @@ class MenuOption {
             this.text = "Enter";
         } else if(this.type == "exit") {
             this.text = "Exit";
+        } else if(this.type == "craft"){
+            this.text = "Craft";
         } else {
             this.text = "Option Error";
         }
@@ -44,6 +46,8 @@ class MenuOption {
         } else if(this.type == "exit"){
             var exit = game.get(this.key);
             game.exit(exit);
+        } else if(this.type == "craft"){
+            game.hud.openCraftingTable();
         }
     }
 }

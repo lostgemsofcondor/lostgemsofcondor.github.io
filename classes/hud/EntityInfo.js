@@ -3,7 +3,7 @@ class EntityInfo {
         this.key = -1;
         this.width = 336;
         this.offsetY = 24;
-        this.window = new Window(-1, this.offsetY).setWidth(this.width);
+        this.window = new GameWindow(-1, this.offsetY).setWidth(this.width);
         this.open = false;
     }
     

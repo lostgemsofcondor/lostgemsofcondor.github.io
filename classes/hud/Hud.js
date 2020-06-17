@@ -35,9 +35,13 @@ class Hud {
         this.windowBottomRight = new Image();
         this.windowBottomRight.src = "./sprites/hud/windowBottomRight.png";
 
-        this.console = new Window(0, this.height - 256).setWidth(512).setHeight(256);
+        this.menu = null;
+
+        this.console = new GameWindow(0, this.height - 256).setWidth(512).setHeight(256);
         this.console.open = false;
         this.consoleLog = [];
+
+        this.craftingMenu = new CraftingMenu();
 
         this.entityInfo = new EntityInfo();
         
@@ -81,6 +85,7 @@ class Hud {
         this.drawConsole();
         this.addText();
         this.entityInfo.draw(this.context);
+        this.craftingMenu.draw(this.context);
         this.drawItems();
         this.drawRightClickMenu();
     }
@@ -168,10 +173,14 @@ class Hud {
     }
 
     clickOnHud(x, y){
-        if(x >= this.offset || this.console.clicked(x, y) || this.entityInfo.clicked(x, y) || (game.menu && game.menu.clicked(x, y))){
+        if(x >= this.offset ||
+            this.console.clicked(x, y) ||
+            this.entityInfo.clicked(x, y) ||
+            (this.menu && this.menu.clicked(x, y)) ||
+            this.craftingMenu.clicked(x, y)){
             return true;
         } else {
-            delete game.menu;
+            delete this.menu;
             return false;
         }
     }
@@ -196,44 +205,49 @@ class Hud {
     }
 
     handleClickStart(x, y){
-        if((game.menu && game.menu.clicked(x, y))){
-            var option = game.menu.clickedOption(x, y);
+        if((this.menu && this.menu.clicked(x, y))){
+            var option = this.menu.clickedOption(x, y);
             if(option){
                 option.execute();
                 if(option.log != null){
                     this.log(option.log);
                 }
-                delete game.menu;
+                delete this.menu;
             }
             return;
         } else {
-            delete game.menu;
+            delete this.menu;
         }
+         
+        if(this.craftingMenu.clicked(x, y) != 1){
+            this.craftingMenu.closeWindow();
+        }
+        if(game.mouse.onHud){
+            if(this.console.clicked(x, y) == 2){
+                this.console.open = false;
+                return;
+            }
+            
+            if(this.entityInfo.clicked(x, y) == 2){
+                this.entityInfo.open = false;
+                return;
+            }
 
-        if(this.console.clicked(x, y) == 2){
-            this.console.open = false;
-            return;
-        }
-        
-        if(this.entityInfo.clicked(x, y) == 2){
-            this.entityInfo.open = false;
-            return;
-        }
-
-        for(var i in game.inventories){
-            var inventory = game.inventories[i];
-            var slotX = inventory.getSlotX(x);
-            var slotY = inventory.getSlotY(y);
-            if(slotX != null && slotY != null && inventory.get(slotX, slotY)){
-                var item = inventory.get(slotX, slotY);
-                if(item != null){
-                    var x = inventory.inventorySlotX(item.x);
-                    var y = inventory.inventorySlotY(item.y);
-                    game.mouse.clickItem(item, x, y);
-                    return;
+            for(var i in game.inventories){
+                var inventory = game.inventories[i];
+                var slotX = inventory.getSlotX(x);
+                var slotY = inventory.getSlotY(y);
+                if(slotX != null && slotY != null && inventory.get(slotX, slotY)){
+                    var item = inventory.get(slotX, slotY);
+                    if(item != null){
+                        var x = inventory.inventorySlotX(item.x);
+                        var y = inventory.inventorySlotY(item.y);
+                        game.mouse.clickItem(item, x, y);
+                        return;
+                    }
                 }
             }
-        }
+        }   
     }
 
     handleClickEnd(x, y){
@@ -304,8 +318,8 @@ class Hud {
     }
 
     drawRightClickMenu(){
-        if(game.menu){
-            game.menu.draw(this.context);
+        if(this.menu){
+            this.menu.draw(this.context);
         }
     }
 
@@ -325,5 +339,9 @@ class Hud {
                 }
             }
         }
+    }
+
+    openCraftingTable(){
+        this.craftingMenu.openWindow();
     }
 }

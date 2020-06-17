@@ -7,8 +7,7 @@ class KingCrab extends Enemy {
             .setSpeed(1)
             .setIcon()
             .setMaxHealth(6);
-        this.AI = new CombineAI(
-            new BuilderAI(30, 1200, new ShootAI(3), null),
+        this.AI = new BuilderAI(60, 1200, new StopAndShootAI(3, 30),
             new BuilderAI(3000, 6000,
                 new CircleAI(0, 200, Math.random() > .5),
                 new AI()));

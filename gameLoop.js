@@ -32,16 +32,10 @@ class GameLoopService {
 	}
 
 	handleClicks(){
+		game.hud.handleClick(game.mouse.x, game.mouse.y);
 		if(game.mouse.left.down){
-			if(game.mouse.onHud){
-				game.hud.handleClick(game.mouse.x, game.mouse.y);
-			} else {
+			if(!game.mouse.onHud){
 				this.handleShooting();
-			}
-		}
-		if(game.mouse.left.end){
-			if(game.mouse.onHud){
-				game.hud.handleClick(game.mouse.x, game.mouse.y);
 			}
 		}
 	}

@@ -43,6 +43,11 @@ class Scene {
             .setDimensions(96, 96)
             .setExit(true);
 
+            
+		new CraftingTable(spawnX, spawnY + 450)
+            .setDimensions(96, 96)
+            .setExit(true);
+
 		var e = new Entity(spawnX + 300, spawnY)
             .setImage("./sprites/furniture/bed.png", 0)
             .setDimensions(144, 72);

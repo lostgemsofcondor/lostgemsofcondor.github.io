@@ -10,5 +10,7 @@ class Sounds {
         this.bowFire = new Sound("./sounds/Bow_Fire.wav");
         this.defultHit = new Sound("./sounds/Hit1.wav");
         this.playerHit = new Sound("./sounds/Hit2.wav");
+
+        this.bonfire = new Sound("./sounds/Ambience_Bonfire_Loop.wav");
     }
 }
