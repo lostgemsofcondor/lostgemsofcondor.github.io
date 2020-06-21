@@ -1,9 +1,9 @@
-class Weapon extends Item {
+class Ammunition extends Item {
     constructor(key, imgSource){
         super(key, imgSource);
-        this.maxStack = 1;
+        this.maxStack = 999;
         this.damage = 1;
-        this.ammunitionType = Ammunition;
+        this.weaponType = Weapon;
     }
 
     setDamage(damage){

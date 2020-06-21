@@ -73,7 +73,7 @@ class Inventory {
             for(var x = 0; x < this.width; x++){
                 var item = new ItemEntity(this.inv[y][x]);
                 if(item.data && item.itemKey == itemKey){
-                    var maxStack = game.itemService[item.itemKey].maxStack;
+                    var maxStack = item.getDefinition().maxStack;
                     if(!nonFullStack || item.amount < maxStack){
                         return item;
                     }
@@ -87,7 +87,7 @@ class Inventory {
         for(var y = 0; y < this.height; y++){
             for(var x = 0; x < this.width; x++){
                 var item = new ItemEntity(this.inv[y][x]);
-                if(item.data && game.itemService[item.itemKey] instanceof type){
+                if(item.data && item.getDefinition() instanceof type){
                     return item;
                 }
             }
@@ -138,7 +138,13 @@ class Inventory {
         var leftOver = new ItemEntity().newEntity(recipe.output[0], this.location, recipe.output[1]);
         if(leftOver > 0){
             new DroppedItem(game.player.x, game.player.y).setItemKey(recipe.output[0]).setAmount(leftOver);
+            game.hud.log("Not enough inventory space item crafted was dropped");
         }
+        var sound = game.itemService[recipe.output[0]].pickedSound;
+        if(sound){
+            sound.play();
+        }
+
 
     }
     
@@ -165,7 +171,7 @@ class Inventory {
                     if(game.mouse.heldItem == item.itemEntityKey){
                         heldItem = item;
                     } else {
-                        var img = game.itemService[item.itemKey].img;
+                        var img = item.getDefinition().img;
                         var x = this.inventorySlotX(item.x);
                         var y = this.inventorySlotY(item.y);
                         context.drawImage(img, x, y);
@@ -197,7 +203,7 @@ class Inventory {
         
         var stack = this.getWithItemKey(item.itemKey, true);
         if(stack != null){
-            var maxStack = game.itemService[item.itemKey].maxStack;
+            var maxStack = item.getDefinition().maxStack;
             var temp = Math.min(maxStack, stack.amount + item.amount);
             item.amount -= maxStack - stack.amount;
             stack.amount = temp;

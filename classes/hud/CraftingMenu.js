@@ -43,15 +43,21 @@ class CraftingMenu extends GameWindow {
             return;
         }
         super.draw(context);
-
+        
         this.recipeUnderMouse = null;
         var ingredientsWindow = null;
         var width = 90;
         var gap = 12;
         var height = 60;
-
+        
         var x = this.x + 50;
         var y = this.y + 50;
+
+        if(this.recipes.length == 0){
+            game.font.write(context, "Nothing craftable\ncollect more resources", x, y, true)
+            return;
+        }
+
         for(var i in this.recipes){
             var r = this.recipes[i];
             var img = game.itemService[r.output[0]].img;

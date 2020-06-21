@@ -12,7 +12,7 @@ class Crab extends Enemy {
                 new AI()));
         this.shoot = new BulletBuilder().newBubble(1);
 
-        this.dropTable = new DropTable().addDrop("arrow", 1).addDropAlways("topaz", 32).addDropAlways("topaz", 32).addDropAlways("topaz", 32).addDropAlways("topaz", 32);
+        this.dropTable = new DropTable().addDrop("arrow", 1);
     }
 
 	getDescription(){

@@ -284,7 +284,7 @@ class Hud {
                             item.move(inventory, slotX, slotY);
                             //move selected item
                         } else {
-                            this.log("todo: swap")
+                            inventory.getWithKey(game.mouse.heldItem).swap(inventory.get(slotX, slotY));
                         }
                     }
                 }
@@ -347,7 +347,7 @@ class Hud {
                         return;
                     }
                     game.font.write(this.context, strings[s], this.console.x + 20, this.console.y + this.console.height - 30 - offsetY);
-                    offsetY += 20
+                    offsetY += 14
                 }
             }
         }

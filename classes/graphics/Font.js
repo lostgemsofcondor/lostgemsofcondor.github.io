@@ -35,6 +35,13 @@ class Font {
         // x = Math.floor(x);
         // y = Math.floor(y);
         s = s.toString();
+
+        var i = s.indexOf("\n");
+        if(i != -1){
+            this.write(context, s.substring(i + 1), x, y + (large ? 21 : 14), large, color);
+            s = s.substring(0, i);
+        }
+
         var offset = 0;
         if(large){
             for(var i = 0; i < s.length; i++){

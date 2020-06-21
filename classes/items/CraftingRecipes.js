@@ -7,8 +7,6 @@ class CraftingRecipes {
         this.add(new Recipe("Palm Bow", [["palmLog", 5]], ["palmBow", 1]));
 
         this.add(new Recipe("Tip Emerld Arrows", [["arrow", 5], ["emerald", 1]], ["emeraldArrow", 5]));
-
-        this.add(new Recipe("Temp", [["arrow", 5], ["emerald", 1], ["emerald", 1], ["emerald", 1]], ["emeraldArrow", 5]));
     }
 
     add(recipe){

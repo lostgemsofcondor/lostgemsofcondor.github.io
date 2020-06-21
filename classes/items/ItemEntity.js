@@ -86,7 +86,7 @@ class ItemEntity {
     }
 
     move(inventory, x, y){
-        if(inventory.valid(x, y)){
+        if(inventory.valid(x, y) && this.validSlot(inventory.location, x, y)){
             var oldX = this.x;
             var oldY = this.y;
             this.x = x;
@@ -109,8 +109,75 @@ class ItemEntity {
             return;
         }
         if(this.itemKey == item.itemKey){
-            item.amount = Math.min(item.amount + this.amount, item.max);
+            var definition = this.getDefinition();
+            if(item.amount + this.amount > definition.maxStack){
+                this.amount = item.amount + this.amount - definition.maxStack;
+                item.amount = definition.maxStack;
+            } else {
+                item.amount = item.amount + this.amount;
+                this.delete();
+            }
+        } else {
+            if(this.validSlot(item.location, item.x, item.y) && item.validSlot(this.location, this.x, this.y)){
+                var inventory1 = game.getInventory(this.location);
+                var inventory2 = game.getInventory(item.location);
+
+                var tempLocation = item.location;
+                var tempX = item.x;
+                var tempY = item.y;
+                
+                item.location = this.location;
+                item.x = this.x;
+                item.y = this.y;
+                
+                this.location = tempLocation;
+                this.x = tempX;
+                this.y = tempY;
+
+                inventory1.forceAdd(item);
+                inventory2.forceAdd(this);
+            }
         }
+    }
+
+    validSlot(location, x, y){
+        var definition = this.getDefinition();
+        var typeRequired = Item;
+
+
+        if(location == "weapons"){
+            var weapons = game.getInventory("weapons");
+            if(x == 0 && y == 0){
+                var ammunition = weapons.get(0, 1);
+                typeRequired = ammunition ? ammunition.getDefinition().weaponType : Weapon;
+            }
+            if(x == 0 && y == 1){
+                var weapon = weapons.get(0, 0);
+                typeRequired = weapon ? weapon.getDefinition().ammunitionType : Ammunition;
+            }
+        } else if(location == "armor"){
+            if(x == 0 && y == 0){
+                typeRequired = Helm;
+            }
+            if(x == 0 && y == 1){
+                typeRequired = Breastplate;
+            }
+            if(x == 0 && y == 2){
+                typeRequired = Greave;
+            }
+        }
+        if(typeRequired != null){
+            if(definition instanceof typeRequired){
+                return true;
+            } else {
+                game.hud.log("Only " + typeRequired.name + "s can go in this slot at the moment");
+                return false;
+            }
+        } else {
+            game.hud.log("Nothing can go in this slot at the moment");
+            return false;
+        }
+
     }
 
     drop(x, y){

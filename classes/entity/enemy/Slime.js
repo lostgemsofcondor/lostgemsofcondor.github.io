@@ -1,7 +1,7 @@
 class Slime extends Enemy {
 	constructor(x, y){
         super(x, y)
-            .setImage("enemy/snail")
+            .setImage("enemy/slime")
             .setDimensions(96, 96)
             .setMoving(true)
             .setSpeed(1)
