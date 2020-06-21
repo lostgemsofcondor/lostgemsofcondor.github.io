@@ -12,16 +12,18 @@ class ItemEntity {
 	get x(){
 		return this.data.x;
     }
-	// set x(x) {
-    //     this.data.x = x;
-    // }
+
+    set x(x) {
+        this.data.x = x;
+    }
     
     get y(){
         return this.data.y;
     }
-    // set y(y) {
-    //     this.data.y = y;
-    // }
+
+    set y(y) {
+        this.data.y = y;
+    }
     
     get amount(){
         return this.data.amount;
@@ -56,6 +58,10 @@ class ItemEntity {
         }
     }
 
+    getDefinition(){
+        return game.itemService[this.itemKey];
+    }
+
     newEntity(itemKey, location, amount = 1){
         
         this.itemEntityKey = game.save.itemIdNext;
@@ -69,7 +75,11 @@ class ItemEntity {
         for(var i in game.inventories){
             var inventory = game.inventories[i];
             if(inventory.location == location){
-                return inventory.add(this);
+                var leftOver = inventory.add(this);
+                if(leftOver > 0){
+                    this.remove();
+                }
+                return leftOver;
             }
         }
         return null;
@@ -79,8 +89,8 @@ class ItemEntity {
         if(inventory.valid(x, y)){
             var oldX = this.x;
             var oldY = this.y;
-            this.data.x = x;
-            this.data.y = y;
+            this.x = x;
+            this.y = y;
             
             for(var i in game.inventories){
                 var oldInventory = game.inventories[i];
@@ -90,7 +100,16 @@ class ItemEntity {
                     break;
                 }
             }
-            this.data.location = inventory.location;
+            this.location = inventory.location;
+        }
+    }
+    
+    swap(item){
+        if(this.itemEntityKey == item.itemEntityKey){
+            return;
+        }
+        if(this.itemKey == item.itemKey){
+            item.amount = Math.min(item.amount + this.amount, item.max);
         }
     }
 

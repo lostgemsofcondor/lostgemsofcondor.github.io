@@ -12,6 +12,8 @@ class Overlay {
         this.sunsetLength = 3600;
         this.sunrise = this.dayLength - this.sunsetLength;
 
+        this.dayOffset = 0;
+
         
         for(var i = 0; i < 4; i++){
             game.imageBuilder.buildLighting(128 + i, 5)
@@ -90,7 +92,7 @@ class Overlay {
         if(game.scene){
             return game.scene.lightLevel;
         }
-        var tick = game.gameTick % this.dayLength;
+        var tick = game.gameTick - this.dayOffset % this.dayLength;
         if(tick < this.sunset){
             return 0;
         }
@@ -109,7 +111,7 @@ class Overlay {
     }
 
     getTimeString(){
-        var tick = (game.gameTick + 16200) % this.dayLength;
+        var tick = (game.gameTick - this.dayOffset + 16200) % this.dayLength;
         var minute = Math.floor(tick/60) % 60;
 
         var hour = Math.floor(tick/(60*60)) % (60*60);

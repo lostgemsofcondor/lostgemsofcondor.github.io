@@ -91,11 +91,11 @@ class MapChunk {
 			}
 			self.loaded = true;
 
-			if(self.x == 0 && self.y == 0){
-				var e = new Entrance(100, 100)
+			if(self.x % 6 == 0 && self.y % 6 == 0){
+				var e = new Entrance(self.x * self.tileSize * self.chunkSize + 100, self.y * self.tileSize * self.chunkSize + 100)
 					.setImage("./sprites/entrance/hole.png", 0)
 					.setDimensions(96,96)
-					.setSolid(true)
+					.setSolid(true);
 			}
 		}
 		//end of map worker call

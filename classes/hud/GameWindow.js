@@ -3,7 +3,8 @@ class GameWindow {
         this.x = x;
         this.y = y;
         this.open = true;
-        this.centered = false
+        this.centered = false;
+        this.hasX = true;
     }
 
     setWidth(width){
@@ -13,6 +14,11 @@ class GameWindow {
 
     setHeight(height){
         this.height = Math.max(128, height);
+        return this;
+    }
+
+    setHasX(hasX){
+        this.hasX = hasX;
         return this;
     }
     
@@ -44,7 +50,11 @@ class GameWindow {
         context.fillRect(this.x + 6, this.y + 6, this.width - 12, this.height - 12);
 
         context.drawImage(game.hud.windowTopLeft, this.x, this.y);
-        context.drawImage(game.hud.windowTopRight, this.x + this.width - game.hud.windowTopRight.width, this.y - 21);
+        if(this.hasX){
+            context.drawImage(game.hud.windowTopRight, this.x + this.width - game.hud.windowTopRight.width, this.y - 21);
+        } else {
+            context.drawImage(game.hud.windowTopRightNoX, this.x + this.width - game.hud.windowTopRightNoX.width, this.y);
+        }
         context.drawImage(game.hud.windowBottomLeft, this.x, this.y + this.height - game.hud.windowBottomLeft.height);
         context.drawImage(game.hud.windowBottomRight, this.x + this.width - game.hud.windowTopRight.width, this.y + this.height - game.hud.windowBottomLeft.height);
     }

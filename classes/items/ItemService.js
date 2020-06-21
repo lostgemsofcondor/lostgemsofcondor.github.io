@@ -1,11 +1,11 @@
 class ItemService {
     constructor(){
-        this.arrow = new Item("arrow", "./sprites/bullets/arrows/arrowGreen.png").setDescription("Arrow").setPickedSound(game.sounds.arrowPick);
+        this.arrow = new Arrow("arrow", "./sprites/bullets/arrows/arrowGreen.png").setDescription("Arrow");
+        this.emeraldArrow = new Arrow("emeraldArrow", "./sprites/bullets/arrows/emeraldArrowGreen.png").setDescription("Emerald Tipped Arrow").setDamage(2);
 
-        
+        this.palmBow = new Bow("palmBow", "./sprites/weapons/palmBow.png").setName("Palm Bow").setDescription("Palm Bow").setPickedSound(game.sounds.bowPick);
         
         this.palmLog = new Item("palmLog", "./sprites/trees/palmLog.png").setName("Palm Log");
-        this.palmBow = new Item("palmBow", "./sprites/weapons/palmBow.png").setMaxStack(1).setName("Palm Bow").setDescription("Palm Bow").setPickedSound(game.sounds.bowPick);
 
         this.amethyst = new Item("amethyst", "./sprites/gems/amethyst.png").setPickedSound(game.sounds.gemPick);
         this.emerald = new Item("emerald", "./sprites/gems/emerald.png").setPickedSound(game.sounds.gemPick);

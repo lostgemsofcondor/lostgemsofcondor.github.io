@@ -81,7 +81,79 @@ class Inventory {
             }
         }
         return null;
-        
+    }
+
+    getWithItemType(type){
+        for(var y = 0; y < this.height; y++){
+            for(var x = 0; x < this.width; x++){
+                var item = new ItemEntity(this.inv[y][x]);
+                if(item.data && game.itemService[item.itemKey] instanceof type){
+                    return item;
+                }
+            }
+        }
+        return null;
+    }
+    
+    getItemsWithItemKey(itemKey){
+        var items = [];
+        for(var y = 0; y < this.height; y++){
+            for(var x = 0; x < this.width; x++){
+                var item = new ItemEntity(this.inv[y][x]);
+                if(item.data && item.itemKey == itemKey){
+                    var maxStack = game.itemService[item.itemKey].maxStack;
+                    items.push(item);
+                }
+            }
+        }
+        return items;
+    }
+
+    getItemCounts(){
+        var counts = {};
+        for(var y = 0; y < this.height; y++){
+            for(var x = 0; x < this.width; x++){
+                var item = new ItemEntity(this.inv[y][x]);
+                if(item.data){
+                    if(counts[item.itemKey]){
+                        counts[item.itemKey] += item.amount;
+                    } else {
+                        counts[item.itemKey] = item.amount;
+                    }
+                }
+            }
+        }
+        return counts;
+    }
+
+    // Craft recipe that is assumed you can.
+	craft(recipe){
+        for(var i in recipe.inputs){
+            var input = recipe.inputs[i];
+            var inputKey = input[0];
+            var inputAmount = input[1];
+            
+            this.discard(inputAmount, inputKey);
+        }
+        var leftOver = new ItemEntity().newEntity(recipe.output[0], this.location, recipe.output[1]);
+        if(leftOver > 0){
+            new DroppedItem(game.player.x, game.player.y).setItemKey(recipe.output[0]).setAmount(leftOver);
+        }
+
+    }
+    
+    discard(inputAmount, inputKey){
+        var items = this.getItemsWithItemKey(inputKey);
+        for(var j in items){
+            var item = items[j];
+            if(item.amount < inputAmount){
+                inputAmount -= item.amount;
+                item.discard(item.amount);
+            } else {
+                item.discard(inputAmount);
+                return;
+            }
+        }
     }
 
     draw(context){

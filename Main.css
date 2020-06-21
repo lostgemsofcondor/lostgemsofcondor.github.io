@@ -19,6 +19,10 @@ canvas {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: optimize-contrast;
   -ms-interpolation-mode: nearest-neighbor;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .center {

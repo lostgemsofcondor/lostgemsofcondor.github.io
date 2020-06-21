@@ -35,10 +35,11 @@ class DroppedItem extends Entity {
     getPicked(){
         if(this.canBePicked()){
             var item = game.itemService[this.itemKey];
-            if(item.pickedSound){
+            var newAmount = new ItemEntity().newEntity(this.itemKey, "inventory", this.amount);
+            if(item.pickedSound && this.amount != newAmount){
                 item.pickedSound.play()
             }
-            this.amount = new ItemEntity().newEntity(this.itemKey, "inventory", this.amount);
+            this.amount = newAmount;
             if(this.amount <= 0){
                 game.delete(this);
             }

@@ -40,14 +40,16 @@ class Player extends Mortal {
 		if((main.debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
 			this.lastShot = main.debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
-			var arrow = game.getInventory("weapons").getWithItemKey("arrow");
-			if(arrow != null){
-				arrow.discard(1);
+			var arrowEntity = game.getInventory("weapons").getWithItemType(Arrow);
+			if(arrowEntity != null){
+				var arrow = arrowEntity.getDefinition();
+				arrowEntity.discard(1);
 				game.sounds.bowFire.play();
 				this.shoot = this.bulletBuilder
 					.setTheta(Math.PI)
 					.setAmount(1)
-					.setDamage(1)
+					.setDamage(arrow.damage)
+					.setDrop(arrow.itemKey)
 					.setDropChance(.5)
 					.build();
 				this.shoot(angle);

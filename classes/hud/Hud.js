@@ -30,6 +30,8 @@ class Hud {
         this.windowTopLeft.src = "./sprites/hud/windowTopLeft.png";
         this.windowTopRight = new Image();
         this.windowTopRight.src = "./sprites/hud/windowTopRight.png";
+        this.windowTopRightNoX = new Image();
+        this.windowTopRightNoX.src = "./sprites/hud/windowTopRightNoX.png";
         this.windowBottomLeft = new Image();
         this.windowBottomLeft.src = "./sprites/hud/windowBottomLeft.png";
         this.windowBottomRight = new Image();
@@ -219,9 +221,15 @@ class Hud {
             delete this.menu;
         }
          
-        if(this.craftingMenu.clicked(x, y) != 1){
-            this.craftingMenu.closeWindow();
+        if(this.craftingMenu.open){
+            if(this.craftingMenu.clicked(x, y) == 1){
+                this.craftingMenu.selectRecipe();
+                return;
+            } else {
+                this.craftingMenu.closeWindow();
+            }
         }
+
         if(game.mouse.onHud){
             if(this.console.clicked(x, y) == 2){
                 this.console.open = false;
@@ -270,10 +278,14 @@ class Hud {
                     var slotX = inventory.getSlotX(x);
                     var slotY = inventory.getSlotY(y);
                     //validate position
-                    if(slotX != null && slotY != null && inventory.get(slotX, slotY) == null){
-                        var item = inventory.getWithKey(game.mouse.heldItem);
-                        item.move(inventory, slotX, slotY);
-                        //move selected item
+                    if(slotX != null && slotY != null){
+                        if(inventory.get(slotX, slotY) == null){
+                            var item = inventory.getWithKey(game.mouse.heldItem);
+                            item.move(inventory, slotX, slotY);
+                            //move selected item
+                        } else {
+                            this.log("todo: swap")
+                        }
                     }
                 }
             }
@@ -304,7 +316,7 @@ class Hud {
             }
         }
         if(heldItem != null){
-            var img = game.itemService[heldItem.itemKey].img;
+            var img = heldItem.getDefinition().img;
             this.context.drawImage(img, game.mouse.x - game.mouse.itemOffsetX, game.mouse.y - game.mouse.itemOffsetY);
         }
     }

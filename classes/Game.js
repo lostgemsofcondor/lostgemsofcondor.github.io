@@ -56,6 +56,7 @@ class Game {
 		this.overlay = new Overlay();
 		this.items = [];
 		this.itemService = new ItemService();
+		this.craftingRecipes = new CraftingRecipes();
 
 
 		this.experienceService = new ExperienceService();
@@ -397,10 +398,16 @@ class Game {
 	}
 
 	exit(exit){
-		game.player.positionX = game.scene.overworldX;
-		game.player.positionY = game.scene.overworldY;
+		this.player.positionX = this.scene.overworldX;
+		this.player.positionY = this.scene.overworldY;
 		this.clearEntities();
 		this.scene.delete();
 		this.scene = null;
+	}
+
+	sleep(){
+		this.hud.log("Game saved");
+		this.overlay.dayOffset = game.gameTick;
+		this.hud.log("The time is now 4:30am");
 	}
 }

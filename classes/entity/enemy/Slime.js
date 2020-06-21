@@ -1,7 +1,7 @@
 class Slime extends Enemy {
 	constructor(x, y){
         super(x, y)
-            .setImage("enemy/slime")
+            .setImage("enemy/snail")
             .setDimensions(96, 96)
             .setMoving(true)
             .setSpeed(1)
@@ -15,7 +15,7 @@ class Slime extends Enemy {
                 new AI()));
         this.shoot = this.bulletBuilder.setImage("./sprites/bullets/magic/green.png").setAmount(4).setTheta(Math.PI/8).setDamage(2).setLife(50).build();
 
-        this.dropTable = new DropTable().addDrop("arrow", 1);
+        this.dropTable = new DropTable().addDrop("emerald", 1);
     }
 
 	getDescription(){

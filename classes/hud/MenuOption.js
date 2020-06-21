@@ -23,6 +23,8 @@ class MenuOption {
             this.text = "Exit";
         } else if(this.type == "craft"){
             this.text = "Craft";
+        } else if(this.type == "sleep"){
+            this.text = "Sleep";
         } else {
             this.text = "Option Error";
         }
@@ -48,6 +50,8 @@ class MenuOption {
             game.exit(exit);
         } else if(this.type == "craft"){
             game.hud.openCraftingTable();
+        } else if(this.type == "sleep"){
+            game.sleep();
         }
     }
 }

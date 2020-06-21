@@ -48,17 +48,8 @@ class Scene {
             .setDimensions(96, 96)
             .setExit(true);
 
-		var e = new Entity(spawnX + 300, spawnY)
-            .setImage("./sprites/furniture/bed.png", 0)
-            .setDimensions(144, 72);
-
-        game.add(e);
-
-		var e = new Entity(spawnX + 450, spawnY)
-            .setImage("./sprites/furniture/bed.png", 0)
-            .setDimensions(144, 72);
-
-        game.add(e);
+        new Bed(spawnX + 300, spawnY)
+        new Bed(spawnX + 450, spawnY)
 
         
 		var e = new Entity(spawnX - 32, spawnY + 32)

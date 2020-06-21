@@ -1,14 +1,15 @@
 class Item {
-    constructor(key, imgSource){
-        this.key = key;
+    constructor(itemKey, imgSource){
+        this.itemKey = itemKey;
 
         this.img = new Image();
         this.img.src = imgSource;
 
-        this.name = key;
+        this.name = itemKey;
         this.dropSound = null;
         this.pickedSound = game.sounds.defultPick;
         this.maxStack = 32;
+        this.type = "item";
     }
 
     setName(name){
@@ -21,6 +22,16 @@ class Item {
     
     setDescription(description){
         this.description = description;
+        return this;
+    }
+
+    setType(type){
+        this.type = type;
+        return this;
+    }
+
+    setDamage(damage){
+        this.damage = damage;
         return this;
     }
     
