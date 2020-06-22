@@ -1,9 +1,11 @@
 class Game {
 	constructor(){
 		game = this;
+		this.loaded = false;
 		this.buttons = [];
 		this.keyMap = {};
 		this.config = new Config();
+		this.perlin = new Perlin();
 		this.keyboard = new Keyboard();
 		this.mouse = new Mouse();
 		this.sounds = new Sounds();
@@ -57,8 +59,7 @@ class Game {
 		this.items = [];
 		this.itemService = new ItemService();
 		this.craftingRecipes = new CraftingRecipes();
-
-
+		this.sceneService = new SceneService();
 		this.experienceService = new ExperienceService();
 
         this.solids = null;
@@ -66,16 +67,17 @@ class Game {
 
 		
 		this.player.setIcon("./sprites/miniMap/playerIcon.png", 16, 16, true);
-		
-		// ********************* Start Temp Enemy creation ****************
-		/*
-		// new Enemy("player", 1, 350, -35, 48, 48, true);
-		
-		*/
-		// var AI1 = new Enemy("player", 5, 100, 100, 48, 48, true);
-		// var AI2 = new Enemy("player", 5, 100, 100, 48, 48, true);
-		// var AI3 = new Enemy("player", 5, 100, 100, 48, 48, true);
 
+		
+		
+		this.loaded = true;
+	}
+
+	init(){
+		this.scene = this.sceneService.newScene(this.save.overworldX, this.save.overworldY, this.save.sceneType);
+		this.scene.init(false);
+		/*
+		// ********************* Start Temp Enemy creation ****************
 		var AI1 = new Crab(100, 100)
 			.setImage("enemy/crab")
 			.setDimensions(48, 48)
@@ -101,14 +103,17 @@ class Game {
 			.setMoving(true)
 			.setSpeed(5);
 		tester.AI = new CombineAI(new CircleAI(AI3.key, 200),
-							      new ThrowsAI(AI3.key, 15));
+								  new ThrowsAI(AI3.key, 15));
+								  
+
+		new ArmorStand(150, 150);
 		// var axe = new Entity("./sprites/weapon/axe.png", 0, 0, 0, 96, 96, false, 0, false);
 		// axe.AI = new WeaponAI();
 		// this.add(axe);
 
 
 		//this.vectorField();
-		
+		//*/
 	}
 
 	incrementTick(){
@@ -353,7 +358,7 @@ class Game {
 	}
 
 	spawns(){
-		if(!this.paused){
+		if(!this.paused && this.scene == null){
 			game.spawnService.updateSpawnRate();
 			var r = 1200;
 			var amount = 10;
@@ -385,9 +390,9 @@ class Game {
 
 	enter(enterance){
 		if(enterance){
-			this.scene = new Scene(enterance.positionX, enterance.positionY);
+			this.scene = this.sceneService.newScene(enterance.positionX, enterance.positionY, enterance.type);
 			this.clearEntities();
-			this.scene.init();
+			this.scene.init(true);
 		}
 	}
 
@@ -399,15 +404,19 @@ class Game {
 
 	exit(exit){
 		this.player.positionX = this.scene.overworldX;
-		this.player.positionY = this.scene.overworldY;
+		this.player.positionY = this.scene.overworldY + 48;
+		this.adjustCameraToPlayer();
 		this.clearEntities();
 		this.scene.delete();
 		this.scene = null;
 	}
 
 	sleep(){
-		this.hud.log("Game saved");
+		this.hud.log("Game saved. Spawn point set.");
 		this.overlay.dayOffset = game.gameTick;
-		this.hud.log("The time is now 4:30am");
+		this.save.overworldX = this.scene.overworldX;
+		this.save.overworldY = this.scene.overworldY;
+		this.save.sceneType = this.scene.type;
+		this.hud.log("The time is now 4:30am.");
 	}
 }

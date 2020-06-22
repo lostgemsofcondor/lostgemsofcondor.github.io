@@ -27,7 +27,7 @@ class Mortal extends Entity {
 	
 	struck(bullet){
 		this.drawHealth = true;
-		var damage = bullet.getDamage();
+		var damage = this.getDamage(bullet);
 		if(damage > 0){
 			if(this.hitSound){
 				this.hitSound.play();
@@ -40,6 +40,10 @@ class Mortal extends Entity {
 				this.die();
 			}
 		}
+	}
+
+	getDamage(bullet){
+		return bullet.getDamage();
 	}
     
 	heal(h){

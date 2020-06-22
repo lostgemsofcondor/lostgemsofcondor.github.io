@@ -15,7 +15,7 @@ class Wasp extends Enemy {
                 new AI()));
         this.shoot = this.bulletBuilder.setImage("./sprites/bullets/magic/orange.png").setAmount(5).setTheta(Math.PI/8).setDamage(5).setLife(50).build();
 
-        this.dropTable = new DropTable().addDrop("arrow", 1);
+        this.dropTable = new DropTable().addDrop("emeraldArrow", 1).addDrop("copperAxe");
     }
 
 	getDescription(){

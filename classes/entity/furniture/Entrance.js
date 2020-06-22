@@ -3,12 +3,18 @@ class Entrance extends Entity {
         super(x, y);
         
         this.exit = false;
+        this.type = "default";
 		game.add(this);
         this.setIcon("./sprites/miniMap/entranceIcon.png", 3, 3);
     }
 
     setLocation(location){
         this.location = location;
+        return this;
+    }
+
+    setType(type){
+        this.type = type;
         return this;
     }
 

@@ -40,21 +40,42 @@ class Player extends Mortal {
 		if((main.debug.overRideMove ? game.mainTick : game.gameTick) >= this.lastShot + this.dexterity){
 			this.lastShot = main.debug.overRideMove ? game.mainTick : game.gameTick;
 			var angle =  Math.atan2(y - this.positionY, x - this.positionX);
-			var arrowEntity = game.getInventory("weapons").getWithItemType(Arrow);
-			if(arrowEntity != null){
-				var arrow = arrowEntity.getDefinition();
-				arrowEntity.discard(1);
-				game.sounds.bowFire.play();
-				this.shoot = this.bulletBuilder
-					.setTheta(Math.PI)
-					.setAmount(1)
-					.setDamage(arrow.damage)
-					.setDrop(arrow.itemKey)
-					.setDropChance(.5)
-					.build();
-				this.shoot(angle);
-			}
-			else {
+			var weaponEntity = game.getInventory("weapons").get(0, 0);
+			var ammunitionEntity = game.getInventory("weapons").get(0, 1);
+			if(weaponEntity != null){
+				var weaponDefinition = weaponEntity.getDefinition();
+				if(weaponDefinition instanceof Bow && ammunitionEntity != null && ammunitionEntity.amount >= weaponDefinition.shots){
+					this.bulletBuilder = new BulletBuilder();
+					var arrow = ammunitionEntity.getDefinition();
+					ammunitionEntity.discard(weaponDefinition.shots);
+					game.sounds.bowFire.play();
+					this.shoot = this.bulletBuilder
+						.setTheta(Math.PI)
+						.setAmount(weaponDefinition.shots)
+						.setTheta(weaponDefinition.theta)
+						.setDamage(weaponDefinition.damage + arrow.damage)
+						.setDrop(arrow.itemKey)
+						.setDropChance(0)
+						.build();
+					this.shoot(angle);
+				} else {
+					if(this.reduceStamina(weaponDefinition.cost, false)){
+						game.sounds.swipe1.play();
+						this.shoot = this.bulletBuilder
+							.setImage("./sprites/bullets/melee/swipe.png")
+							.setAngle(0)
+							.setSize(96)
+							.setAmount(1)
+							.setTether(true)
+							.setLife()
+							.setDamage(weaponDefinition.damage)
+							.setType(weaponDefinition.type)
+							.setCost(weaponDefinition.cost)
+							.build();
+						this.shoot(angle);
+					}
+				}
+			} else {
 				if(this.reduceStamina(1, false)){
 					game.sounds.swipe1.play();
 					this.shoot = this.bulletBuilder.newSwipeMedium();
@@ -65,8 +86,11 @@ class Player extends Mortal {
 	}
 
 	die(){
-		game.hud.log("You died! Refresh the page to continue.")
-		game.paused = true;
+		game.hud.log("You died!")
+		this.health = 1;
+		this.stamina = 1;
+		game.init();
+		this.dead = false;
 	}
 
 	update(){

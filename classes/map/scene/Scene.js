@@ -1,18 +1,19 @@
 class Scene {
     constructor(x, y){
-        this.boarderSize = 32;
-        this.chunk = new MapChunk(0, 0, game.map.tileSize, 16 + this.boarderSize * 2, false);
-        //this.chunk.load();
-
         this.overworldX = x;
-        this.overworldY = y + 48;
+        this.overworldY = y;
 
         this.lightLevel = game.overlay.nightLevel;
         
-		this.miniMap = new MiniMap("Scene");
+        this.miniMap = new MiniMap("Scene");
+        
+        this.type = "default";
     }
 
-    init(){
+    init(downLadder){
+        this.boarderSize = 32;
+        this.chunk = new MapChunk(0, 0, game.map.tileSize, 16 + this.boarderSize * 2, false);
+
         this.chunk.clearTileMap(true);
         for(var i = 0; i < this.chunk.chunkSize; i++){
             for(var j = 0; j < this.chunk.chunkSize; j++){
@@ -27,7 +28,7 @@ class Scene {
                     tile = game.map.undergroundFloor;
                 }
                 this.chunk.setTile(tile, i, j, false);
-            }
+                }
         }
 
         this.chunk.setMiniMapChunk();
@@ -35,8 +36,13 @@ class Scene {
         var spawnX = this.boarderSize * 48 + 100;
         var spawnY = this.boarderSize * 48 + 100;
 
-        game.player.positionX = spawnX;
-        game.player.positionY = spawnY + 48;
+        if(downLadder){
+            game.player.positionX = spawnX;
+            game.player.positionY = spawnY + 48;
+        } else {
+            game.player.positionX = spawnX + 300;
+            game.player.positionY = spawnY + 48;
+        }
 
 		new Entrance(spawnX, spawnY)
             .setImage("./sprites/entrance/ropeUp.png", 0)
@@ -44,35 +50,16 @@ class Scene {
             .setExit(true);
 
             
-		new CraftingTable(spawnX, spawnY + 450)
-            .setDimensions(96, 96)
-            .setExit(true);
+		new CraftingTable(spawnX, spawnY + 450);
 
         new Bed(spawnX + 300, spawnY)
         new Bed(spawnX + 450, spawnY)
 
         
-		var e = new Entity(spawnX - 32, spawnY + 32)
-        .setImage("./sprites/lighting/torch.png", 0)
-        .setDimensions(48, 48)
-        .setLight("medium");
-
-        game.add(e);
-        
-		var e = new Entity(spawnX + 32, spawnY - 32)
-        .setImage("./sprites/lighting/torch.png", 0)
-        .setDimensions(48, 48)
-        .setLight("medium");
-
-        game.add(e);
-
-        
-		var e = new Entity((this.boarderSize + 8) * 48, (this.boarderSize + 8) * 48)
-        .setImage("./sprites/lighting/torch.png", 0)
-        .setDimensions(48, 48)
-        .setLight("large");
-
-        game.add(e);
+		new Torch(spawnX - 32, spawnY + 32);
+		new Torch(spawnX + 32, spawnY - 32);
+		new Torch((this.boarderSize + 8) * 48, (this.boarderSize + 8) * 48)
+            .setLight("large");
     }
 
     getTile(x, y){
@@ -80,7 +67,7 @@ class Scene {
     }
 
     delete(){
-        game.map.loadAllChunks(true);
+        game.map.adjustChunks(true);
         delete this;
     }
 }

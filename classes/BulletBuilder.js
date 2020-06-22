@@ -5,13 +5,34 @@ class BulletBuilder{
 		this.amount = 1;
 		this.name = "Bullet"
 		this.image = "./sprites/bullets/arrows/arrowGreenBullet.png";
+		this.angle = Math.PI/4;
+		this.speed = 10;
 		this.dropChance = 0;
 		this.drop = "arrow";
 		this.life = 100;
+		this.type = "bullet";
+		this.cost = 0;
+		this.size = 48;
+		this.tether = false;
 	}
 
 	setDamage(damage){
 		this.damage = damage;
+		return this;
+	}
+	
+	setType(type){
+		this.type = type;
+		return this;
+	}
+	
+	setSize(size){
+		this.size = size;
+		return this;
+	}
+	
+	setCost(cost){
+		this.cost = cost;
 		return this;
 	}
 
@@ -32,6 +53,22 @@ class BulletBuilder{
 	
 	setImage(image){
 		this.image = image;
+		return this;
+	}
+
+	setAngle(angle){
+		this.angle = angle;
+		return this;
+	}
+	
+	setSpeed(speed){
+		this.speed = speed;
+		return this;
+	}
+	
+	setTether(tether){
+		this.tether = tether;
+		this.piercing = tether;
 		return this;
 	}
 	
@@ -58,20 +95,27 @@ class BulletBuilder{
 				if(this.bulletBuilder.amount > 1){
 					var t = -1 * this.bulletBuilder.theta/2 + count*this.bulletBuilder.theta/(this.bulletBuilder.amount - 1);
 				}
-				var arrow = new Bullet(this.positionX, this.positionY)
-					.setImage(this.bulletBuilder.image, angle + t + Math.PI/4)
-					.setSpeed(10)
-					.setDimensions(48, 48)
+				var bullet = new Bullet(this.positionX, this.positionY)
+					.setImage(this.bulletBuilder.image, angle + t + this.bulletBuilder.angle)
+					.setAngle(angle + t)
+					.setSpeed(this.bulletBuilder.speed)
+					.setDimensions(this.bulletBuilder.size, this.bulletBuilder.size)
 					.setRotates(false)
 					.setFriendly(false)
 					.setBaseDamage(this.bulletBuilder.damage)
-					.setAngle(angle + t)
+					.setPiercing(this.bulletBuilder.piercing)
 					.setFriendly(this.friendly)
-					.setName(this.name);
+					.setName(this.name)
+					.setStaminaCost(this.bulletBuilder.cost)
+					.setType(this.bulletBuilder.type);
 				if(Math.random() < this.bulletBuilder.dropChance && count == Math.floor(this.bulletBuilder.amount/2)){
-					arrow.setItemKey(this.bulletBuilder.drop);
+					bullet.setItemKey(this.bulletBuilder.drop);
 				}
-				arrow.AI = new BulletAI(arrow, this.bulletBuilder.life);
+				if(this.bulletBuilder.tether){
+					bullet.AI = new CombineAI(new TetherAI(this.key, this.bulletBuilder.size, this.bulletBuilder.size, angle), new BulletAI(bullet, 10)); 
+				} else {
+					bullet.AI = new BulletAI(bullet, this.bulletBuilder.life);
+				}
 			}
 		}
 	}

@@ -17,6 +17,10 @@ class Bullet extends Entity{
 		// this.positionY = 0;
 	}
 
+	setType(type){
+		this.type = type;
+		return this;
+	}
 	
 	setFriendly(friendly){
 		this.friendly = friendly;
@@ -53,7 +57,7 @@ class Bullet extends Entity{
 	}
 
 	getDamage(){
-		return this.baseDamage; 
+		return this.baseDamage;
 	}
 
 	handleHit(){

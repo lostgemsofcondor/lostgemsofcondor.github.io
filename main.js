@@ -52,6 +52,8 @@ class Main {
 		var frameTime = 0;
 		var drawTimeMax = 0;
 		var adjust = 0;
+		
+		game.init();
 
 		while(true){
 			var fast = false;

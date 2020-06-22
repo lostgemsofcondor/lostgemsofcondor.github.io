@@ -9,7 +9,7 @@ class Item {
         this.dropSound = null;
         this.pickedSound = game.sounds.defultPick;
         this.maxStack = 32;
-        this.type = "item";
+        this.type = null;
     }
 
     setName(name){

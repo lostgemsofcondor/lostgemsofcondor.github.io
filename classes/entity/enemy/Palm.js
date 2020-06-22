@@ -1,12 +1,12 @@
-class Palm extends Enemy {
+class Palm extends Tree {
 	constructor(x, y){
         super(x, y)
             .setImage("./sprites/trees/palm.png", 0)
             .setDimensions(96, 96)
-            .setSolid(true);
+            .setSolid(true)
+            .setMaxHealth(40);
         this.dropTable = new DropTable()
-            .addDropAlways("palmLog", 1)
-            .addDropAlways("arrow", 1);
+            .addDropAlways("palmLog", 1);
     }
     
 	getDescription(){

@@ -26,6 +26,7 @@ class Map {
 		this.undergroundFloor = new Tile("./sprites/background/underground/undergroundFloor.png", 96, 96, this.tileSize, "#724E30", null, true);
 		this.underground = new Tile("./sprites/background/underground/underground.png", 96, 96, this.tileSize, "#3D2F1C", null, false);
 		this.underground2 = new Tile("./sprites/background/underground/underground2.png", 96, 96, this.tileSize, "#3D2F1C", null, false);
+		this.undergroundWater = new Tile("./sprites/background/underground/undergroundWater.png", 96, 96, this.tileSize, "#1A4893	", null, false);
 
 		this.chunkSize = 32;
 		this.chunks = [];
@@ -48,11 +49,11 @@ class Map {
 	draw(){
 		if(game.scene){
 			main.copyMapChunk(game.scene.chunk);
-		} else [
+		} else {
 			this.chunks.forEach(c => {
 				main.copyMapChunk(c);
 			})
-		]
+		}
 	}
 
 	loadAllChunks(force = false){
@@ -63,20 +64,19 @@ class Map {
 		})
 	}
 
-	adjustChunks(){ //run on each frame
-		if(game.scene){
+	adjustChunks(force = false){ //run on each frame
+		if(!force && game.scene){
 			return;
 		}
-		this.loadAllChunks();
 		
 		var chunkX = this.currentChunkX();
 		var chunkY = this.currentChunkY();
 		
-		if(this.lastChunkX == chunkX && this.lastChunkY == chunkY){
+		if(!force && this.lastChunkX == chunkX && this.lastChunkY == chunkY){
 			this.lastChunkTick = game.gameTick;
 			return;
 		}
-		if(game.gameTick - this.lastChunkTick < this.chunkDelay){
+		if(!force && game.gameTick - this.lastChunkTick < this.chunkDelay){
 			return;
 		}
 		this.lastChunkTick = game.gameTick;
@@ -94,6 +94,7 @@ class Map {
 				}
 			}
 		}
+		this.loadAllChunks(force);
 		this.lastChunkX = chunkX;
 		this.lastChunkY = chunkY;
 	}
@@ -148,19 +149,6 @@ class Map {
 			}
 		}
 		return null;
-
-		if(chunk == null){
-			game.hud.log("chunk is null");
-		}
-
-		var mapX = Math.floor(x / this.tileSize) - chunkX*this.chunkSize;
-		var line = chunk.tileMap[mapX];
-		if(line){
-			var mapY = Math.floor(y / this.tileSize) - chunkY*this.chunkSize;
-			return line[mapY] == null ? null : line[mapY];
-		} else {
-			return null;
-		}
 	}
 
 	noCollsion(x, y){

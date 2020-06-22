@@ -8,6 +8,11 @@ class Save {
 
         this.health = 20;
         this.stamina = 20;
+        
+        this.overworldX = 0;
+        this.overworldY = 0;
+
+        this.sceneType = "tutorial"
     }
 
     save(){

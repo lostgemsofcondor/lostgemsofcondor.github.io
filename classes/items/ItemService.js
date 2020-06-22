@@ -4,6 +4,11 @@ class ItemService {
         this.emeraldArrow = new Arrow("emeraldArrow", "./sprites/bullets/arrows/emeraldArrowGreen.png").setDescription("Emerald Tipped Arrow").setDamage(2);
 
         this.palmBow = new Bow("palmBow", "./sprites/weapons/palmBow.png").setName("Palm Bow").setDescription("Palm Bow").setPickedSound(game.sounds.bowPick);
+        this.doubleBow = new Bow("doubleBow", "./sprites/weapons/doubleBow.png").setName("Double Bow").setDescription("Double Bow it shoots 2 shots").setPickedSound(game.sounds.bowPick).setShots(2);
+        this.powerBow = new Bow("powerBow", "./sprites/weapons/powerBow.png").setName("Power Bow").setDescription("Power Bow it shoots 5 shots").setPickedSound(game.sounds.bowPick).setShots(5);
+
+        this.axe = new Weapon("axe", "./sprites/weapons/axe.png").setName("Axe").setDescription("An axe made from palm wood").setType("axe").setCost(1);
+        this.copperAxe = new Weapon("copperAxe", "./sprites/weapons/copperAxe.png").setName("copperAxe").setDescription("An heavy axe made from copper").setType("axe").setCost(2).setDamage(2);
         
         this.palmLog = new Item("palmLog", "./sprites/trees/palmLog.png").setName("Palm Log");
 

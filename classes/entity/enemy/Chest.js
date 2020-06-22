@@ -7,7 +7,7 @@ class Chest extends Enemy {
 
 			
 		this.dropTable = new DropTable()
-            .addDrops(["amethyst", "emerald", "ruby", "topaz", "diamond", "sapphire"]);
+            .addDrops(["amethyst", "ruby", "topaz", "sapphire", "doubleBow"]);
 	}
 	
 	getDescription(){

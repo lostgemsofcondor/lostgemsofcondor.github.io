@@ -3,6 +3,7 @@ class CraftingTable extends Entity {
         super(x, y)
             .setImage("./sprites/furniture/bench.png", 0)
             .setName("Crafting Table")
+            .setDimensions(96, 96);
         
         this.exit = false;
 		game.add(this);

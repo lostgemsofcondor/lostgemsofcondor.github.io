@@ -44,18 +44,17 @@ class MapChunk {
 			var seen = miniChunk.seen[main.correctMod(self.x, self.miniMap.mapChunkPerMiniMapChunk)][main.correctMod(self.y, self.miniMap.mapChunkPerMiniMapChunk)];
 
 			self.clearTileMap(!seen);
-
 			
 			for(var j = 0; j < self.chunkSize; j += 1){
 				for(var i = 0; i < self.chunkSize; i += 1){
 					//var noCollision = true;
 					var pallet = e.data.map[i][j].pallet;
 					var noise = e.data.map[i][j].noise;
-					var tile; 
+					var tile;
+
+					//noise is a number from 0-1 on a non regular scale constructed by the map worker
 					if(noise < .3){
-						//noCollision = false;
 						tile = game.map.water;
-						// mapContext.drawImage(water, i, j, width, height);
 					} else {
 						if(pallet > .5){
 							if(noise < .4){
@@ -91,11 +90,22 @@ class MapChunk {
 			}
 			self.loaded = true;
 
-			if(self.x % 6 == 0 && self.y % 6 == 0){
-				var e = new Entrance(self.x * self.tileSize * self.chunkSize + 100, self.y * self.tileSize * self.chunkSize + 100)
+			if(self.x == 0 && self.y == 0){
+				var e = new Entrance(0, 0)
 					.setImage("./sprites/entrance/hole.png", 0)
 					.setDimensions(96,96)
-					.setSolid(true);
+					.setSolid(true)
+					.setType("tutorial");
+			} else if(self.tileMap[0][0] == game.map.grass && game.perlin.randomHash(self.x, self.y) < .04){
+				var x = Math.floor((self.x + game.perlin.randomHash(self.x + 17, self.y)) * self.tileSize * self.chunkSize);
+				var y = Math.floor((self.y + game.perlin.randomHash(self.x, self.y + 17)) * self.tileSize * self.chunkSize);
+				if(self.getTile(x, y).noCollision){
+					var e = new Entrance(x, y)
+						.setImage("./sprites/entrance/hole.png", 0)
+						.setDimensions(96,96)
+						.setSolid(true)
+						.setType("defult");
+				}
 			}
 		}
 		//end of map worker call
@@ -107,7 +117,7 @@ class MapChunk {
 
 		tile.draw(this.context, x * this.tileSize, y * this.tileSize);
 		if(!seen){
-			if(Math.random() < game.spawnService.randomChunkSpawnRate){
+			if(!game.scene && Math.random() < game.spawnService.randomChunkSpawnRate){
 				if(tile.spawn){
 					tile.spawn((this.x*this.chunkSize + x) * this.tileSize, (this.y*this.chunkSize + y) * this.tileSize, true);
 				}
