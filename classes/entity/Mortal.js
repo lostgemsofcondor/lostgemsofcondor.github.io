@@ -22,7 +22,6 @@ class Mortal extends Entity {
 	setHitSound(hitSound){
 		this.hitSound = hitSound;
 		return this;
-		
 	}
 	
 	struck(bullet){

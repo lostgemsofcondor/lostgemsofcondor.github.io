@@ -7,7 +7,6 @@ class Button {
 		this.keyCode = -1;
 
 		game.addButton(this);
-
 	}
 	
 	setKeyCode(keyCode){

@@ -6,6 +6,7 @@
 .canvasDiv
 {
 	height:100%;
+  text-align: center;
 }
 
 .gameCanvas
@@ -32,5 +33,3 @@ canvas {
   height: 100%;
   width: 30%;
 }
-
-@font-face { font-family: pixel_font; src: url('slkscr.ttf'); } 

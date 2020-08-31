@@ -67,7 +67,7 @@ class CraftingMenu extends GameWindow {
             }
             if(game.mouse.x >= x && game.mouse.x < x + width - gap && game.mouse.y >= y && game.mouse.y < y + height - gap){
                 this.recipeUnderMouse = r;
-                ingredientsWindow = new IngredientsWindow(r.inputs, x, y, width, height);
+                ingredientsWindow = new IngredientsWindow(r, x, y, height);
             }
 
             x += width; //?

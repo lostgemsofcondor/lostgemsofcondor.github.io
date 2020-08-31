@@ -62,6 +62,24 @@ class Scene {
             .setLight("large");
     }
 
+    fillBackGround(sceneActualSize){
+        var tile;
+        for(var i = 0; i < sceneActualSize; i++){
+            for(var j = 0; j < sceneActualSize; j++){
+                if(Math.random() <= .25){
+                    tile = game.map.underground;
+                } else {
+                    tile = game.map.underground2;
+                }
+                this.chunk.setTile(tile, i, j, false);
+            }
+        }
+    }
+
+    entranceAtBottomRight(){
+        
+    }
+
     getTile(x, y){
         return game.map.grass;
     }

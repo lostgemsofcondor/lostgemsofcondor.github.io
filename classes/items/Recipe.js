@@ -1,9 +1,29 @@
 class Recipe {
-    constructor(name, inputs, output){
-        this.name = name;
-        this.inputs = inputs;
-        this.output = output;
+    constructor(){
+        this.inputs = [];
+        this.output = [];
+        this.exp = 1;
         this.craftable = false;
+    }
+    
+	setName(name){
+		this.name = name;
+		return this;
+    }
+    
+	setInputs(inputs){
+		this.inputs = inputs;
+		return this;
+    }
+    
+	setOutput(output){
+		this.output = output;
+		return this;
+    }
+    
+	setExp(exp){
+		this.exp = exp;
+		return this;
     }
 
     update(itemCounts){

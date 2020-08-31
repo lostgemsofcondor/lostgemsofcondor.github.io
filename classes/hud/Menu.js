@@ -82,7 +82,6 @@ class Menu {
                 }
                 game.font.write(context, this.options[i].getText(), this.x + 36, this.y + offsetY - 60+10);
                 game.font.write(context, this.options[i + 1].getText(), this.x + 36, this.y + offsetY - 60+30+10);
-                
             }
             if(this.options.length%2 == 1){
                 if(i == selected){

@@ -1,13 +1,15 @@
 class IngredientsWindow extends GameWindow {
-    constructor(ingredients, x, y, width, height){
+    constructor(recipe, x, y, height){
         super(x, y + height);
 
         this.open = true;
-        this.ingredients = ingredients;
+        this.ingredients = recipe.inputs;
         this.itemHeight = height;
 
-        this.setWidth(width)
-            .setHeight(this.ingredients.length * this.itemHeight)
+        this.description = recipe.name;
+
+        this.setWidth(game.font.measureString(this.description) + 36)
+            .setHeight(this.ingredients.length * this.itemHeight + 30)
             .setHasX(false);
     }
 
@@ -17,8 +19,13 @@ class IngredientsWindow extends GameWindow {
         }
         super.draw(context);
 
-        var x = this.x + 6;
-        var y = this.y + 6;
+        var x = this.x + 18;
+        var y = this.y + 18;
+
+        game.font.write(context, this.description, x, y);
+
+        y += 18;
+
         for(var i in this.ingredients){
             var ingredient = this.ingredients[i];
             var img = game.itemService[ingredient[0]].img;

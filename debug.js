@@ -1,7 +1,5 @@
 class Debug {
-
 	constructor(){
-		//what
 		this.setAllDebug(false);
 		this.keys = "";
 		this.str = "";
@@ -12,6 +10,9 @@ class Debug {
 	setAllDebug(bool){
 		this.debugging = bool;
 		this.overRideMove = bool;
+		if(game?.player) {
+			game.player.noCollsion = bool;
+		}
 		if(bool){
 			main.canvas.oncontextmenu = null;
 		} else {
@@ -179,7 +180,7 @@ class DebugInfo {
 	
 	add(str, level=0){
 		if(level <= this.level){
-			game.font.write(main.context, str, this.leftMargin, this.gap * (this.lines + 1) + this.offset)
+			game.font.write(main.context, str, this.leftMargin, this.gap * (this.lines + 1) + this.offset, true)
 			this.lines++;
 		}
 	}

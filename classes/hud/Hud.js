@@ -8,6 +8,18 @@ class Hud {
         
         this.hudImg = new Image();
         this.hudImg.src = "./sprites/hud/hud.png";
+        
+        this.hudInventoryHighlightedImg = new Image();
+        this.hudInventoryHighlightedImg.src = "./sprites/hud/hudInventoryHighlighted.png";
+        
+        this.hudSkillsHighlightedImg = new Image();
+        this.hudSkillsHighlightedImg.src = "./sprites/hud/hudSkillsHighlighted.png";
+
+        this.hudWorkspaceImg = new Image();
+        this.hudWorkspaceImg.src = "./sprites/hud/hudWorkspace.png";
+
+        this.hudWorkspaceLevelsImg = new Image();
+        this.hudWorkspaceLevelsImg.src = "./sprites/hud/hudWorkspaceLevels.png";
 
         this.menuImg = new Image();
         this.menuImg.src = "./sprites/hud/menu.png";
@@ -57,6 +69,7 @@ class Hud {
 
         this.skillUpdated = -1;
 
+        this.tab = "skills";
     }
 
     get offset(){
@@ -82,27 +95,75 @@ class Hud {
         this.addHealthBar();
         this.addStaminaBar();
 
-        this.addToContext(this.hudImg, this.offset, 0, this.width, this.height);
+        if(this.mouseOnInventoryButton()){
+            this.addToContext(this.hudInventoryHighlightedImg, this.offset, 0);
+        } else if(this.mouseOnSkillsButton()){
+            this.addToContext(this.hudSkillsHighlightedImg, this.offset, 0);
+        } else {
+            this.addToContext(this.hudImg, this.offset, 0);
+        }
+
+        if(this.tab == "skills"){
+            this.drawStats();
+        } else {
+            this.addToContext(this.hudWorkspaceImg, this.offset, this.height - this.hudWorkspaceImg.height);
+        }
         this.addSkillBar();
         this.drawConsole();
         this.addText();
         this.entityInfo.draw(this.context);
         this.craftingMenu.draw(this.context);
+
         this.drawItems();
+
         this.drawRightClickMenu();
     }
 
-    addText(){
-        var x = this.offset + 12;
-        var y = 920;
-        
-        game.font.write(this.context, "Press the space to dash", x, y);
-        game.font.write(this.context, "Equip arrows to fire arrows", x, y+14);
+    drawStats(){
+        var skillX = this.offset + 112;
+        var progressX = this.offset + 201;
+        var progressCenterX = this.offset + 249;
+        var levelX = this.offset + 336;
+        var y = 567;
+        var gap = 37;
 
-        game.font.write(this.context, "Endurance Level: " + game.experienceService.enduranceLevel, x, y+14*4);
-        game.font.write(this.context, "Endurance EXP: " + game.experienceService.endurance, x, y+14*5);
-        game.font.write(this.context, "Endurance EXP to", x, y+14*6);
-        game.font.write(this.context, "Next Level: " + game.experienceService.nextLevelEXP(game.experienceService.enduranceLevel), x, y+14*7);
+        var progressWidth = 96;
+        var progressHeight = 21;
+
+        // draw exp bars
+
+        var skills = ["endurance", "crafting", "ranged"];
+
+        for(var i = 0; i < skills.length; i ++){
+            var skill = skills[i];
+            var progress = game.experienceService.progress(skill);
+            this.context.fillStyle = game.config.expGold;
+            this.context.fillRect(progressX, y, progressWidth, progressHeight);
+            this.context.fillStyle = game.config.lightGray;
+            this.context.fillRect(Math.floor(progressX + progressWidth * progress), y, Math.ceil(progressWidth - progressWidth * progress), progressHeight);
+
+            y += gap;
+        }
+
+
+        this.addToContext(this.hudWorkspaceLevelsImg, this.offset, this.height - this.hudWorkspaceImg.height);
+        // draw stats text
+        y = 570;
+        
+        for(var i = 0; i < skills.length; i ++){
+            var skill = skills[i];
+            var progress = game.experienceService.progress(skill);
+            game.font.writeCentered(this.context, skill, skillX, y, true);
+            game.font.writeCentered(this.context, Math.floor(progress * 1000)/10 + "%", progressCenterX, y, true);
+            game.font.writeCentered(this.context, game.experienceService.level(skill), levelX, y, true);
+
+            y += gap;
+        }
+    }
+
+    addText(){
+        game.font.writeCentered(this.context, "Inventory", this.offset + 99, 462, true);
+        game.font.writeCentered(this.context, "Skills", this.offset + 279, 462, true);
     }
 
     addHealthBar(){
@@ -117,10 +178,9 @@ class Hud {
         this.context.fillRect(x, y, width, height);
         
         this.context.fillStyle = game.config.lightGray;
-        this.context.fillRect(x + width * health/maxHealth, y, width - width * health/maxHealth, height);
+        this.context.fillRect(Math.floor(x + width * health/maxHealth), y, Math.floor(width - width * health/maxHealth), height);
 
         game.font.writeCentered(this.context, health + "/" + maxHealth, x + width/2, y + 3, true);
-
     }
 
     addStaminaBar(){
@@ -145,25 +205,29 @@ class Hud {
             return;
         }
         var x = this.offset - 300;
-        var y = 30;
+        var y = 0;
         var width = 247;
         var height = 21;
 
+        var gap = 18;
+
+        var gameWindow = new GameWindow(x, y).setWidth(width).setHeight(height);
+        gameWindow.draw(this.context);
         
 
         var current = game.experienceService[this.skill];
         var last = this.skillLast;
         var max = this.skillNext;
         
-
+        width -= gap*2
         this.context.fillStyle = game.config.expGold;
-        this.context.fillRect(x, y, width, height);
+        this.context.fillRect(x + gap, y + 30, width, height);
         
         this.context.fillStyle = game.config.lightGray;
-        this.context.fillRect(x + width * (current - last)/(max - last), y, width - width * (current - last)/(max - last), height);
+        this.context.fillRect(x + gap + width * (current - last)/(max - last), y + 30, width - width * (current - last)/(max - last), height);
         
-        game.font.write(this.context, this.skillText, x, y - 20);
-        game.font.writeCentered(this.context, current + "/" + max, Math.floor(x + width/2), y + 3, true);
+        game.font.writeCentered(this.context, this.skillText, Math.floor(x + gameWindow.width/2), y + gap);
+        game.font.writeCentered(this.context, current + "/" + max, Math.floor(x + gameWindow.width/2), y + 33, true);
     }
 
     addToContext(img, x, y, width = null, height = null){
@@ -206,6 +270,14 @@ class Hud {
         }
     }
 
+    mouseOnInventoryButton(){
+        return game.mouse.x >= this.offset + 15 && game.mouse.x <= this.offset + 189 && game.mouse.y >= 459 && game.mouse.y <= 480;
+    }
+
+    mouseOnSkillsButton(){
+        return game.mouse.x >= this.offset + 195 && game.mouse.x <= this.offset + 369 && game.mouse.y >= 459 && game.mouse.y <= 480;
+    }
+
     handleClickStart(x, y){
         if((this.menu && this.menu.clicked(x, y))){
             var option = this.menu.clickedOption(x, y);
@@ -235,7 +307,16 @@ class Hud {
                 this.console.open = false;
                 return;
             }
-            
+
+            if(this.mouseOnInventoryButton()){
+                this.tab = "inventory"
+                return;
+            }
+            if(this.mouseOnSkillsButton()){
+                this.tab = "skills"
+                return;
+            }
+
             if(this.entityInfo.clicked(x, y) == 2){
                 this.entityInfo.open = false;
                 return;
@@ -243,6 +324,9 @@ class Hud {
 
             for(var i in game.inventories){
                 var inventory = game.inventories[i];
+                if(inventory.location == "inventory" && this.tab != "inventory"){
+                    continue;
+                }
                 var slotX = inventory.getSlotX(x);
                 var slotY = inventory.getSlotY(y);
                 if(slotX != null && slotY != null && inventory.get(slotX, slotY)){
@@ -255,7 +339,7 @@ class Hud {
                     }
                 }
             }
-        }   
+        }
     }
 
     handleClickEnd(x, y){
@@ -275,6 +359,10 @@ class Hud {
                 
                 for(var i in game.inventories){
                     var inventory = game.inventories[i];
+                    
+                    if(inventory.location == "inventory" && this.tab != "inventory"){
+                        continue;
+                    }
                     var slotX = inventory.getSlotX(x);
                     var slotY = inventory.getSlotY(y);
                     //validate position
@@ -310,6 +398,10 @@ class Hud {
         var heldItem = null
         for(var i in game.inventories){
             var inventory = game.inventories[i];
+            if(inventory.location == "inventory" && this.tab != "inventory"){
+                continue;
+            }
+
             var temp = inventory.draw(this.context);
             if(temp != null){
                 heldItem = temp;
@@ -326,7 +418,7 @@ class Hud {
         this.skillLast = skillLast;
         this.skillNext = skillNext;
         this.skillUpdated = game.gameTick + 600;
-        this.skillText = "Endurance Progress"
+        this.skillText = skill.charAt(0).toUpperCase() + skill.slice(1) + " Progress"
     }
 
     drawRightClickMenu(){

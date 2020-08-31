@@ -169,15 +169,15 @@ class Main {
 	}
 
 	drawHealth(e){
-		var width = (e.sprite.width + 48)/2;
-		var x = e.sprite.adjustXCord() - width / 2;
-		var y = e.sprite.adjustYCord() + 3;
+		var width = Math.floor((e.sprite.width + 48)/2);
+		var x = Math.floor(e.sprite.adjustXCord() - width / 2);
+		var y = Math.floor(e.sprite.adjustYCord() + 3);
 		var height = 6;
 		this.context.fillStyle = game.config.healthGreen;
 		this.context.fillRect(x, y, width, height);
 		
 		this.context.fillStyle = game.config.healthRed;
-		this.context.fillRect(x + width * e.health/e.maxHealth, y, width - width * e.health/e.maxHealth, height);
+		this.context.fillRect(Math.floor(x + width * e.health/e.maxHealth), y, Math.ceil(width - width * e.health/e.maxHealth), height);
 		
 	}
 
@@ -230,8 +230,11 @@ class Main {
 	}
 
 	handelMouseDown(){
-		var canvasX = event.clientX / this.canvasDiv.offsetWidth * this.canvas.width;
-		var canvasY = event.clientY / this.canvasDiv.offsetHeight * this.canvas.height;
+		var x = event.clientX - this.canvas.offsetLeft;
+		var y = event.clientY - this.canvas.offsetTop;
+
+		var canvasX = x / this.canvas.offsetWidth * this.canvas.width;
+		var canvasY = y / this.canvas.offsetHeight * this.canvas.height;
 		//0 left, 1 middle, 2 right
 		if(event.button == 0){
 			game.mouse.clickLeft(canvasX, canvasY);
@@ -252,8 +255,10 @@ class Main {
 	}
 
 	handelMouseMove(){
-		var canvasX = event.clientX / this.canvasDiv.offsetWidth * this.canvas.width;
-		var canvasY = event.clientY / this.canvasDiv.offsetHeight * this.canvas.height;
+		var x = event.clientX - this.canvas.offsetLeft;
+		var y = event.clientY - this.canvas.offsetTop;
+		var canvasX = x / this.canvas.offsetWidth * this.canvas.width;
+		var canvasY = y / this.canvas.offsetHeight * this.canvas.height;
 		
 		game.mouse.move(canvasX, canvasY);
 	}

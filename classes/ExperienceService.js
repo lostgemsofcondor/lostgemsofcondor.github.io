@@ -24,24 +24,104 @@ class ExperienceService {
 		}
     }
 	set endurance(enduranceEXP) {
-
 		game.save.enduranceEXP = enduranceEXP;
-		this.updateEndurance()
+		this.updateEndurance();
+	}
+	
+	get craftingLevel(){
+		if(game.save.craftingLevel){
+			return game.save.craftingLevel;
+		} else {
+			return 1;
+		}
+    }
+	set craftingLevel(craftingLevel) {
+		game.save.craftingLevel = craftingLevel;
+	}
+    
+	get crafting(){
+		if(game.save.craftingEXP){
+			return game.save.craftingEXP;
+		} else {
+			return 0;
+		}
+    }
+	set crafting(craftingEXP) {
+		game.save.craftingEXP = craftingEXP;
+		this.updateCrafting();
+	}
+	
+	get rangedLevel(){
+		if(game.save.rangedLevel){
+			return game.save.rangedLevel;
+		} else {
+			return 1;
+		}
+    }
+	set rangedLevel(rangedLevel) {
+		game.save.rangedLevel = rangedLevel;
+	}
+    
+	get ranged(){
+		if(game.save.rangedEXP){
+			return game.save.rangedEXP;
+		} else {
+			return 0;
+		}
+    }
+	set ranged(rangedEXP) {
+		game.save.rangedEXP = rangedEXP;
+		this.updateRanged();
+	}
+
+	progress(skill){
+		var level = this.level(skill);
+		var lastLevel = this.nextLevelEXP(level - 1);
+		var nextLevel = this.nextLevelEXP(level);
+		return (this[skill] - lastLevel) / (nextLevel - lastLevel);
+	}
+
+	level(skill){
+		return this[skill + "Level"];
 	}
 	
 	updateEndurance(){
-		var lastLevel = this.nextLevelEXP(this.enduranceLevel - 1)
-		var nextLevel = this.nextLevelEXP(this.enduranceLevel)
-		game.hud.setSkill("endurance", lastLevel, nextLevel)
+		var lastLevel = this.nextLevelEXP(this.enduranceLevel - 1);
+		var nextLevel = this.nextLevelEXP(this.enduranceLevel);
+		game.hud.setSkill("endurance", lastLevel, nextLevel);
 		if(this.endurance >= nextLevel){
 			game.player.risingText("Endurance Level Up ").setLife(180);
 			
 			this.enduranceLevel += 1;
-			game.hud.log("Well done!\nYou are now Endurance level " + this.enduranceLevel + ".")
+			game.hud.log("Well done!\nYou are now Endurance level " + this.enduranceLevel + ".");
 
 			this.updateStaminaRegen();
 			this.updateEndurance();
 			game.player.stamina = game.player.maxStamina;
+		}
+	}
+	
+	updateCrafting(){
+		var lastLevel = this.nextLevelEXP(this.craftingLevel - 1);
+		var nextLevel = this.nextLevelEXP(this.craftingLevel);
+		game.hud.setSkill("crafting", lastLevel, nextLevel);
+		if(this.crafting >= nextLevel){
+			game.player.risingText("Crafting Level Up ").setLife(180);
+			
+			this.craftingLevel += 1;
+			game.hud.log("Well done!\nYou are now Crafting level " + this.craftingLevel + ".");
+		}
+	}
+	
+	updateRanged(){
+		var lastLevel = this.nextLevelEXP(this.rangedLevel - 1);
+		var nextLevel = this.nextLevelEXP(this.rangedLevel);
+		game.hud.setSkill("ranged", lastLevel, nextLevel);
+		if(this.ranged >= nextLevel){
+			game.player.risingText("ranged Level Up ").setLife(180);
+			
+			this.rangedLevel += 1;
+			game.hud.log("Well done!\nYou are now Ranged level " + this.rangedLevel + ".");
 		}
 	}
 

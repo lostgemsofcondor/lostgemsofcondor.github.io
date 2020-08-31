@@ -5,6 +5,8 @@ class Save {
 
         this.enduranceEXP = 0;
         this.enduranceLevel = 1;
+        this.craftingEXP = 0;
+        this.craftingLevel = 1;
 
         this.health = 20;
         this.stamina = 20;

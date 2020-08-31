@@ -144,8 +144,7 @@ class Inventory {
         if(sound){
             sound.play();
         }
-
-
+        game.experienceService.crafting += recipe.exp;
     }
     
     discard(inputAmount, inputKey){

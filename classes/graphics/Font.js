@@ -11,7 +11,7 @@ class Font {
         this.fontLargeRed = new Image();
         this.fontLargeRed.src = "./sprites/font/fontLargeRed.png"
         this.fontSize = [3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,
-                         3,3,3,4,4,3,4,3,3,3,5,5,3,3,3,3,4,3,4,4,4,4,4,4,4,4,3,3,3,4,3,4,
+                         3,3,3,4,4,3,4,3,3,3,5,5,3,3,2,3,4,3,4,4,4,4,4,4,4,4,3,3,3,4,3,4,
                          4,4,4,4,4,3,3,4,4,3,4,4,3,5,4,4,4,4,4,4,3,4,5,5,5,5,3,3,3,3,5,5,
                          3,4,4,4,4,3,3,4,4,3,4,4,3,5,4,4,4,4,4,4,3,4,5,5,5,5,3,3,3,3,4,3]
     }
@@ -32,8 +32,6 @@ class Font {
     }
 
     write(context, s, x, y, large = false, color = null){
-        // x = Math.floor(x);
-        // y = Math.floor(y);
         s = s.toString();
 
         var i = s.indexOf("\n");
@@ -46,7 +44,7 @@ class Font {
         if(large){
             for(var i = 0; i < s.length; i++){
                 this.placeLargeChar(context, s.charCodeAt(i), x + offset, y, color);
-                offset += (this.fontSize[s.charCodeAt(i)] + 1) *3;
+                offset += (this.fontSize[s.charCodeAt(i)] + 1)*3;
             }
         } else {
             for(var i = 0; i < s.length; i++){
@@ -54,18 +52,27 @@ class Font {
                 offset += (this.fontSize[s.charCodeAt(i)] + 1)*2;
             }
         }
+        return offset;
     }
 
     writeCentered(context, s, x, y, large = false){
-        var shift = 0;
-        var scale = 2;
-        if(large){
-            scale = 3;
-        } 
+        s = s.toString();
+        var shift = this.measureString(s, large);
+        return this.write(context, s, x - Math.floor(shift/2), y, large);
+    }
 
-        for(var i = 0; i < s.length; i++){
-            shift += (this.fontSize[s.charCodeAt(i)] + 1) * scale;
+    measureString(s, large = false){
+        s = s.toString();
+        var length = 0;
+        if(large){
+            for(var i = 0; i < s.length; i++){
+                length += (this.fontSize[s.charCodeAt(i)] + 1)*3;
+            }
+        } else {
+            for(var i = 0; i < s.length; i++){
+                length += (this.fontSize[s.charCodeAt(i)] + 1)*2;
+            }
         }
-        this.write(context, s, x - Math.floor(shift/2), y, large);
+        return length;
     }
 }
