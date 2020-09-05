@@ -15,6 +15,8 @@ class Save {
         this.overworldY = 0;
 
         this.sceneType = "tutorial"
+
+        this.progress = {};
     }
 
     save(){

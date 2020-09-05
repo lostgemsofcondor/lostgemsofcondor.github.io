@@ -56,8 +56,8 @@ class Hud {
         this.consoleLog = [];
 
         this.craftingMenu = new CraftingMenu();
-
         this.entityInfo = new EntityInfo();
+        this.dialog = new Dialog();
         
         game.inventories.push(
             new Inventory(45, 510, 5, 6, "inventory"),
@@ -69,7 +69,7 @@ class Hud {
 
         this.skillUpdated = -1;
 
-        this.tab = "skills";
+        this.tab = "inventory";
     }
 
     get offset(){
@@ -113,6 +113,7 @@ class Hud {
         this.addText();
         this.entityInfo.draw(this.context);
         this.craftingMenu.draw(this.context);
+        this.dialog.draw(this.context);
 
         this.drawItems();
 
@@ -132,7 +133,7 @@ class Hud {
 
         // draw exp bars
 
-        var skills = ["endurance", "crafting", "ranged"];
+        var skills = ["endurance", "crafting"/*, "ranged"*/];
 
         for(var i = 0; i < skills.length; i ++){
             var skill = skills[i];
@@ -243,6 +244,7 @@ class Hud {
             this.console.clicked(x, y) ||
             this.entityInfo.clicked(x, y) ||
             (this.menu && this.menu.clicked(x, y)) ||
+            this.dialog.clicked(x, y) ||
             this.craftingMenu.clicked(x, y)){
             return true;
         } else {
@@ -319,6 +321,16 @@ class Hud {
 
             if(this.entityInfo.clicked(x, y) == 2){
                 this.entityInfo.open = false;
+                return;
+            }
+            
+            if(this.dialog.clicked(x, y) == 2){
+                this.dialog.open = false;
+                return;
+            }
+            
+            if(this.dialog.clicked(x, y) == 1){
+                this.dialog.onClick();
                 return;
             }
 
@@ -439,7 +451,7 @@ class Hud {
                         return;
                     }
                     game.font.write(this.context, strings[s], this.console.x + 20, this.console.y + this.console.height - 30 - offsetY);
-                    offsetY += 14
+                    offsetY += 14;
                 }
             }
         }

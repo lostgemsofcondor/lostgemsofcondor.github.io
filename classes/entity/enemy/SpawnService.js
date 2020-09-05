@@ -23,11 +23,16 @@ class SpawnService {
         var rand = Math.random();
 
         if(rand < .05){
-            new Chest(x, y)
+            new Chest(x, y);
+            return;
         } else if(rand < .2){
             new KingCrab(x, y);
         } else if(rand < .6){
             new Crab(x, y);
+        }
+
+        if(chunkLoad){
+            new Palm(x, y);
         }
     }
 

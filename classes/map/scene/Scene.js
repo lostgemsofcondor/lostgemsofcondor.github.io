@@ -49,13 +49,11 @@ class Scene {
             .setDimensions(96, 96)
             .setExit(true);
 
-            
 		new CraftingTable(spawnX, spawnY + 450);
 
         new Bed(spawnX + 300, spawnY)
         new Bed(spawnX + 450, spawnY)
 
-        
 		new Torch(spawnX - 32, spawnY + 32);
 		new Torch(spawnX + 32, spawnY - 32);
 		new Torch((this.boarderSize + 8) * 48, (this.boarderSize + 8) * 48)

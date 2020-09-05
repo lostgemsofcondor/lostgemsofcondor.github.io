@@ -11,7 +11,8 @@ class CraftingMenu extends GameWindow {
 
     center(){
         this.width = Math.min(1000, main.canvas.width - game.hud.width - 100)
-        this.x = Math.floor((main.canvas.width - game.hud.width - this.width)/2);
+        // this.x = Math.floor((main.canvas.width - game.hud.width - this.width)/2);
+        super.center();
     }
 
     openWindow(){

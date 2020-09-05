@@ -196,7 +196,7 @@ class Main {
 	}
 
 	adjustCanvasSize(){
-		this.canvas.width = game.width = Math.min(2160,Math.max(990, game.zoom/this.canvasDiv.offsetHeight * this.canvasDiv.offsetWidth));
+		this.canvas.width = game.width = Math.min(2700,Math.max(990, game.zoom/this.canvasDiv.offsetHeight * this.canvasDiv.offsetWidth));
 		this.canvas.height = game.height = game.zoom;
 	}
 

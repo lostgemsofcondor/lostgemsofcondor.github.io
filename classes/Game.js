@@ -130,6 +130,9 @@ class Game {
 			if(this.save.version == null || this.config.versionCompare(this.save.version, this.config.version) > 0){
 				this.newSave();
 			}
+			if(!this.save.progress){
+				this.save.progress = {};
+			}
         } else {
 			this.newSave();
 		}
@@ -409,6 +412,12 @@ class Game {
 		this.clearEntities();
 		this.scene.delete();
 		this.scene = null;
+		if(!this.save.progress.leftTutorial){
+			this.save.progress.leftTutorial = true;
+			this.hud.dialog.add("Condor is a wide and open world with many treasures and dangers be careful.");
+			this.hud.dialog.add("Find, craft, and upgrade tools and weapons to help you along the way. You might find other caves that might contain monsters or camps to rest at. Just maybe you can uncover the lost gems you are searching for");
+			this.hud.dialog.add("Head towards the beach to start your journey!");
+		}
 	}
 
 	sleep(){
