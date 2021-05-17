@@ -36,21 +36,31 @@ class SpawnService {
         }
     }
 
-    mountain(x, y){
+    mountain(x, y, chunkLoad = false){
         var rand = Math.random();
         if(rand < .5){
             new Skeleton(x, y);
         }
     }
 
-    forest(x, y){
+    forest(x, y, chunkLoad = false){
         var rand = Math.random();
+        new Oak(x, y);
+
+        var i = 150;
+        while(chunkLoad && Math.random() < .6){
+            new Oak(x + i + Math.random()*150, y + i + Math.random()*150);
+            new Oak(x - i + Math.random()*150, y - i + Math.random()*150);
+            new Oak(x + i + Math.random()*150, y - i + Math.random()*150);
+            new Oak(x - i + Math.random()*150, y + i + Math.random()*150);
+            i+=150;
+        }
         if(rand < .5){
             new Slime(x, y);
         }
     }
 
-    forest2(x, y){
+    forest2(x, y, chunkLoad = false){
         var rand = Math.random();
         if(rand < .5){
             new Wasp(x, y);

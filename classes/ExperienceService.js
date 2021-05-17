@@ -74,6 +74,31 @@ class ExperienceService {
 		this.updateRanged();
 	}
 
+	
+	
+	get woodcuttingLevel(){
+		if(game.save.woodcuttingLevel){
+			return game.save.woodcuttingLevel;
+		} else {
+			return 1;
+		}
+    }
+	set woodcuttingLevel(woodcuttingLevel) {
+		game.save.woodcuttingLevel = woodcuttingLevel;
+	}
+    
+	get woodcutting(){
+		if(game.save.woodcuttingEXP){
+			return game.save.woodcuttingEXP;
+		} else {
+			return 0;
+		}
+    }
+	set woodcutting(woodcuttingEXP) {
+		game.save.woodcuttingEXP = woodcuttingEXP;
+		this.updateWoodcutting();
+	}
+
 	progress(skill){
 		var level = this.level(skill);
 		var lastLevel = this.nextLevelEXP(level - 1);
@@ -122,6 +147,18 @@ class ExperienceService {
 			
 			this.rangedLevel += 1;
 			game.hud.log("Well done!\nYou are now Ranged level " + this.rangedLevel + ".");
+		}
+	}
+	
+	updateWoodcutting(){
+		var lastLevel = this.nextLevelEXP(this.woodcuttingLevel - 1);
+		var nextLevel = this.nextLevelEXP(this.woodcuttingLevel);
+		game.hud.setSkill("woodcutting", lastLevel, nextLevel);
+		if(this.woodcutting >= nextLevel){
+			game.player.risingText("woodcutting Level Up ").setLife(180);
+			
+			this.woodcuttingLevel += 1;
+			game.hud.log("Well done!\nYou are now Woodcutting level " + this.woodcuttingLevel + ".");
 		}
 	}
 

@@ -8,6 +8,10 @@ class CraftingRecipes {
             .setInputs([["palmLog", 1]])
             .setOutput(["arrow", 5]));
         this.add(new Recipe()
+            .setName("Fletch Oak Arrows")
+            .setInputs([["oakLog", 1]])
+            .setOutput(["arrow", 5]));
+        this.add(new Recipe()
             .setName("Craft Palm Bow")
             .setInputs([["palmLog", 5]])
             .setOutput(["palmBow", 1])

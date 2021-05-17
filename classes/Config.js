@@ -1,10 +1,16 @@
 class Config {
     constructor(){
+        //Must increment when items are removed and load function changed.
         this.version = "0.1.1"
+        this.fpsMax = 60;
+        this.newGameOnLoad = false;
+
+
         this.debugLevel = 5;
         this.adjustment = 1/32;
 
         this.rotateSpeed = 2;
+
 
 
         /// colors

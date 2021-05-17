@@ -47,7 +47,7 @@ class CraftingMenu extends GameWindow {
         
         this.recipeUnderMouse = null;
         var ingredientsWindow = null;
-        var width = 90;
+        var width = 180;
         var gap = 12;
         var height = 60;
         
@@ -63,8 +63,9 @@ class CraftingMenu extends GameWindow {
             var r = this.recipes[i];
             var img = game.itemService[r.output[0]].img;
             context.drawImage(img, x, y);
+            game.font.write(context, r.output[0], x + 50, y + 10);
             if(r.output[1] != 1){
-                game.font.write(context, "x " + r.output[1], x + 48, y + 24);
+                game.font.write(context, "x " + r.output[1], x + 50, y + 24);
             }
             if(game.mouse.x >= x && game.mouse.x < x + width - gap && game.mouse.y >= y && game.mouse.y < y + height - gap){
                 this.recipeUnderMouse = r;

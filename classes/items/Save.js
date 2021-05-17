@@ -20,7 +20,11 @@ class Save {
     }
 
     save(){
-        localStorage.setItem("save", JSON.stringify(this));
+        try {
+            localStorage.setItem("save", JSON.stringify(this));
+        } catch {
+            
+        }
     }
 
     // this class does not have functions due to cookies

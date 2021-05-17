@@ -7,6 +7,14 @@ class Entrance extends Entity {
 		game.add(this);
         this.setIcon("./sprites/miniMap/entranceIcon.png", 3, 3);
     }
+    
+	getDescription(){
+        if(this.exit){
+            return "This way to the outside world!";
+        } else {
+            return "Wonder what is inside.";
+        }
+	}
 
     setLocation(location){
         this.location = location;

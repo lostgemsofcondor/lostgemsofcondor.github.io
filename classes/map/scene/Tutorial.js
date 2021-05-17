@@ -7,7 +7,7 @@ class Tutorial extends Scene {
 
     init(downLadder){
         this.boarderSize = 32;
-        var sceneSize = 32;
+        var sceneSize = 64;
         var sceneActualSize = sceneSize + this.boarderSize * 2;
         this.chunk = new MapChunk(0, 0, game.map.tileSize, sceneActualSize * 2, false);
         
@@ -31,18 +31,29 @@ class Tutorial extends Scene {
         }
         
         for(var i = this.boarderSize - 5; i < this.boarderSize; i++){
-            for(var j = sceneActualSize - this.boarderSize - 5; j < sceneActualSize - this.boarderSize; j++){
+            for(var j = sceneActualSize - this.boarderSize - 32 - 5; j < sceneActualSize - this.boarderSize - 32; j++){
                 tile = game.map.sand;
                 this.chunk.setTile(tile, i, j, false);
             }
         }
         
         for(var i = this.boarderSize + 9; i < this.boarderSize + 20; i++){
-            for(var j = 40; j < sceneActualSize - this.boarderSize; j++){
-                if(i != this.boarderSize + 9 && (i <= this.boarderSize + 13 || j > 50)){
+            for(var j = 40; j < sceneActualSize - this.boarderSize - 16; j++){
+                if(i != this.boarderSize + 9 && (i <= this.boarderSize + 13 || j > 50) && j < sceneActualSize - this.boarderSize - 32){
                     tile = game.map.undergroundWater;
                 } else {
                     tile = game.map.sand;
+                }
+                this.chunk.setTile(tile, i, j, false);
+            }
+        }
+
+        for(var i = 32; i <= 41; i++){
+            for(var j = 84; j < 86; j++){
+                if(i == 36){
+                    tile = game.map.sand;
+                } else {
+                    tile = game.map.underground2;
                 }
                 this.chunk.setTile(tile, i, j, false);
             }
@@ -58,7 +69,7 @@ class Tutorial extends Scene {
             game.player.positionY = spawnY + 48;
         } else {
             game.player.positionX = 1752;
-            game.player.positionY = 2904;
+            game.player.positionY = 4440;
         }
 
         
@@ -96,7 +107,8 @@ class Tutorial extends Scene {
         var crab = new Crab(2256, 2016);
         crab.shoot = new BulletBuilder().newBubble(0);
         crab.dropTable = null;
-        new ArmorStand(1752, 2592);
+        new ArmorStand(1752, 4128)
+        .setSolid(true);
 
         new CraftingTable(1584, 2160);
 

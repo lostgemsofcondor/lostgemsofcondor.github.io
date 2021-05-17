@@ -48,7 +48,7 @@ class Overlay {
 
     draw(){
         this.dayNight();
-        this.drawLighting();
+        // this.drawLighting();
     }
 
     drawLighting(){
@@ -84,7 +84,7 @@ class Overlay {
     
     dayNight(){
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.context.fillStyle = "rgba(0, 0, 0, " + this.lightLevel() + ")";
+        this.context.fillStyle = "rgba(0, 0, 0, " + this.lightLevel()/3 + ")";
         this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
     }
 

@@ -9,7 +9,7 @@ class IngredientsWindow extends GameWindow {
         this.description = recipe.name;
 
         this.setWidth(game.font.measureString(this.description) + 36)
-            .setHeight(this.ingredients.length * this.itemHeight + 30)
+            .setHeight(this.ingredients.length * this.itemHeight + 36 + 8)
             .setHasX(false);
     }
 
@@ -30,10 +30,14 @@ class IngredientsWindow extends GameWindow {
             var ingredient = this.ingredients[i];
             var img = game.itemService[ingredient[0]].img;
             context.drawImage(img, x, y);
+            game.font.write(context, ingredient[0], x + 50, y + 10);
             if(ingredient[1] != 1){
-                game.font.write(context, "x " + ingredient[1], x + 48, y + 24);
+                game.font.write(context, "x " + ingredient[1], x + 50, y + 24);
             }
             y += this.itemHeight;
+        }
+        if(this.height < y + 36){
+            this.setHeight(y + 36);
         }
     }
 }

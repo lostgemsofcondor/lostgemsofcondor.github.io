@@ -88,6 +88,9 @@ class GameLoopService {
 				game.angle -= game.rotateSpeed;
 				game.adjustAllSpriteDirections();
 			}
+		} else {
+			// always update player direction because it has separate moving animation
+			game.player.adjustSpriteDirection();
 		}
 	}
 
@@ -116,9 +119,11 @@ class GameLoopService {
 			// game.player.positionY += Math.sin(game.player.angle)*game.player.speed;
 			// game.player.positionX += Math.cos(game.player.angle)*game.player.speed;
 			game.player.moving = true;
+			game.player.sprite.moving = true;
 			// game.player.move();
 		} else {
 			game.player.moving = false;
+			game.player.sprite.moving = false;
 		}
 
 		//game.player.adjustSpriteDirection();	

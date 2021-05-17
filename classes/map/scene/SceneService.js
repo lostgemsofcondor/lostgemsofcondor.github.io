@@ -7,7 +7,7 @@ class SceneService {
         if(type == "tutorial"){
             return new Tutorial(x, y);
         } else {
-            return new Dungeon(x, y);
+            return new Scene(x, y);
         }
     }
 }

@@ -124,8 +124,13 @@ class Game {
 	}
 
 	loadSave(){
-        var saveOnFile = localStorage.getItem("save");
-        if(saveOnFile != null){
+		var saveOnFile = null;
+		try{
+			saveOnFile = localStorage.getItem("save");
+		} catch {
+			console.log("error getting save file");
+		}
+        if(!this.config.newGameOnLoad && saveOnFile != null){
 			this.save = Object.assign(new Save, JSON.parse(saveOnFile));
 			if(this.save.version == null || this.config.versionCompare(this.save.version, this.config.version) > 0){
 				this.newSave();
@@ -209,7 +214,6 @@ class Game {
 	}
 	
 	adjustAllSpriteDirections(){
-		this.player.adjustSpriteDirection();
 		for(var i in this.entities){
 			this.entities[i].adjustSpriteDirection();
 		}

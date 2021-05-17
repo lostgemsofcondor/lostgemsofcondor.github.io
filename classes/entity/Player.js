@@ -27,6 +27,9 @@ class Player extends Mortal {
 		// this.positionY = 0;
 		this.bulletBuilder = new BulletBuilder();
 		this.shoot = this.bulletBuilder.newTripleArrow(1);
+
+		
+        this.sprite.setMovingAnimationFrames(2).setRandomOffset().setMovingAnimationTime(15);
 	}
 
 	//override
@@ -102,8 +105,6 @@ class Player extends Mortal {
 		game.save.stamina = this.stamina;
 	}
 
-
-
 	reduceStamina(s, gainEXP){
 		if(this.stamina >= s){
 			this.stamina -= s;
@@ -136,7 +137,6 @@ class Player extends Mortal {
 			this.speed = this.baseSpeed;
 		}
 	}
-
 
 	recoverStamina(s){
 		// might use Math.floor

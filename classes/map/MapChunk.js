@@ -21,7 +21,7 @@ class MapChunk {
 		// this.grass = new Tile("./sprites/background/grassBasic.png", 96, 96, this.tileSize);
 		// this.water = new Tile("./sprites/background/waterBasic.png", 96, 96, this.tileSize);
 		if(this.overworld){
-			this.mapWorker = new Worker('classes/map/MapWorker.js');
+			this.mapWorker = new Worker("classes/map/MapWorker.js");
 		}
 		this.loaded = false;
 

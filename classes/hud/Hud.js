@@ -133,11 +133,12 @@ class Hud {
 
         // draw exp bars
 
-        var skills = ["endurance", "crafting"/*, "ranged"*/];
+        var skills = ["endurance", "crafting", "woodcutting"];
 
         for(var i = 0; i < skills.length; i ++){
             var skill = skills[i];
             var progress = game.experienceService.progress(skill);
+            this.context.fillStyle = game.config.expGold;
             this.context.fillStyle = game.config.expGold;
             this.context.fillRect(progressX, y, progressWidth, progressHeight);
             this.context.fillStyle = game.config.lightGray;
@@ -326,6 +327,7 @@ class Hud {
             
             if(this.dialog.clicked(x, y) == 2){
                 this.dialog.open = false;
+                game.paused = false;
                 return;
             }
             

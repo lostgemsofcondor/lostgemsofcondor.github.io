@@ -25,7 +25,7 @@ class Main {
 		
 		onkeydown = onkeyup = function(e){
 			e = e || event; // to deal with IE
-			if(e.type == 'keydown'){
+			if(e.type == "keydown"){
 				game.keyMap[e.keyCode] = true;
 			} else {
 				delete game.keyMap[e.keyCode];
@@ -63,8 +63,8 @@ class Main {
 
 			await this.sleep(0)
 			drawTime = performance.now() - start;
-			if(drawTime < 1/(fpsMax) * 1000){
-				await this.sleep((1/(fpsMax) * 1000) - drawTime + adjust);
+			if(drawTime < 1/(game.config.fpsMax) * 1000){
+				await this.sleep((1/(game.config.fpsMax) * 1000) - drawTime + adjust);
 				fast = true;
 			} else {
 			}
@@ -81,15 +81,15 @@ class Main {
 			if(count % 60 == 0){
 				count = 0;
 				
-				if(this.fps - 1 > fpsMax && fast){
+				if(this.fps - 1 > game.config.fpsMax && fast){
 					adjust += game.config.adjustment;
-					if(this.fps - .4 > fpsMax){
+					if(this.fps - .4 > game.config.fpsMax){
 						adjust += game.config.adjustment;
 					}
 				}
-				if(this.fps + .5 < fpsMax && fast){
+				if(this.fps + .5 < game.config.fpsMax && fast){
 					adjust -= game.config.adjustment;
-					if(this.fps + .2 < fpsMax){
+					if(this.fps + .2 < game.config.fpsMax){
 						adjust -= game.config.adjustment;
 					}
 				}
@@ -98,7 +98,7 @@ class Main {
 	}
 
 	sleep(ms){
-	return new Promise(resolve => setTimeout(resolve, ms));
+		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
 	gameLoop(){
@@ -275,5 +275,3 @@ class Main {
 
 var main = new Main();
 var game = new Game();
-
-var fpsMax = 60;

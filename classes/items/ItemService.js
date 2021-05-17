@@ -11,6 +11,7 @@ class ItemService {
         this.copperAxe = new Weapon("copperAxe", "./sprites/weapons/copperAxe.png").setName("copperAxe").setDescription("An heavy axe made from copper").setType("axe").setCost(2).setDamage(2);
         
         this.palmLog = new Item("palmLog", "./sprites/trees/palmLog.png").setName("Palm Log");
+        this.oakLog = new Item("oakLog", "./sprites/trees/oakLog.png").setName("Oak Log");
 
         this.amethyst = new Item("amethyst", "./sprites/gems/amethyst.png").setPickedSound(game.sounds.gemPick);
         this.emerald = new Item("emerald", "./sprites/gems/emerald.png").setPickedSound(game.sounds.gemPick);

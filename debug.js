@@ -11,7 +11,7 @@ class Debug {
 		this.debugging = bool;
 		this.overRideMove = bool;
 		if(game?.player) {
-			game.player.noCollsion = bool;
+			// game.player.noCollsion = bool;
 		}
 		if(bool){
 			main.canvas.oncontextmenu = null;

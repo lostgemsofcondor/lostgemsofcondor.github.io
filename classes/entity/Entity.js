@@ -105,15 +105,27 @@ class Entity {
 	}
 
 	adjustSpriteDirection(){
-		var angle = this.correctMod((this.angleAbsolute + game.angle)/Math.PI*180, 360) ;
-		if(angle >= 315 || angle <= 45){
-			this.sprite.setDirection("right");
-		} else if(angle > 45 && angle < 135){
-			this.sprite.setDirection("down");
-		} else if(angle >= 135 && angle <= 225){
-			this.sprite.setDirection("left");
+		var angle = this.correctMod((this.angleAbsolute + game.angle)/Math.PI*180, 360);
+		if(this.sprite.movingAnimation && this.moving){
+			if(angle >= 315 || angle <= 45){
+				this.sprite.setDirection("movingRight", true);
+			} else if(angle > 45 && angle < 135){
+				this.sprite.setDirection("movingDown", true);
+			} else if(angle >= 135 && angle <= 225){
+				this.sprite.setDirection("movingLeft", true);
+			} else {
+				this.sprite.setDirection("movingUp", true);
+			}
 		} else {
-			this.sprite.setDirection("up");
+			if(angle >= 315 || angle <= 45){
+				this.sprite.setDirection("right");
+			} else if(angle > 45 && angle < 135){
+				this.sprite.setDirection("down");
+			} else if(angle >= 135 && angle <= 225){
+				this.sprite.setDirection("left");
+			} else {
+				this.sprite.setDirection("up");
+			}
 		}
 	}
 
