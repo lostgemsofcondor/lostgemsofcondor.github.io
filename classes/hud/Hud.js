@@ -48,6 +48,17 @@ class Hud {
         this.windowBottomLeft.src = "./sprites/hud/windowBottomLeft.png";
         this.windowBottomRight = new Image();
         this.windowBottomRight.src = "./sprites/hud/windowBottomRight.png";
+        
+        this.weaponSlot = new Image();
+        this.weaponSlot.src = "./sprites/hud/weaponSlot.png";
+        this.ammunitionSlot = new Image();
+        this.ammunitionSlot.src = "./sprites/hud/ammunitionSlot.png";
+        this.helmSlot = new Image();
+        this.helmSlot.src = "./sprites/hud/helmSlot.png";
+        this.breastplateSlot = new Image();
+        this.breastplateSlot.src = "./sprites/hud/breastplateSlot.png";
+        this.greaveSlot = new Image();
+        this.greaveSlot.src = "./sprites/hud/greaveSlot.png";
 
         this.menu = null;
 
@@ -115,13 +126,14 @@ class Hud {
         this.craftingMenu.draw(this.context);
         this.dialog.draw(this.context);
 
+        this.drawSlots()
         this.drawItems();
 
         this.drawRightClickMenu();
     }
 
     drawStats(){
-        var skillX = this.offset + 112;
+        var skillX = this.offset + 108;
         var progressX = this.offset + 201;
         var progressCenterX = this.offset + 249;
         var levelX = this.offset + 336;
@@ -400,6 +412,37 @@ class Hud {
     handleRightClickStart(x, y){
 
 
+    }
+
+    drawSlots(){
+        var weaponsInventory = game.getInventory("weapons");
+        var armorInventory = game.getInventory("armor");
+        if(weaponsInventory.get(0, 0) == null){
+            var x = weaponsInventory.inventorySlotX(0);
+            var y = weaponsInventory.inventorySlotY(0);
+            this.context.drawImage(this.weaponSlot, x, y);
+        }
+        if(weaponsInventory.get(0, 1) == null){
+            var x = weaponsInventory.inventorySlotX(0);
+            var y = weaponsInventory.inventorySlotY(1);
+            this.context.drawImage(this.ammunitionSlot, x, y);
+        }
+        
+        if(armorInventory.get(0, 0) == null){
+            var x = armorInventory.inventorySlotX(0);
+            var y = armorInventory.inventorySlotY(0);
+            this.context.drawImage(this.helmSlot, x, y);
+        }
+        if(armorInventory.get(0, 1) == null){
+            var x = armorInventory.inventorySlotX(0);
+            var y = armorInventory.inventorySlotY(1);
+            this.context.drawImage(this.breastplateSlot, x, y);
+        }
+        if(armorInventory.get(0, 2) == null){
+            var x = armorInventory.inventorySlotX(0);
+            var y = armorInventory.inventorySlotY(2);
+            this.context.drawImage(this.greaveSlot, x, y);
+        }        
     }
 
     drawItems(){

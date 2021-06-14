@@ -85,8 +85,8 @@ class ItemEntity {
         return null;
     }
 
-    move(inventory, x, y){
-        if(inventory.valid(x, y) && this.validSlot(inventory.location, x, y)){
+    move(inventory, x, y, silent = false){
+        if(inventory.valid(x, y) && this.validSlot(inventory.location, x, y, silent)){
             var oldX = this.x;
             var oldY = this.y;
             this.x = x;
@@ -101,12 +101,16 @@ class ItemEntity {
                 }
             }
             this.location = inventory.location;
+            return true;
         }
+        return false;
     }
     
-    swap(item){
+    swap(item, silent = false){
         if(this.itemEntityKey == item.itemEntityKey){
-            return;
+            // Item moved to its own item slot. Item click.
+            this.click();
+            return true;
         }
         if(this.itemKey == item.itemKey){
             var definition = this.getDefinition();
@@ -118,7 +122,7 @@ class ItemEntity {
                 this.delete();
             }
         } else {
-            if(this.validSlot(item.location, item.x, item.y) && item.validSlot(this.location, this.x, this.y)){
+            if(this.validSlot(item.location, item.x, item.y, silent) && item.validSlot(this.location, this.x, this.y, silent)){
                 var inventory1 = game.getInventory(this.location);
                 var inventory2 = game.getInventory(item.location);
 
@@ -136,14 +140,55 @@ class ItemEntity {
 
                 inventory1.forceAdd(item);
                 inventory2.forceAdd(this);
+            } else {
+                return false
+            }
+        }
+        return true;
+    }
+
+    click(){
+        if(this.location == "weapons" || this.location == "armor"){
+            game.getInventory("inventory").add(this);
+        }  else if(this.location == "inventory"){
+            var weaponsInventory = game.getInventory("weapons");
+
+            for(var i = 0; i <= weaponsInventory.width; i++){
+                for(var j = 0; j <= weaponsInventory.height; j++){
+                    if(weaponsInventory.get(i, j) == null){
+                        if(this.move(weaponsInventory, i, j, true)){
+                            return;
+                        }
+                    } else {
+                        if(this.swap(weaponsInventory.get(i, j), true))
+                        {
+                            return;
+                        }
+                    }
+                }
+            }
+
+            var armorInventory = game.getInventory("armor");
+
+            for(var i = 0; i <= armorInventory.width; i++){
+                for(var j = 0; j <= armorInventory.height; j++){
+                    if(armorInventory.get(i, j) == null){
+                        if(this.move(armorInventory, i, j, true)){
+                            return;
+                        }
+                    } else {
+                        if(this.swap(armorInventory.get(i, j), true)){
+                            return;
+                        }
+                    }
+                }
             }
         }
     }
 
-    validSlot(location, x, y){
+    validSlot(location, x, y, silent = false){
         var definition = this.getDefinition();
         var typeRequired = Item;
-
 
         if(location == "weapons"){
             var weapons = game.getInventory("weapons");
@@ -166,18 +211,22 @@ class ItemEntity {
                 typeRequired = Greave;
             }
         }
+
         if(typeRequired != null){
             if(definition instanceof typeRequired){
                 return true;
             } else {
-                game.hud.log("Only " + typeRequired.name + "s can go in this slot at the moment");
+                if(!silent){
+                    game.hud.log("Only " + typeRequired.name + "s can go in this slot at the moment");
+                }
                 return false;
             }
         } else {
-            game.hud.log("Nothing can go in this slot at the moment");
+            if(!silent){
+                game.hud.log("Nothing can go in this slot at the moment");
+            }
             return false;
         }
-
     }
 
     drop(x, y){

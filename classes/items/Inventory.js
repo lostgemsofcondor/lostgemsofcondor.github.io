@@ -30,7 +30,6 @@ class Inventory {
         }
     }
 
-    
     inventorySlotX(x){
         return game.hud.offset + this.x + x * this.slotSize;
     }
@@ -199,7 +198,6 @@ class Inventory {
     }
 
     add(item){
-        
         var stack = this.getWithItemKey(item.itemKey, true);
         if(stack != null){
             var maxStack = item.getDefinition().maxStack;
@@ -207,13 +205,13 @@ class Inventory {
             item.amount -= maxStack - stack.amount;
             stack.amount = temp;
             if(item.amount <= 0){
-                item.remove();
+                item.delete();
                 return 0;
             } else {
                 return this.add(item);
             }
         }
-        item.location = this.location;
+        // item.location = this.location;
         for(var j = 0; j < this.height; j++){
             for(var i = 0; i < this.width; i++){
                 if(this.inv[j][i] == null){
